@@ -288,7 +288,7 @@ namespace View3D.view
             bool allModelsInside = true;
             foreach (var stl in Models)
             {
-                stl.outside = false;
+                stl.Outside = false;
                 if (    !pointInPrintArea(stl.xMin, stl.yMin, stl.zMin) ||
                         !pointInPrintArea(stl.xMax, stl.yMin, stl.zMin) ||
                         !pointInPrintArea(stl.xMin, stl.yMax, stl.zMin) ||
@@ -298,7 +298,7 @@ namespace View3D.view
                         !pointInPrintArea(stl.xMin, stl.yMax, stl.zMax) ||
                         !pointInPrintArea(stl.xMax, stl.yMax, stl.zMax))
                 {
-                    stl.outside = true;
+                    stl.Outside = true;
                     allModelsInside = false;
                 }
             }

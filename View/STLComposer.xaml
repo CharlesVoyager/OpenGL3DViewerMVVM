@@ -36,7 +36,8 @@
             AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
-                <DataGridTextColumn Header="Trangles" Binding="{Binding Triangles}" Width="100"/>
+                <DataGridTextColumn Header="Trangles" Binding="{Binding Triangles}" Width="80"/>
+                <DataGridTextColumn Header="Outside" Binding="{Binding Outside}" Width="60"/>
             </DataGrid.Columns>
 
         </DataGrid>

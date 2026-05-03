@@ -72,9 +72,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public ModelGLDraw Drawer;
 
         public RHBoundingBox BoundingBox;
-
-        public bool outside = false;
-      
+     
         public Matrix4 trans;
 
         public ThreeDModel()
@@ -112,7 +110,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox.Clear();
 
             Name = "Unknown";
-            outside = false;
+            Outside = false;
 
             // It should dispose drawer in main thread. But, it causes black flash when deleting model. So, we just let GC to dispose it.
 #if false
@@ -303,6 +301,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         {
             get { return Model.drawTriangles.Count; }
         }
+
+        public bool Outside { get; set; } = false;
+
 
         public float xMin
         {

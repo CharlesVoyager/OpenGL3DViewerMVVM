@@ -59,7 +59,7 @@ namespace View3D.view
             txtSizeY.Text = bbox.Size.y.ToString("0.000") + " mm";
             txtSizeZ.Text = bbox.Size.z.ToString("0.000") + " mm";
 
-            txtCollision.Text = pm.outside.ToString();
+            txtCollision.Text = pm.Outside.ToString();
             txtFilename.Text = pm.Name;
             txtPosX.Text = pm.Position.X.ToString("0.000");
             txtPosY.Text = pm.Position.Y.ToString("0.000");

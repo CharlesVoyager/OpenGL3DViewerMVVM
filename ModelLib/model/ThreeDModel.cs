@@ -338,7 +338,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public bool Outside { get; set; } = false;
 
-
         public float xMin
         {
             get { return (float)BoundingBox.MinPoint.x; }

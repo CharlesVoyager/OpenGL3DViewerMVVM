@@ -56,7 +56,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         }
     }
 
-
     public class ThreeDModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -407,6 +406,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             get { return selected; }
             set { selected = value; }
         }
+
         public Coord3D Position
         {
             get { return position; }
@@ -422,17 +422,21 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             get { return scale; }
         }
 
+        void updateChange()
+        {
+            OnPropertyChanged();
+            UpdateTransMatrix();
+            UpdateOutOfBound();
+            MainWindow.main.threeDControl.UpdateChanges();
+        }
+
         public double PositionX
         {
             get { return position.X; }
             set 
             { 
                 position.X = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
 
@@ -442,11 +446,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.Y = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
 
@@ -456,11 +456,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.Z = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
 
@@ -470,11 +466,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.x = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
         public double RotationY
@@ -483,11 +475,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.y = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
         public double RotationZ
@@ -496,11 +484,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.z = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
 
@@ -510,11 +494,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.x = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
         public double ScaleY
@@ -523,11 +503,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.y = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
         public double ScaleZ
@@ -536,11 +512,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.z = value;
-
-                OnPropertyChanged();
-                UpdateTransMatrix();
-                UpdateOutOfBound();
-                MainWindow.main.threeDControl.UpdateChanges();
+                updateChange();
             }
         }
         public string OriginalModelSize

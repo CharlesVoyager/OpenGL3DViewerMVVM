@@ -398,10 +398,15 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             get { return scale; }
         }
 
-        void updateChange()
+        void updateChange(string propertyName = null)
         {
-            OnPropertyChanged(null);    // Notify UI that property has changed.
-            UpdateTransMatrix();
+            OnPropertyChanged(propertyName);    // Notify UI that property has changed.
+       
+            if (propertyName.Contains("Position"))
+                UpdateTransMatrix();    // Bounding box will be automatically updated by position change.
+            else
+                UpdateBoundingBoxAndMatrix();
+
             UpdateOutOfBound();
             MainWindow.main.threeDControl.UpdateChanges();
         }
@@ -412,7 +417,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.X = value;
-                updateChange();
+                updateChange(nameof(PositionX));
             }
         }
 
@@ -422,7 +427,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.Y = value;
-                updateChange();
+                updateChange(nameof(PositionY));
             }
         }
 
@@ -432,7 +437,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.Z = value;
-                updateChange();
+                updateChange(nameof(PositionZ));
             }
         }
 
@@ -442,7 +447,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.x = value;
-                updateChange();
+                updateChange(nameof(RotationX));
             }
         }
 
@@ -452,7 +457,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.y = value;
-                updateChange();
+                updateChange(nameof(RotationY));
             }
         }
 
@@ -462,7 +467,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.z = value;
-                updateChange();
+                updateChange(nameof(RotationZ));
             }
         }
 
@@ -472,7 +477,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.x = value;
-                updateChange();
+                updateChange(nameof(ScaleX));
             }
         }
 
@@ -482,7 +487,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.y = value;
-                updateChange();
+                updateChange(nameof(ScaleY));
             }
         }
 
@@ -492,7 +497,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.z = value;
-                updateChange();
+                updateChange(nameof(ScaleZ));
             }
         }
 

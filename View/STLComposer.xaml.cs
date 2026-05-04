@@ -42,21 +42,6 @@ namespace View3D.view
 
         public void translate() { }
 
-        public void RemoveLastModel()
-        {
-            if (0 == ViewModel.Models.Count) return;
-            int idx = ViewModel.Models.Count - 1;
-            while (idx >= 0)
-            {
-                if (typeof(ThreeDModel) == ViewModel.Models[idx].GetType() && null != ViewModel.Models[idx].Model)
-                {
-                    RemoveModel(ViewModel.Models[idx]);
-                    return;
-                }
-                idx--;
-            }
-        }
-
         public List<ThreeDModel> GetAllPrintModels()
         {
             var list = new List<ThreeDModel>();

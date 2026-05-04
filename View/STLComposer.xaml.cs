@@ -13,8 +13,6 @@ namespace View3D.view
 {
     public partial class STLComposer : Window
     {
-        public STLComposerViewModel ViewModel;
-
         // ── Constructor ───────────────────────────────────────────────────────
         public STLComposer()
         {
@@ -27,8 +25,7 @@ namespace View3D.view
             }
             catch { }
 
-            ViewModel = new STLComposerViewModel();
-            DataContext = ViewModel;
+            DataContext = MainWindow.main.viewModel;
         }
 
         public void translate() { }
@@ -36,7 +33,7 @@ namespace View3D.view
         public List<ThreeDModel> GetAllPrintModels()
         {
             var list = new List<ThreeDModel>();
-            foreach (var m in ViewModel.Models)
+            foreach (var m in MainWindow.main.viewModel.Models)
                 if (IsValidPrintModel(m)) list.Add(m);
             return list;
         }
@@ -44,7 +41,7 @@ namespace View3D.view
         public List<ThreeDModel> GetSelectedPrintModels()
         {
             var list = new List<ThreeDModel>();
-            foreach (var m in ViewModel.Models)
+            foreach (var m in MainWindow.main.viewModel.Models)
                 if (IsValidPrintModel(m) && m.Selected) list.Add(m);
             return list;
         }
@@ -163,7 +160,7 @@ namespace View3D.view
             }
 
             // Remember initial positions for all ViewModel.Models after Autoposition.
-            foreach (var m in ViewModel.Models)
+            foreach (var m in MainWindow.main.viewModel.Models)
             {
                 m.InitialPosition.x = m.Position.X;
                 m.InitialPosition.y = m.Position.Y;
@@ -174,8 +171,8 @@ namespace View3D.view
             newModel.InitialPosition.y = newModel.Position.Y;
             newModel.InitialPosition.z = newModel.Position.Z;
               
-            ViewModel.Models.Add(newModel);
-            ViewModel.SelectedModel = newModel;
+            MainWindow.main.viewModel.Models.Add(newModel);
+            MainWindow.main.viewModel.SelectedModel = newModel;
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
@@ -193,7 +190,7 @@ namespace View3D.view
             model.CopyTo(newModel); 
             Autoposition(newModel);
             newModel.UpdateOutOfBound();
-            ViewModel.Models.Add(newModel);
+            MainWindow.main.viewModel.Models.Add(newModel);
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
@@ -232,10 +229,10 @@ namespace View3D.view
         private void RemoveModel(ThreeDModel model)
         {
             model.Clear();
-            ViewModel.Models.Remove(model);
+            MainWindow.main.viewModel.Models.Remove(model);
         }
 
-        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(ViewModel.SelectedModel);
+        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(MainWindow.main.viewModel.SelectedModel);
 
         private bool IsValidPrintModel(ThreeDModel model)
             => model.Name != "Unknown" &&
@@ -247,7 +244,7 @@ namespace View3D.view
         // =====================================================================
         bool Autoposition(ThreeDModel newModel)
         {
-            List<ThreeDModel> allModels = new List<ThreeDModel>(ViewModel.Models);
+            List<ThreeDModel> allModels = new List<ThreeDModel>(MainWindow.main.viewModel.Models);
 
             allModels.Add(newModel);
 

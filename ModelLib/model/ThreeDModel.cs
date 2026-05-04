@@ -340,7 +340,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 outside = value;
                 OnPropertyChanged();    // Update DataGrid in STLComposer.
-                MainWindow.main.stlComposer.ViewModel.UpdateOutOfBound();
+                MainWindow.main.viewModel.UpdateOutOfBound();
             }
         }
 

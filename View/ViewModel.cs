@@ -6,11 +6,11 @@ using View3D;
 
 namespace OpenGL3DViewerMVVM.View
 {
-    public class STLComposerViewModel : ViewModelBase
+    public class ViewModel : ViewModelBase
     {
         public ObservableCollection<ThreeDModel> Models { get; set; }
 
-        public STLComposerViewModel()
+        public ViewModel()
         {
             Models = new ObservableCollection<ThreeDModel>();
         }

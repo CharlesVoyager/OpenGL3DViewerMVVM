@@ -17,7 +17,7 @@ namespace View3D.view
             }
             catch { }
 
-            DataContext = MainWindow.main.stlComposer.ViewModel;
+            DataContext = MainWindow.main.viewModel;
         }
 
         private void translate()

@@ -261,7 +261,7 @@ namespace View3D.view
             redBorderDraw.Dispose();
             boundingBoxDraw.Dispose();
 
-            foreach (var m in stlComp.ViewModel.Models)
+            foreach (var m in MainWindow.main.viewModel.Models)
                 m.Drawer.Dispose();
 
             MainWindow.main.Dispatcher.Invoke(() =>
@@ -365,14 +365,14 @@ namespace View3D.view
          
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        stlComp.ViewModel.SelectedModel = sel;
+                        MainWindow.main.viewModel.SelectedModel = sel;
                     });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        stlComp.ViewModel.SelectedModel = null;
+                        MainWindow.main.viewModel.SelectedModel = null;
                     });
                 }
             }
@@ -388,14 +388,14 @@ namespace View3D.view
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
                         //stlComp.ObjectSelected(sel);
-                        MainWindow.main.ShowContextMenu(stlComp.ViewModel.SelectedModel != null);
+                        MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null);
                     });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        MainWindow.main.ShowContextMenu(stlComp.ViewModel.SelectedModel != null);
+                        MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null);
                     });
                 }
             }
@@ -490,7 +490,7 @@ namespace View3D.view
 
                 redBorderDraw.Draw();
 
-                foreach (var m in stlComp.ViewModel.Models)
+                foreach (var m in MainWindow.main.viewModel.Models)
                     m.Drawer.Draw();
 
                 SwapBuffers();
@@ -551,7 +551,7 @@ namespace View3D.view
  
             Vector3 aabbMinPoint3 = new Vector3();
             Vector3 aabbMaxPoint3 = new Vector3();
-            foreach (ThreeDModel model in stlComp.ViewModel.Models)
+            foreach (ThreeDModel model in MainWindow.main.viewModel.Models)
             {
                 if (model.BoundingBox.minPoint == null || model.BoundingBox.maxPoint == null)
                     continue;
@@ -634,8 +634,8 @@ namespace View3D.view
                     speedX = (xPos - lastX) * 200 * zoom / ClientSize.X;
                     speedY = (yPos - lastY) * 200 * zoom / ClientSize.Y;
 
-                    if (stlComp.ViewModel.SelectedModel != null)
-                        stlComp.ViewModel.SelectedModel.ObjectMoved(diff.x, diff.y);
+                    if (MainWindow.main.viewModel.SelectedModel != null)
+                        MainWindow.main.viewModel.SelectedModel.ObjectMoved(diff.x, diff.y);
                
                     lastX = xPos; 
                     lastY = yPos;

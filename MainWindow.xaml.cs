@@ -1,6 +1,7 @@
 ﻿using OpenGL3DViewerMVVM.MeshIOLib;
 using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
+using OpenGL3DViewerMVVM.View;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,7 @@ namespace View3D
 
         public static MainWindow main = null;
 
+        public ViewModel viewModel = null;
         public ThreeDSettings threeDSettings = null;
         public ThreeDControl threeDControl = null;
         public STLComposer stlComposer = null;
@@ -49,6 +51,8 @@ namespace View3D
                     dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
                 }
             };
+
+            viewModel = new ViewModel();
 
             // ThreeDSettings
             threeDSettings = new ThreeDSettings();
@@ -194,13 +198,13 @@ namespace View3D
 
         private void OnMmToInch() 
         {
-            ThreeDModel m = stlComposer.ViewModel.SelectedModel;
+            ThreeDModel m = viewModel.SelectedModel;
             if (m != null) stlComposer.DoMmToInch(m);
         }
 
         private void OnInchToMm()
         {
-            ThreeDModel m = stlComposer.ViewModel.SelectedModel;
+            ThreeDModel m = viewModel.SelectedModel;
             if (m != null) stlComposer.DoInchtomm(m);
         }
 
@@ -367,7 +371,7 @@ namespace View3D
         private void info_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_object_information, "StateVisible", true);
-            UI_object_information.Analyse(stlComposer.ViewModel.SelectedModel);
+            UI_object_information.Analyse(viewModel.SelectedModel);
 
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
@@ -434,7 +438,7 @@ namespace View3D
 
         void DebugLog()
         {
-            foreach(var m in stlComposer.ViewModel.Models)
+            foreach(var m in viewModel.Models)
             {
                 System.Diagnostics.Debug.WriteLine($"Model: {m.Name}, Position: {m.Position.ToString()}, Rotation: {m.Rotation.ToString()}, Scale: {m.Scale.ToString()}");
             }

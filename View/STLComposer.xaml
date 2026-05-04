@@ -131,7 +131,7 @@
             <!-- ═══════════════════════════════════════════
                  panelAnalysis  –  Object Analysis GroupBox
                  ═══════════════════════════════════════════ -->
-            <Border x:Name="panelAnalysis" Height="200" Style="{StaticResource panelAnalysisBorderStyle}">
+            <Border x:Name="panelAnalysis" Height="200" Style="{StaticResource panelAnalysisBorderStyle}" Visibility="Visible">
                 <GroupBox Header="Object Analysis" Margin="4,2" Background="White" x:Name="groupBoxObjectAnalysis">
                     <Grid Margin="4">
                         <Grid.ColumnDefinitions>
@@ -155,47 +155,17 @@
                         <TextBlock Grid.Row="0" Grid.Column="1"
                                    Text="{Binding SelectedModel.OriginalModelSize, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
 
-                        <!-- Row 1 – Loop edges -->
+                        <!-- Row 1 – Triangles -->
                         <TextBlock Grid.Row="1" Grid.Column="0"
-                                   Text="Loop edges:" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="labelLoopEdges"
-                                   Grid.Row="1" Grid.Column="1"
-                                   Text="0" VerticalAlignment="Center"/>
-
-                        <!-- Row 2 – Highly connected -->
-                        <TextBlock Grid.Row="2" Grid.Column="0"
-                                   Text="Highly connected edges:"
-                                   VerticalAlignment="Center"/>
-                        <TextBlock x:Name="labelHighConnected"
-                                   Grid.Row="2" Grid.Column="1"
-                                   Text="0" VerticalAlignment="Center"/>
-
-                        <!-- Row 3 – Vertices -->
-                        <TextBlock Grid.Row="3" Grid.Column="0"
-                                   Text="Vertices:" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="labelVertices"
-                                   Grid.Row="3" Grid.Column="1"
-                                   Text="0" VerticalAlignment="Center"/>
-
-                        <!-- Row 4 – Edges -->
-                        <TextBlock Grid.Row="4" Grid.Column="0"
-                                   Text="Edges:" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="labelEdges"
-                                   Grid.Row="4" Grid.Column="1"
-                                   Text="0" VerticalAlignment="Center"/>
-
-                        <!-- Row 5 – Triangles -->
-                        <TextBlock Grid.Row="5" Grid.Column="0"
                                    Text="Triangles:" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="txtTriangles"
-                                   Grid.Row="5" Grid.Column="1"
-                                   Text="0" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   Text="{Binding SelectedModel.Triangles, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
 
                         <!-- Row 6 – Debug Info -->
-                        <TextBlock Grid.Row="6" Grid.Column="0"
+                        <TextBlock Grid.Row="3" Grid.Column="0"
                                    Text="Debug Info:" VerticalAlignment="Center"/>
                         <TextBlock x:Name="txtDebugInfo"
-                                   Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="80,0,0,0"
+                                   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="80,0,0,0"
                                    Text="" VerticalAlignment="Center"/>
                     </Grid>
                 </GroupBox>

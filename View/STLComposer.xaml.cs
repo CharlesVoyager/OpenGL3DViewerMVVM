@@ -42,20 +42,6 @@ namespace View3D.view
 
         public void translate() { }
 
-        void updateAnalyserData()
-        {
-            ThreeDModel model = ViewModel.SelectedModel;
-            if (model == null) return;
-
-            labelVertices.Text             = "(To be implemented)";
-            txtTriangles.Text            = model.Model.drawTriangles.Count.ToString();
-
-            // Colour: black when zero, red when non-zero
-            var red   = new SolidColorBrush(Colors.Red);
-            var black = new SolidColorBrush(Colors.Black);
-        }
-
-
         public void RemoveLastModel()
         {
             if (0 == ViewModel.Models.Count) return;

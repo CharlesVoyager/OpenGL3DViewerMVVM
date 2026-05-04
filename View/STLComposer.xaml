@@ -82,6 +82,7 @@
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
                              Text="{Binding SelectedItem.PositionZ, UpdateSourceTrigger=PropertyChanged}"/>
+                    
                     <!-- Scale -->
                     <TextBox x:Name="textScaleX" Grid.Row="1" Grid.Column="2" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"

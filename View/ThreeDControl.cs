@@ -365,15 +365,14 @@ namespace View3D.view
          
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        //stlComp.ObjectSelected(sel);
+                        stlComp.ViewModel.SelectedModel = sel;
                     });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        // Clear selected items.
-                        //stlComp.listObjects.SelectedItems.Clear();
+                        stlComp.ViewModel.SelectedModel = null;
                     });
                 }
             }

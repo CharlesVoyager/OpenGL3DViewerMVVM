@@ -151,13 +151,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             Name = "Unknown";
             Outside = false;
 
-            // It should dispose drawer in main thread. But, it causes black flash when deleting model. So, we just let GC to dispose it.
-#if false
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
                 Drawer.Dispose();
             });
-#endif
         }
 
         /// <summary>

@@ -231,11 +231,8 @@ namespace View3D.view
         // =====================================================================
         private void RemoveModel(ThreeDModel model)
         {
-            // ThreeDModel
-            for (int i = 0; i < ViewModel.Models.Count; i++)
-                if (ViewModel.Models[i] == model) { ViewModel.Models.RemoveAt(i); break; }
-
             model.Clear();
+            ViewModel.Models.Remove(model);
         }
 
         public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(ViewModel.SelectedModel);

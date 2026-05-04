@@ -233,16 +233,17 @@ namespace View3D
 
         public void setbuttonVisable(bool flag)
         {
+            view_toggleButton.IsChecked = false;
+            VisualStateManager.GoToState(UI_view, "StateHidden", true);
+
             if (flag == true)
             {
-                view_toggleButton.Visibility = Visibility.Visible;
                 move_toggleButton.Visibility = Visibility.Visible;
                 rotate_toggleButton.Visibility = Visibility.Visible;
                 resize_toggleButton.Visibility = Visibility.Visible;
                 info_toggleButton.Visibility = Visibility.Visible;
                 remove_toggleButton.Visibility = Visibility.Visible;
 
-                view_toggleButton.IsChecked = false;
                 move_toggleButton.IsChecked = false;
                 rotate_toggleButton.IsChecked = false;
                 resize_toggleButton.IsChecked = false;

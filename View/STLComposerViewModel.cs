@@ -24,7 +24,14 @@ namespace OpenGL3DViewerMVVM.View
             {
                 if (selectedModel != value)
                 {
+                    if (selectedModel != null)
+                        selectedModel.Selected = false;
+                    
                     selectedModel = value;
+                  
+                    if (selectedModel != null)
+                        selectedModel.Selected = true;
+
                     OnPropertyChanged();
                     MainWindow.main.threeDControl.UpdateChanges();
                 }

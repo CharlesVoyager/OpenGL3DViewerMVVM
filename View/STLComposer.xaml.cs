@@ -5,8 +5,6 @@ using OpenGL3DViewerMVVM.View;
 using System.IO;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using View3D.model.geom;
 
 #nullable disable
@@ -16,10 +14,6 @@ namespace View3D.view
     public partial class STLComposer : Window
     {
         public STLComposerViewModel ViewModel;
-
-        // ── Private fields ────────────────────────────────────────────────────
-        private List<ThreeDModel> cloneModels = new List<ThreeDModel>();
-
 
         // ── Constructor ───────────────────────────────────────────────────────
         public STLComposer()
@@ -199,19 +193,18 @@ namespace View3D.view
             model.CopyTo(newModel); 
             Autoposition(newModel);
             newModel.UpdateOutOfBound();
+            ViewModel.Models.Add(newModel);
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
                 newModel.Drawer.Init();
-                ViewModel.Models.Add(newModel);
             });
             return true;
         }
 
         public void CloneObject()
         {
-            cloneModels.Clear();
-            cloneModels = GetSelectedPrintModels();
+            List<ThreeDModel> cloneModels = GetSelectedPrintModels();
             foreach (var pm in cloneModels) CloneObject(pm);
         }
 

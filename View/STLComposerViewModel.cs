@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using View3D;
 
 namespace OpenGL3DViewerMVVM.View
 {
@@ -26,6 +27,7 @@ namespace OpenGL3DViewerMVVM.View
                     selectedModel = value;
                     OnPropertyChanged();
                 }
+                MainWindow.main.setbuttonVisable(selectedModel != null);
             }
         }
     }

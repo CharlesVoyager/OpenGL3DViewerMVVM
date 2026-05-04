@@ -216,8 +216,7 @@ namespace View3D.view
             ThreeDModel newModel = new ThreeDModel();
             model.CopyTo(newModel); 
             Autoposition(newModel);
-
-            UpdateOutOfBound();
+            newModel.UpdateOutOfBound();
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
@@ -232,44 +231,6 @@ namespace View3D.view
             cloneModels.Clear();
             cloneModels = GetSelectedPrintModels();
             foreach (var pm in cloneModels) CloneObject(pm);
-        }
-
-        // =====================================================================
-        //  STL state / out-of-bounds
-        // =====================================================================
-        private bool pointInPrintArea(float x, float y, float z)
-        {
-            double epsilon = 1e-4; // 0.0001
-
-            if (z < -0.1 || z > SettingsService.Instance.Settings.PrintAreaHeight)
-                return false;
-
-            if (x < -epsilon || x > SettingsService.Instance.Settings.PrintAreaWidth + epsilon) return false;
-            if (y < -epsilon || y > SettingsService.Instance.Settings.PrintAreaDepth + epsilon) return false;
-
-            return true;
-        }
-        public void UpdateOutOfBound()
-        {
-            bool allModelsInside = true;
-            foreach (var stl in ViewModel.Models)
-            {
-                stl.Outside = false;
-                if (    !pointInPrintArea(stl.xMin, stl.yMin, stl.zMin) ||
-                        !pointInPrintArea(stl.xMax, stl.yMin, stl.zMin) ||
-                        !pointInPrintArea(stl.xMin, stl.yMax, stl.zMin) ||
-                        !pointInPrintArea(stl.xMax, stl.yMax, stl.zMin) ||
-                        !pointInPrintArea(stl.xMin, stl.yMin, stl.zMax) ||
-                        !pointInPrintArea(stl.xMax, stl.yMin, stl.zMax) ||
-                        !pointInPrintArea(stl.xMin, stl.yMax, stl.zMax) ||
-                        !pointInPrintArea(stl.xMax, stl.yMax, stl.zMax))
-                {
-                    stl.Outside = true;
-                    allModelsInside = false;
-                }
-            }
-
-            MainWindow.main.OutofBound.Visibility = allModelsInside ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public void check_stl_size_too_small(ThreeDModel model)
@@ -418,7 +379,7 @@ namespace View3D.view
             ViewModel.Update();
 
             stl.UpdateTransMatrix();
-            UpdateOutOfBound();
+            stl.UpdateOutOfBound();
             MainWindow.main.threeDControl.UpdateChanges();
         }
 
@@ -449,7 +410,7 @@ namespace View3D.view
 
                 model.UpdateBoundingBoxAndMatrix();
                 model.Land();
-                UpdateOutOfBound();
+                model.UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
@@ -484,7 +445,7 @@ namespace View3D.view
 
                 model.UpdateBoundingBoxAndMatrix();
                 model.Land();
-                UpdateOutOfBound();
+                model.UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
@@ -506,7 +467,7 @@ namespace View3D.view
 
                 model.UpdateBoundingBoxAndMatrix();
                 model.Land();
-                UpdateOutOfBound();
+                model.UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }

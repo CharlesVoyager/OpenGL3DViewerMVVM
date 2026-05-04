@@ -86,6 +86,38 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox = new RHBoundingBox();
         }
 
+        bool pointInPrintArea(float x, float y, float z)
+        {
+            double epsilon = 1e-4; // 0.0001
+
+            if (z < -0.1 || z > SettingsService.Instance.Settings.PrintAreaHeight)
+                return false;
+
+            if (x < -epsilon || x > SettingsService.Instance.Settings.PrintAreaWidth + epsilon) return false;
+            if (y < -epsilon || y > SettingsService.Instance.Settings.PrintAreaDepth + epsilon) return false;
+
+            return true;
+        }
+
+        public void UpdateOutOfBound()
+        {
+            if (    !pointInPrintArea(xMin, yMin, zMin) ||
+                    !pointInPrintArea(xMax, yMin, zMin) ||
+                    !pointInPrintArea(xMin, yMax, zMin) ||
+                    !pointInPrintArea(xMax, yMax, zMin) ||
+                    !pointInPrintArea(xMin, yMin, zMax) ||
+                    !pointInPrintArea(xMax, yMin, zMax) ||
+                    !pointInPrintArea(xMin, yMax, zMax) ||
+                    !pointInPrintArea(xMax, yMax, zMax))
+            {
+                Outside = true;
+            }
+            else
+            {
+                Outside = false;
+            }
+        }
+
         public void CopyTo(ThreeDModel stl)
         {
             Model.CopyTo(stl.Model);   // NOTE: Just clone Model is enough. Drawer/BoundingBox do not need to clone.
@@ -469,39 +501,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 MainWindow.main.threeDControl.UpdateChanges();
             }
         }
-
-
-        bool pointInPrintArea(float x, float y, float z)
-        {
-            double epsilon = 1e-4; // 0.0001
-
-            if (z < -0.1 || z > SettingsService.Instance.Settings.PrintAreaHeight)
-                return false;
-
-            if (x < -epsilon || x > SettingsService.Instance.Settings.PrintAreaWidth + epsilon) return false;
-            if (y < -epsilon || y > SettingsService.Instance.Settings.PrintAreaDepth + epsilon) return false;
-
-            return true;
-        }
-        void UpdateOutOfBound()
-        {
-            if (!pointInPrintArea(xMin, yMin, zMin) ||
-                    !pointInPrintArea(xMax, yMin, zMin) ||
-                    !pointInPrintArea(xMin, yMax, zMin) ||
-                    !pointInPrintArea(xMax, yMax, zMin) ||
-                    !pointInPrintArea(xMin, yMin, zMax) ||
-                    !pointInPrintArea(xMax, yMin, zMax) ||
-                    !pointInPrintArea(xMin, yMax, zMax) ||
-                    !pointInPrintArea(xMax, yMax, zMax))
-            {
-                Outside = true;
-            }
-            else
-            {
-                Outside = false;
-            }
-        }
-
         public string OriginalModelSize
         {
             get { return Model.boundingBox.Size.ToString(); }

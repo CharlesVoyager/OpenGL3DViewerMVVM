@@ -1,7 +1,6 @@
 using OpenGL3DViewerMVVM.MeshIOLib;
 using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
-using OpenGL3DViewerMVVM.View;
 using System.IO;
 using System.Text;
 using System.Windows;

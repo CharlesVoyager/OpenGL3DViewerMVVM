@@ -77,7 +77,7 @@ namespace View3D.view
 
         public void Initial()
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             slider_moveX.Maximum = 1000;
@@ -163,7 +163,7 @@ namespace View3D.view
 
         public void button_move_reset_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             slider_moveX.Value = stl.InitialPosition.x;
@@ -173,7 +173,7 @@ namespace View3D.view
 
         public void button_land_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             stl.Land();
@@ -248,7 +248,7 @@ namespace View3D.view
             {
                 try
                 {
-                    ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+                    ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
                     if (stl == null) return;
                     slider_moveX.Value = Convert.ToDouble(moveX_textbox.Text);
                 }
@@ -262,7 +262,7 @@ namespace View3D.view
             {
                 try
                 {
-                    ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+                    ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
                     if (stl == null) return;
                     slider_moveY.Value = Convert.ToDouble(moveY_textbox.Text);
                 }
@@ -276,7 +276,7 @@ namespace View3D.view
             {
                 try
                 {
-                    ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+                    ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
                     if (stl == null) return;
                     slider_moveZ.Value = Convert.ToDouble(moveZ_textbox.Text);
                 }

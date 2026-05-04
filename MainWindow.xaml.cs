@@ -194,13 +194,13 @@ namespace View3D
 
         private void OnMmToInch() 
         {
-            ThreeDModel m = stlComposer.SelectedModel;
+            ThreeDModel m = stlComposer.ViewModel.SelectedModel;
             if (m != null) stlComposer.DoMmToInch(m);
         }
 
         private void OnInchToMm()
         {
-            ThreeDModel m = stlComposer.SelectedModel;
+            ThreeDModel m = stlComposer.ViewModel.SelectedModel;
             if (m != null) stlComposer.DoInchtomm(m);
         }
 
@@ -367,7 +367,7 @@ namespace View3D
         private void info_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_object_information, "StateVisible", true);
-            UI_object_information.Analyse(stlComposer.SelectedModel);
+            UI_object_information.Analyse(stlComposer.ViewModel.SelectedModel);
 
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
@@ -434,7 +434,7 @@ namespace View3D
 
         void DebugLog()
         {
-            foreach(var m in stlComposer.Models)
+            foreach(var m in stlComposer.ViewModel.Models)
             {
                 System.Diagnostics.Debug.WriteLine($"Model: {m.Name}, Position: {m.Position.ToString()}, Rotation: {m.Rotation.ToString()}, Scale: {m.Scale.ToString()}");
             }

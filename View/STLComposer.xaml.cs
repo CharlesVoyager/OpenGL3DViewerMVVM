@@ -1,7 +1,7 @@
 using OpenGL3DViewerMVVM.MeshIOLib;
 using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
-using System.Collections.ObjectModel;
+using OpenGL3DViewerMVVM.View;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -15,22 +15,7 @@ namespace View3D.view
 {
     public partial class STLComposer : Window
     {
-        public ObservableCollection<ThreeDModel> Models { get; } = new ObservableCollection<ThreeDModel>();
-
-        private ThreeDModel selectedModel;
-
-        public ThreeDModel SelectedModel
-        {
-            get => selectedModel;
-            set
-            {
-                if (selectedModel != value)
-                {
-                    selectedModel = value;
-                    updateTextBox();
-                }
-            }
-        }
+        public STLComposerViewModel ViewModel = new STLComposerViewModel();
 
         // ── Private fields ────────────────────────────────────────────────────
         private List<ThreeDModel> cloneModels = new List<ThreeDModel>();
@@ -51,14 +36,14 @@ namespace View3D.view
             }
             catch { }
 
-            DataContext = this;
+            DataContext = ViewModel;
         }
 
         public void translate() { }
 
         void updateAnalyserData()
         {
-            ThreeDModel model = SelectedModel;
+            ThreeDModel model = ViewModel.SelectedModel;
             if (model == null) return;
 
             txtOriginalModelSize.Text = "(" + model.Model.boundingBox.Size.x.ToString("0.000") + ", " +
@@ -75,13 +60,13 @@ namespace View3D.view
 
         public void RemoveLastModel()
         {
-            if (0 == Models.Count) return;
-            int idx = Models.Count - 1;
+            if (0 == ViewModel.Models.Count) return;
+            int idx = ViewModel.Models.Count - 1;
             while (idx >= 0)
             {
-                if (typeof(ThreeDModel) == Models[idx].GetType() && null != Models[idx].Model)
+                if (typeof(ThreeDModel) == ViewModel.Models[idx].GetType() && null != ViewModel.Models[idx].Model)
                 {
-                    RemoveModel(Models[idx]);
+                    RemoveModel(ViewModel.Models[idx]);
                     return;
                 }
                 idx--;
@@ -91,7 +76,7 @@ namespace View3D.view
         public List<ThreeDModel> GetAllPrintModels()
         {
             var list = new List<ThreeDModel>();
-            foreach (var m in Models)
+            foreach (var m in ViewModel.Models)
                 if (IsValidPrintModel(m)) list.Add(m);
             return list;
         }
@@ -99,7 +84,7 @@ namespace View3D.view
         public List<ThreeDModel> GetSelectedPrintModels()
         {
             var list = new List<ThreeDModel>();
-            foreach (var m in Models)
+            foreach (var m in ViewModel.Models)
                 if (IsValidPrintModel(m) && m.Selected) list.Add(m);
             return list;
         }
@@ -217,8 +202,8 @@ namespace View3D.view
                 newModel.UpdateTransMatrix();
             }
 
-            // Remember initial positions for all Models after Autoposition.
-            foreach (var m in Models)
+            // Remember initial positions for all ViewModel.Models after Autoposition.
+            foreach (var m in ViewModel.Models)
             {
                 m.InitialPosition.x = m.Position.X;
                 m.InitialPosition.y = m.Position.Y;
@@ -229,8 +214,8 @@ namespace View3D.view
             newModel.InitialPosition.y = newModel.Position.Y;
             newModel.InitialPosition.z = newModel.Position.Z;
               
-            Models.Add(newModel);
-            SelectedModel = newModel;
+            ViewModel.Models.Add(newModel);
+            ViewModel.SelectedModel = newModel;
             updateTextBox();
 
             MainWindow.main.threeDControl.InvokeGL(() =>
@@ -254,7 +239,7 @@ namespace View3D.view
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
                 newModel.Drawer.Init();
-                Models.Add(newModel);
+                ViewModel.Models.Add(newModel);
             });
             return true;
         }
@@ -284,7 +269,7 @@ namespace View3D.view
         public void UpdateOutOfBound()
         {
             bool allModelsInside = true;
-            foreach (var stl in Models)
+            foreach (var stl in ViewModel.Models)
             {
                 stl.Outside = false;
                 if (    !pointInPrintArea(stl.xMin, stl.yMin, stl.zMin) ||
@@ -328,14 +313,14 @@ namespace View3D.view
         private void RemoveModel(ThreeDModel model)
         {
             // ThreeDModel
-            for (int i = 0; i < Models.Count; i++)
-                if (Models[i] == model) { Models.RemoveAt(i); break; }
+            for (int i = 0; i < ViewModel.Models.Count; i++)
+                if (ViewModel.Models[i] == model) { ViewModel.Models.RemoveAt(i); break; }
 
             model.Clear();
         }
 
 
-        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(SelectedModel);
+        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(ViewModel.SelectedModel);
 
         private bool IsValidPrintModel(ThreeDModel model)
             => model.Name != "Unknown" &&
@@ -347,7 +332,7 @@ namespace View3D.view
         // =====================================================================
         private void updateEnabled()
         {
-            bool enable = SelectedModel != null;
+            bool enable = ViewModel.SelectedModel != null;
             if (enable)
             {         
                 panelAnalysis.Visibility = Visibility.Visible;
@@ -376,7 +361,7 @@ namespace View3D.view
         // =====================================================================
         bool Autoposition(ThreeDModel newModel)
         {
-            List<ThreeDModel> allModels = new List<ThreeDModel>(Models);
+            List<ThreeDModel> allModels = new List<ThreeDModel>(ViewModel.Models);
 
             allModels.Add(newModel);
 
@@ -449,7 +434,7 @@ namespace View3D.view
         {
             updateEnabled();
 
-            ThreeDModel stl = SelectedModel;
+            ThreeDModel stl = ViewModel.SelectedModel;
 
             if (stl != null)
             {
@@ -502,7 +487,7 @@ namespace View3D.view
         private void textTransX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             double old = stl.Position.X;
             double.TryParse(textTransX.Text, out double outVal);
@@ -516,7 +501,7 @@ namespace View3D.view
         private void textTransY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             double old = stl.Position.Y;
             double.TryParse(textTransY.Text, out double outVal);
@@ -530,7 +515,7 @@ namespace View3D.view
         private void textTransZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             double old = stl.Position.Z;
             double.TryParse(textTransZ.Text, out double outVal);
@@ -544,7 +529,7 @@ namespace View3D.view
         private void textScaleX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             double.TryParse(textScaleX.Text, out stl.Scale.x);
             stl.UpdateBoundingBoxAndMatrix();
@@ -555,7 +540,7 @@ namespace View3D.view
         private void textScaleY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             double.TryParse(textScaleY.Text, out stl.Scale.y);
             stl.UpdateBoundingBoxAndMatrix();
@@ -566,7 +551,7 @@ namespace View3D.view
         private void textScaleZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             double old = stl.Scale.z;
             double.TryParse(textScaleZ.Text, out stl.Scale.z);
@@ -579,7 +564,7 @@ namespace View3D.view
         public void textRotX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             float oriZmin = stl.zMin;
             double old = stl.Rotation.x;
@@ -594,7 +579,7 @@ namespace View3D.view
         private void textRotY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             float oriZmin = stl.zMin;
             double old = stl.Rotation.y;
@@ -609,7 +594,7 @@ namespace View3D.view
         private void textRotZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SelectedModel;
+            var stl = ViewModel.SelectedModel;
             if (stl == null) return;
             float oriZmin = stl.zMin;
             double old = stl.Rotation.z;
@@ -642,7 +627,7 @@ namespace View3D.view
             float maxY = SettingsService.Instance.Settings.PrintAreaDepth * 1.2f;
             float minY = -SettingsService.Instance.Settings.PrintAreaDepth * 0.2f;
 
-            ThreeDModel stl = SelectedModel;
+            ThreeDModel stl = ViewModel.SelectedModel;
 
             if ( dx < 0 && stl.Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
                 stl.Position.X += dx;
@@ -654,7 +639,7 @@ namespace View3D.view
             else if (stl.Position.Y + dy < maxY && stl.Position.Y + dy > minY) 
                 stl.Position.Y += dy;
 
-            if (SelectedModel != null)
+            if (ViewModel.SelectedModel != null)
             {
                 _suppressTextEvents = true;
                 textTransX.Text = stl.Position.X.ToString("0.000");

@@ -261,7 +261,7 @@ namespace View3D.view
             redBorderDraw.Dispose();
             boundingBoxDraw.Dispose();
 
-            foreach (var m in stlComp.Models)
+            foreach (var m in stlComp.ViewModel.Models)
                 m.Drawer.Dispose();
 
             MainWindow.main.Dispatcher.Invoke(() =>
@@ -389,14 +389,14 @@ namespace View3D.view
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
                         //stlComp.ObjectSelected(sel);
-                        MainWindow.main.ShowContextMenu(stlComp.SelectedModel != null);
+                        MainWindow.main.ShowContextMenu(stlComp.ViewModel.SelectedModel != null);
                     });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        MainWindow.main.ShowContextMenu(stlComp.SelectedModel != null);
+                        MainWindow.main.ShowContextMenu(stlComp.ViewModel.SelectedModel != null);
                     });
                 }
             }
@@ -491,7 +491,7 @@ namespace View3D.view
 
                 redBorderDraw.Draw();
 
-                foreach (var m in stlComp.Models)
+                foreach (var m in stlComp.ViewModel.Models)
                     m.Drawer.Draw();
 
                 SwapBuffers();
@@ -552,7 +552,7 @@ namespace View3D.view
  
             Vector3 aabbMinPoint3 = new Vector3();
             Vector3 aabbMaxPoint3 = new Vector3();
-            foreach (ThreeDModel model in stlComp.Models)
+            foreach (ThreeDModel model in stlComp.ViewModel.Models)
             {
                 if (model.BoundingBox.minPoint == null || model.BoundingBox.maxPoint == null)
                     continue;

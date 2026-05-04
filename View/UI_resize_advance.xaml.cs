@@ -54,7 +54,7 @@ namespace View3D.view
         public void Init()
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            ThreeDModel model = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel model = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (model == null) return;
 
             gIsShow = true;
@@ -83,7 +83,7 @@ namespace View3D.view
             if (gIsShow == true)
                 return;
 
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
             try
             {
@@ -113,7 +113,7 @@ namespace View3D.view
             if (gIsShow == true)
                 return;
 
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
             try
             {
@@ -140,7 +140,7 @@ namespace View3D.view
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
 
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
          
             if (stl == null) return;
 
@@ -178,7 +178,7 @@ namespace View3D.view
         public void chk_Uniform_Checked(object sender, RoutedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
             try
             {
@@ -209,7 +209,7 @@ namespace View3D.view
         private void slider_resize_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             if (e.Delta > 0)
@@ -223,7 +223,7 @@ namespace View3D.view
         private void slider_resize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             txt_Scale.Text = slider_resize.Value.ToString("0");
@@ -240,7 +240,7 @@ namespace View3D.view
         void checkMin()
         {
             if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             // Ensure the value of dimension is not zero; otherwise, exception happens when calculating scale.
@@ -268,7 +268,7 @@ namespace View3D.view
         public void button_Reset_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
          
             MainWindow.main.stlComposer.textScaleX.Text = "1";
@@ -296,7 +296,7 @@ namespace View3D.view
 
         private void button_mmtoinch_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             button_mmtoinch.IsEnabled = false;
@@ -316,7 +316,7 @@ namespace View3D.view
 
         private void button_inchtomm_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel model = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel model = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (model == null) return;
 
             button_mmtoinch.IsEnabled = true;
@@ -336,7 +336,7 @@ namespace View3D.view
 
         private void btn_Scale_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             try
@@ -359,7 +359,7 @@ namespace View3D.view
         // Check if values of TextBox is valid.
         private void scaleLostFocus(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             gIsShow = true;
@@ -369,7 +369,7 @@ namespace View3D.view
 
         public void updateTxt()
         {
-            ThreeDModel stl = MainWindow.main.stlComposer.SelectedModel;
+            ThreeDModel stl = MainWindow.main.stlComposer.ViewModel.SelectedModel;
             if (stl == null) return;
 
             txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
@@ -382,15 +382,15 @@ namespace View3D.view
             switch (axis)
             {
                 case Axis.X:
-                    slider_resize.Value = MainWindow.main.stlComposer.SelectedModel.Scale.x * 100;
+                    slider_resize.Value = MainWindow.main.stlComposer.ViewModel.SelectedModel.Scale.x * 100;
                     break;
 
                 case Axis.Y:
-                    slider_resize.Value = MainWindow.main.stlComposer.SelectedModel.Scale.y * 100;
+                    slider_resize.Value = MainWindow.main.stlComposer.ViewModel.SelectedModel.Scale.y * 100;
                     break;
 
                 case Axis.Z:
-                    slider_resize.Value = MainWindow.main.stlComposer.SelectedModel.Scale.z * 100;
+                    slider_resize.Value = MainWindow.main.stlComposer.ViewModel.SelectedModel.Scale.z * 100;
                     break;
             }
         }

@@ -176,7 +176,6 @@ namespace View3D.view
                 persp = Matrix4.CreatePerspectiveFieldOfView(Angle * 1.9f, 1.0f, nearDist, farDist);
 
                 Matrix4 trans = Matrix4.Mult(lookAt, persp);
-                Vector4 pos;
                 RHBoundingBox bb = new RHBoundingBox();
 
                 // All 8 corners of the AABB

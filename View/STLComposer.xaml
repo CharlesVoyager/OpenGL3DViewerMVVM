@@ -48,14 +48,12 @@
             ItemsSource="{Binding Models}"
             SelectedItem="{Binding SelectedModel}"
             CanUserAddRows="False" CanUserDeleteRows="False"
-            AutoGenerateColumns="False">
+            AutoGenerateColumns="False"
+            IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
                 <DataGridTextColumn Header="Trangles" Binding="{Binding Triangles}" Width="80"/>
                 <DataGridTextColumn Header="Outside" Binding="{Binding Outside}" Width="60"/>
-                <DataGridTextColumn Header="Pos X" Binding="{Binding PositionX}" Width="50"/>
-                <DataGridTextColumn Header="Pos Y" Binding="{Binding PositionY}" Width="50"/>
-                <DataGridTextColumn Header="Pos Z" Binding="{Binding PositionZ}" Width="50"/>
             </DataGrid.Columns>
 
         </DataGrid>

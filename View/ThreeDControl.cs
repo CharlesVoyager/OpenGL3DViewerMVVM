@@ -634,7 +634,8 @@ namespace View3D.view
                     speedX = (xPos - lastX) * 200 * zoom / ClientSize.X;
                     speedY = (yPos - lastY) * 200 * zoom / ClientSize.Y;
 
-                    stlComp.ViewModel.SelectedModel.ObjectMoved(diff.x, diff.y);
+                    if (stlComp.ViewModel.SelectedModel != null)
+                        stlComp.ViewModel.SelectedModel.ObjectMoved(diff.x, diff.y);
                
                     lastX = xPos; 
                     lastY = yPos;

@@ -469,6 +469,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateChange();
             }
         }
+
         public double RotationY
         {
             get { return rotation.y; }
@@ -478,6 +479,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateChange();
             }
         }
+
         public double RotationZ
         {
             get { return rotation.z; }
@@ -497,6 +499,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateChange();
             }
         }
+
         public double ScaleY
         {
             get { return scale.y; }
@@ -506,6 +509,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateChange();
             }
         }
+
         public double ScaleZ
         {
             get { return scale.z; }
@@ -515,6 +519,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateChange();
             }
         }
+
         public string OriginalModelSize
         {
             get { return Model.boundingBox.Size.ToString(); }

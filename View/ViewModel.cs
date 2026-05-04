@@ -17,7 +17,7 @@ namespace OpenGL3DViewerMVVM.View
 
         private ThreeDModel? selectedModel;
 
-        public ThreeDModel SelectedModel
+        public ThreeDModel? SelectedModel
         {
             get => selectedModel;
             set

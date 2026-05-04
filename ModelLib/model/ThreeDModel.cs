@@ -405,7 +405,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
 
             if (propertyName.Contains("Rotation"))
-                LandToMinZ(0);  
+                Land();  
 
             UpdateOutOfBound();
             MainWindow.main.threeDControl.UpdateChanges();

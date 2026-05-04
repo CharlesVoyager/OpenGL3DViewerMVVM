@@ -20,15 +20,12 @@ namespace View3D.view
         // ── Private fields ────────────────────────────────────────────────────
         private List<ThreeDModel> cloneModels = new List<ThreeDModel>();
 
-        // Image sources replacing WinForms ImageList (index → meaning):
-        //   0 = unlock16   1 = lock16   2 = ok16   3 = bad16   4 = trash16
-        private ImageSource[] _icons = null;
 
         // ── Constructor ───────────────────────────────────────────────────────
         public STLComposer()
         {
             InitializeComponent();
-            _icons = LoadIcons();
+ 
             try
             {
                 if (MainWindow.main != null)
@@ -248,7 +245,6 @@ namespace View3D.view
             model.Clear();
         }
 
-
         public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(ViewModel.SelectedModel);
 
         private bool IsValidPrintModel(ThreeDModel model)
@@ -325,17 +321,6 @@ namespace View3D.view
                 s.UpdateTransMatrix();
             }
             return true;
-        }
-
-        // =====================================================================
-        //  Event handlers – buttons
-        // =====================================================================
-        private void buttonRemoveObject_Click(object sender, RoutedEventArgs e)
-        {
-            var btn   = (System.Windows.Controls.Button)sender;
-            var model = (ThreeDModel)btn.Tag;
-            RemoveModel(model);
-            MainWindow.main.threeDControl.UpdateChanges();
         }
 
         private bool AskUserToChangeUnit()
@@ -426,30 +411,6 @@ namespace View3D.view
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
-        }
-
-        // =====================================================================
-        //  Static icon loader
-        // =====================================================================
-        private ImageSource[] LoadIcons()
-        {
-            // Load embedded resource icons.
-            // Adjust the pack URIs to match your project's resource paths.
-            string[] names = { "unlock16.png", "lock16.png", "ok16.png", "bad16.png", "trash16.png" };
-            var images = new ImageSource[names.Length];
-            for (int i = 0; i < names.Length; i++)
-            {
-                try
-                {
-                    var uri = new Uri($"pack://application:,,,/OpenGL3DViewerMVVM;component/Resources/{names[i]}");
-                    images[i] = new System.Windows.Media.Imaging.BitmapImage(uri);
-                }
-                catch
-                {
-                    images[i] = null; // graceful fallback if resource is missing
-                }
-            }
-            return images;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

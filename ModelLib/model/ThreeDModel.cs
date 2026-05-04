@@ -424,7 +424,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         void updateChange()
         {
-            OnPropertyChanged();
+            OnPropertyChanged(null);    // Notify UI that property has changed.
             UpdateTransMatrix();
             UpdateOutOfBound();
             MainWindow.main.threeDControl.UpdateChanges();

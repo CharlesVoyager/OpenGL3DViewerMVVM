@@ -328,35 +328,6 @@ namespace View3D.view
                model.Model != null;
 
         // =====================================================================
-        //  updateEnabled
-        // =====================================================================
-        private void updateEnabled()
-        {
-            bool enable = ViewModel.SelectedModel != null;
-            if (enable)
-            {         
-                panelAnalysis.Visibility = Visibility.Visible;
-                updateAnalyserData();
-            }
-            else
-            {
-                panelAnalysis.Visibility = Visibility.Collapsed;
-            }
-
-            textTransX.IsEnabled       = enable;
-            textTransY.IsEnabled       = enable;
-            textTransZ.IsEnabled       = enable;
-            textScaleX.IsEnabled       = enable;
-            textScaleY.IsEnabled       = enable;
-            textScaleZ.IsEnabled       = enable;                
-            textRotX.IsEnabled         = enable;
-            textRotY.IsEnabled         = enable;
-            textRotZ.IsEnabled         = enable;
-
-            MainWindow.main.setbuttonVisable(enable);
-        }
-
-        // =====================================================================
         //  Autoposition
         // =====================================================================
         bool Autoposition(ThreeDModel newModel)

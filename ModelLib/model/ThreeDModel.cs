@@ -399,33 +399,75 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public double RotationX
         {
             get { return rotation.x; }
-            set { rotation.x = value; }
+            set 
+            { 
+                rotation.x = value;
+
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
         public double RotationY
         {
             get { return rotation.y; }
-            set { rotation.y = value; }
+            set 
+            { 
+                rotation.y = value;
+
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
         public double RotationZ
         {
             get { return rotation.z; }
-            set { rotation.z = value; }
+            set 
+            { 
+                rotation.z = value;
+                
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
 
         public double ScaleX
         {
             get { return scale.x; }
-            set { scale.x = value; }
+            set 
+            { 
+                scale.x = value;
+                
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
         public double ScaleY
         {
             get { return scale.y; }
-            set { scale.y = value; }
+            set 
+            { 
+                scale.y = value;
+                
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
         public double ScaleZ
         {
             get { return scale.z; }
-            set { scale.z = value; }
+            set 
+            { 
+                scale.z = value;
+
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
 
 

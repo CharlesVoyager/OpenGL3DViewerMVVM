@@ -1,6 +1,8 @@
 ﻿using OpenGL3DViewerMVVM.Draw;
 using OpenTK.Mathematics;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using View3D;
 using View3D.model.geom;
 using View3D.ModelObjectTool;
@@ -55,8 +57,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
     }
 
 
-    public class ThreeDModel
+    public class ThreeDModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+
         private bool selected = false;
 
         private Coord3D position = null;   
@@ -336,7 +342,16 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             get { return Model.drawTriangles.Count; }
         }
 
-        public bool Outside { get; set; } = false;
+        bool outside = false;
+        public bool Outside 
+        {
+            get { return outside; } 
+            set
+            {
+                outside = value;
+                OnPropertyChanged();
+            }
+        }
 
         public float xMin
         {
@@ -395,6 +410,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 position.X = value;
 
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -408,6 +424,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 position.Y = value;
 
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -421,6 +438,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 position.Z = value;
 
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -434,6 +452,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 rotation.x = value;
 
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -446,6 +465,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 rotation.y = value;
 
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -457,7 +477,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 rotation.z = value;
-                
+
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -470,7 +491,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.x = value;
-                
+
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -482,7 +504,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 scale.y = value;
-                
+
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();
@@ -495,6 +518,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 scale.z = value;
 
+                OnPropertyChanged();
                 UpdateTransMatrix();
                 UpdateOutOfBound();
                 MainWindow.main.threeDControl.UpdateChanges();

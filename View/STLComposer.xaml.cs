@@ -367,20 +367,14 @@ namespace View3D.view
             if (stl == null) return;
 
             if ( dx < 0 && stl.Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
-                stl.Position.X += dx;
+                stl.PositionX += dx;
             else if (stl.Position.X + dx < maxX && stl.Position.X + dx > minX) 
-                stl.Position.X += dx;
+                stl.PositionX += dx;
 
             if (dy < 0 && stl.Position.Y + dy > minY)
-                stl.Position.Y += dy;
+                stl.PositionY += dy;
             else if (stl.Position.Y + dy < maxY && stl.Position.Y + dy > minY) 
-                stl.Position.Y += dy;
-
-            ViewModel.Update();
-
-            stl.UpdateTransMatrix();
-            stl.UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
+                stl.PositionY += dy;
         }
 
         private bool AskUserToChangeUnit()

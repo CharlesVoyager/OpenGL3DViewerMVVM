@@ -31,8 +31,6 @@ namespace OpenGL3DViewerMVVM.View
                 MainWindow.main.setbuttonVisable(selectedModel != null);
             }
         }
-
-        public void Update() => OnPropertyChanged("SelectedModel");
     }
 
     public class ViewModelBase : INotifyPropertyChanged

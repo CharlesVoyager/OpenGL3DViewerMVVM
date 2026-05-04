@@ -1,5 +1,4 @@
 ﻿using OpenGL3DViewerMVVM.ModelLib.Utils;
-using System.Windows.Controls;
 
 namespace View3D.view
 {
@@ -17,7 +16,8 @@ namespace View3D.view
             }
             catch { }
 
-            DataContext = MainWindow.main.viewModel;
+            if ( MainWindow.main != null)  // This check is necessary for XAML designer to avoid null reference exceptions.
+                DataContext = MainWindow.main.viewModel;
         }
 
         private void translate()

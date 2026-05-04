@@ -14,7 +14,7 @@ namespace OpenGL3DViewerMVVM.View
             Models = new ObservableCollection<ThreeDModel>();
         }
 
-        private ThreeDModel selectedModel;
+        private ThreeDModel? selectedModel;
 
         public ThreeDModel SelectedModel
         {
@@ -29,7 +29,6 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
     }
-
 
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -48,7 +48,7 @@ namespace View3D.view
             if (model == null) return;
 
             txtOriginalModelSize.Text = "(" + model.Model.boundingBox.Size.x.ToString("0.000") + ", " +
-                                              model.Model.boundingBox.Size.y.ToString("0.000") + "," +
+                                              model.Model.boundingBox.Size.y.ToString("0.000") + ", " +
                                               model.Model.boundingBox.Size.z.ToString("0.000") + ")";
             labelVertices.Text             = "(To be implemented)";
             txtTriangles.Text            = model.Model.drawTriangles.Count.ToString();

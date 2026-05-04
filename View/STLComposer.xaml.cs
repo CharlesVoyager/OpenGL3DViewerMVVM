@@ -217,7 +217,6 @@ namespace View3D.view
               
             ViewModel.Models.Add(newModel);
             ViewModel.SelectedModel = newModel;
-            updateTextBox();
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
@@ -428,104 +427,11 @@ namespace View3D.view
             return true;
         }
 
-        // =====================================================================
-        //  Event handlers – ListView
-        // =====================================================================
-        private void updateTextBox()
-        {
-            updateEnabled();
-
-            ThreeDModel stl = ViewModel.SelectedModel;
-
-            if (stl != null)
-            {
-                textRotX.TextChanged -= textRotX_TextChanged;
-                textRotY.TextChanged -= textRotY_TextChanged;
-                textRotZ.TextChanged -= textRotZ_TextChanged;
-
-                textScaleX.TextChanged -= textScaleX_TextChanged;
-                textScaleY.TextChanged -= textScaleY_TextChanged;
-                textScaleZ.TextChanged -= textScaleZ_TextChanged;
-
-                textTransX.TextChanged -= textTransX_TextChanged;
-                textTransY.TextChanged -= textTransY_TextChanged;
-                textTransZ.TextChanged -= textTransZ_TextChanged;
-
-                textTransX.Text = stl.Position.X.ToString("0.000");
-                textTransY.Text = stl.Position.Y.ToString("0.000");
-                textTransZ.Text = stl.Position.Z.ToString("0.000");
-
-                textScaleX.Text = stl.Scale.x.ToString("0.000");
-                textScaleY.Text = stl.Scale.y.ToString("0.000");
-                textScaleZ.Text = stl.Scale.z.ToString("0.000");
-
-                textRotX.Text = stl.Rotation.x.ToString("0");
-                textRotY.Text = stl.Rotation.y.ToString("0");
-                textRotZ.Text = stl.Rotation.z.ToString("0");
-
-                textRotX.TextChanged += textRotX_TextChanged;
-                textRotY.TextChanged += textRotY_TextChanged;
-                textRotZ.TextChanged += textRotZ_TextChanged;
-
-                textScaleX.TextChanged += textScaleX_TextChanged;
-                textScaleY.TextChanged += textScaleY_TextChanged;
-                textScaleZ.TextChanged += textScaleZ_TextChanged;
-
-                textTransX.TextChanged += textTransX_TextChanged;
-                textTransY.TextChanged += textTransY_TextChanged;
-                textTransZ.TextChanged += textTransZ_TextChanged;
-            }
-
-            if (MainWindow.main.threeDControl != null)
-                MainWindow.main.threeDControl.UpdateChanges();
-        }
-
+  
         // =====================================================================
         //  Event handlers – text boxes (Trans / Scale / Rotate)
         // =====================================================================
         private bool _suppressTextEvents = false;
-
-        private void textTransX_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            double old = stl.Position.X;
-            double.TryParse(textTransX.Text, out double outVal);
-            stl.Position.X = outVal;
-            if (Math.Abs(old - stl.Position.X) < 0.001f) return;
-            stl.UpdateTransMatrix();
-               UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void textTransY_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            double old = stl.Position.Y;
-            double.TryParse(textTransY.Text, out double outVal);
-            stl.Position.Y = outVal;
-            if (Math.Abs(old - stl.Position.Y) < 0.001f) return;
-            stl.UpdateTransMatrix();
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void textTransZ_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            double old = stl.Position.Z;
-            double.TryParse(textTransZ.Text, out double outVal);
-            stl.Position.Z = outVal;
-            if (Math.Abs(old - stl.Position.Z) < 0.001f) return;
-            stl.UpdateTransMatrix();
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
 
         private void textScaleX_TextChanged(object sender, TextChangedEventArgs e)
         {

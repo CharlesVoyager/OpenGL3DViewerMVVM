@@ -1,8 +1,10 @@
 ﻿using OpenGL3DViewerMVVM.Draw;
 using OpenTK.Mathematics;
 using System.Diagnostics;
+using View3D;
 using View3D.model.geom;
 using View3D.ModelObjectTool;
+using View3D.view;
 
 #nullable disable
 
@@ -358,19 +360,40 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public double PositionX
         {
             get { return position.X; }
-            set { position.X = value; }
+            set 
+            { 
+                position.X = value;
+
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
 
         public double PositionY
         {
             get { return position.Y; }
-            set { position.Y = value; }
+            set 
+            { 
+                position.Y = value;
+
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
 
         public double PositionZ
         {
             get { return position.Z; }
-            set { position.Z = value; }
+            set 
+            { 
+                position.Z = value;
+
+                UpdateTransMatrix();
+                UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
         }
 
         public double RotationX
@@ -403,6 +426,38 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         {
             get { return scale.z; }
             set { scale.z = value; }
+        }
+
+
+        bool pointInPrintArea(float x, float y, float z)
+        {
+            double epsilon = 1e-4; // 0.0001
+
+            if (z < -0.1 || z > SettingsService.Instance.Settings.PrintAreaHeight)
+                return false;
+
+            if (x < -epsilon || x > SettingsService.Instance.Settings.PrintAreaWidth + epsilon) return false;
+            if (y < -epsilon || y > SettingsService.Instance.Settings.PrintAreaDepth + epsilon) return false;
+
+            return true;
+        }
+        void UpdateOutOfBound()
+        {
+            if (!pointInPrintArea(xMin, yMin, zMin) ||
+                    !pointInPrintArea(xMax, yMin, zMin) ||
+                    !pointInPrintArea(xMin, yMax, zMin) ||
+                    !pointInPrintArea(xMax, yMax, zMin) ||
+                    !pointInPrintArea(xMin, yMin, zMax) ||
+                    !pointInPrintArea(xMax, yMin, zMax) ||
+                    !pointInPrintArea(xMin, yMax, zMax) ||
+                    !pointInPrintArea(xMax, yMax, zMax))
+            {
+                Outside = true;
+            }
+            else
+            {
+                Outside = false;
+            }
         }
     }
 }

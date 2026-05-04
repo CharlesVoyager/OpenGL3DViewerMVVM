@@ -38,6 +38,9 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
                 <DataGridTextColumn Header="Trangles" Binding="{Binding Triangles}" Width="80"/>
                 <DataGridTextColumn Header="Outside" Binding="{Binding Outside}" Width="60"/>
+                <DataGridTextColumn Header="Outside" Binding="{Binding PositionX}" Width="30"/>
+                <DataGridTextColumn Header="Outside" Binding="{Binding PositionY}" Width="30"/>
+                <DataGridTextColumn Header="Outside" Binding="{Binding PositionZ}" Width="30"/>
             </DataGrid.Columns>
 
         </DataGrid>
@@ -73,40 +76,40 @@
                     <TextBox x:Name="textTransX" Grid.Row="0" Grid.Column="2"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.PositionX, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.PositionX, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textTransY" Grid.Row="0" Grid.Column="4"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.PositionY, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.PositionY, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textTransZ" Grid.Row="0" Grid.Column="6"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.PositionZ, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.PositionZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     
                     <!-- Scale -->
                     <TextBox x:Name="textScaleX" Grid.Row="1" Grid.Column="2" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.RotationX, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.RotationX, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textScaleY" Grid.Row="1" Grid.Column="4" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.RotationY, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.RotationY, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textScaleZ" Grid.Row="1" Grid.Column="6" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.RotationZ, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.RotationZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <!-- Rotate -->
                     <TextBox x:Name="textRotX" Grid.Row="2" Grid.Column="2"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.ScaleX, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.ScaleX, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textRotY" Grid.Row="2" Grid.Column="4"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.ScaleY, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.ScaleY, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textRotZ" Grid.Row="2" Grid.Column="6"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             Text="{Binding SelectedModel.ScaleZ, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding SelectedModel.ScaleZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
                  </Grid>
             </Border>
 

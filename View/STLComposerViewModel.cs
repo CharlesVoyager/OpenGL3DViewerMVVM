@@ -31,6 +31,22 @@ namespace OpenGL3DViewerMVVM.View
                 MainWindow.main.setbuttonVisable(selectedModel != null);
             }
         }
+
+        // Check if all models are in print bed area.
+        public bool IsOutOfBound
+        {
+            get
+            {
+                foreach(var m in Models)
+                {
+                    if (m.Outside)
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        public void UpdateOutOfBound() => OnPropertyChanged(nameof(IsOutOfBound));
     }
 
     public class ViewModelBase : INotifyPropertyChanged

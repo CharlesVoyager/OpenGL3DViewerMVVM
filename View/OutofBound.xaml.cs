@@ -16,6 +16,8 @@ namespace View3D.view
                 MainWindow.main.languageChanged += translate;
             }
             catch { }
+
+            DataContext = MainWindow.main.stlComposer.ViewModel;
         }
 
         private void translate()

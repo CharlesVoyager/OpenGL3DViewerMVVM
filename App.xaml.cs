@@ -56,7 +56,7 @@ namespace OpenGL3DViewerMVVM
         private static void ProcessCommandLine(MainWindow main)
         {
             string[] args = Environment.GetCommandLineArgs();
-            for (int i = 1; i < Math.Min(2, args.Length); i++)
+            for (int i = 1; i < args.Length; i++)
             {
                 string file = args[i];
                 if (File.Exists(file))

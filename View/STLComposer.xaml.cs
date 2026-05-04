@@ -56,11 +56,9 @@ namespace View3D.view
 
         public void translate() { }
 
-        public ThreeDModel SingleSelectedModel { get; set; } = null;
-
         void updateAnalyserData()
         {
-            ThreeDModel model = SingleSelectedModel;
+            ThreeDModel model = SelectedModel;
             if (model == null) return;
 
             txtOriginalModelSize.Text = "(" + model.Model.boundingBox.Size.x.ToString("0.000") + ", " +
@@ -232,7 +230,7 @@ namespace View3D.view
             newModel.InitialPosition.z = newModel.Position.Z;
               
             Models.Add(newModel);
-            SingleSelectedModel = newModel;
+            SelectedModel = newModel;
             updateTextBox();
 
             MainWindow.main.threeDControl.InvokeGL(() =>
@@ -337,7 +335,7 @@ namespace View3D.view
         }
 
 
-        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(SingleSelectedModel);
+        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(SelectedModel);
 
         private bool IsValidPrintModel(ThreeDModel model)
             => model.Name != "Unknown" &&
@@ -349,7 +347,7 @@ namespace View3D.view
         // =====================================================================
         private void updateEnabled()
         {
-            bool enable = SingleSelectedModel != null;
+            bool enable = SelectedModel != null;
             if (enable)
             {         
                 panelAnalysis.Visibility = Visibility.Visible;
@@ -451,7 +449,7 @@ namespace View3D.view
         {
             updateEnabled();
 
-            ThreeDModel stl = SingleSelectedModel;
+            ThreeDModel stl = SelectedModel;
 
             if (stl != null)
             {
@@ -504,7 +502,7 @@ namespace View3D.view
         private void textTransX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             double old = stl.Position.X;
             double.TryParse(textTransX.Text, out double outVal);
@@ -518,7 +516,7 @@ namespace View3D.view
         private void textTransY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             double old = stl.Position.Y;
             double.TryParse(textTransY.Text, out double outVal);
@@ -532,7 +530,7 @@ namespace View3D.view
         private void textTransZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             double old = stl.Position.Z;
             double.TryParse(textTransZ.Text, out double outVal);
@@ -546,7 +544,7 @@ namespace View3D.view
         private void textScaleX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             double.TryParse(textScaleX.Text, out stl.Scale.x);
             stl.UpdateBoundingBoxAndMatrix();
@@ -557,7 +555,7 @@ namespace View3D.view
         private void textScaleY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             double.TryParse(textScaleY.Text, out stl.Scale.y);
             stl.UpdateBoundingBoxAndMatrix();
@@ -568,7 +566,7 @@ namespace View3D.view
         private void textScaleZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             double old = stl.Scale.z;
             double.TryParse(textScaleZ.Text, out stl.Scale.z);
@@ -581,7 +579,7 @@ namespace View3D.view
         public void textRotX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             float oriZmin = stl.zMin;
             double old = stl.Rotation.x;
@@ -596,7 +594,7 @@ namespace View3D.view
         private void textRotY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             float oriZmin = stl.zMin;
             double old = stl.Rotation.y;
@@ -611,7 +609,7 @@ namespace View3D.view
         private void textRotZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_suppressTextEvents) return;
-            var stl = SingleSelectedModel;
+            var stl = SelectedModel;
             if (stl == null) return;
             float oriZmin = stl.zMin;
             double old = stl.Rotation.z;
@@ -644,7 +642,7 @@ namespace View3D.view
             float maxY = SettingsService.Instance.Settings.PrintAreaDepth * 1.2f;
             float minY = -SettingsService.Instance.Settings.PrintAreaDepth * 0.2f;
 
-            ThreeDModel stl = SingleSelectedModel;
+            ThreeDModel stl = SelectedModel;
 
             if ( dx < 0 && stl.Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
                 stl.Position.X += dx;
@@ -656,7 +654,7 @@ namespace View3D.view
             else if (stl.Position.Y + dy < maxY && stl.Position.Y + dy > minY) 
                 stl.Position.Y += dy;
 
-            if (SingleSelectedModel != null)
+            if (SelectedModel != null)
             {
                 _suppressTextEvents = true;
                 textTransX.Text = stl.Position.X.ToString("0.000");

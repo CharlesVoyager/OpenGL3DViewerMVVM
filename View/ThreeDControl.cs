@@ -389,14 +389,14 @@ namespace View3D.view
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
                         //stlComp.ObjectSelected(sel);
-                        MainWindow.main.ShowContextMenu(stlComp.SingleSelectedModel != null);
+                        MainWindow.main.ShowContextMenu(stlComp.SelectedModel != null);
                     });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        MainWindow.main.ShowContextMenu(stlComp.SingleSelectedModel != null);
+                        MainWindow.main.ShowContextMenu(stlComp.SelectedModel != null);
                     });
                 }
             }

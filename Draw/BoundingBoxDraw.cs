@@ -100,7 +100,7 @@ namespace OpenGL3DViewerMVVM.Draw
         // Call each frame in place of the original GL.Begin/End block
         public void Draw()
         {
-            ThreeDModel? m = MainWindow.main.stlComposer.SingleSelectedModel;
+            ThreeDModel? m = MainWindow.main.stlComposer.SelectedModel;
 
             if (m == null) return;
 

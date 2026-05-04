@@ -286,7 +286,7 @@
                 </ToggleButton.Background> Info
             </ToggleButton>
             
-            <ToggleButton Name="remove_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="remove_toggleButton_Checked" Click="remove_toggleButton_Click" Visibility="Hidden" FontFamily="Arial" >
+            <ToggleButton Name="remove_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Click="remove_toggleButton_Click" Visibility="Hidden" FontFamily="Arial" >
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_remove1.png" />
                 </ToggleButton.Background> Remove

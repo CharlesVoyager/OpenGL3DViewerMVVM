@@ -426,11 +426,6 @@ namespace View3D
             Focus();
         }
 
-        private void remove_toggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            remove_toggleButton.IsChecked = false;
-        }
-
         private void button_closeAbout_Click(object sender, RoutedEventArgs e)
         {
             gridAbout.Visibility = Visibility.Hidden;

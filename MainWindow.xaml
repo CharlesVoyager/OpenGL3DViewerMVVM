@@ -261,30 +261,35 @@
                 </ToggleButton.Background> View
             </ToggleButton>
             <Image Name="image3" Source="/OpenGL3DViewerMVVM;component/Resources/bar2.png" Stretch="None" Height="8" />
-            <ToggleButton Name="move_toggleButton" Width="50" Unchecked="move_toggleButton_Unchecked" Height="70" Padding="3" Margin="2.5" Checked="move_toggleButton_Checked" Visibility="Hidden" FontFamily="Arial">
+           
+            <ToggleButton Name="move_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" Visibility="Hidden" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_move1.png" />
                 </ToggleButton.Background> Move
             </ToggleButton>
-            <ToggleButton Content="Rotate" Height="70" Name="rotate_toggleButton" Width="50" Padding="3" Margin="2.5" Checked="rotate_toggleButton_Checked" Unchecked="rotate_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
+
+            <ToggleButton Name="rotate_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="rotate_toggleButton_Checked" Unchecked="rotate_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_turn1.png" />
-                </ToggleButton.Background>
+                </ToggleButton.Background> Rotate
             </ToggleButton>
-            <ToggleButton Content="Resize" Height="70" Name="resize_toggleButton" Width="50" Padding="3" Margin="2.5" Checked="resize_toggleButton_Checked" Unchecked="resize_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
+
+            <ToggleButton Name="resize_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="resize_toggleButton_Checked" Unchecked="resize_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_scale1.png" />
-                </ToggleButton.Background>
+                </ToggleButton.Background> Resize
             </ToggleButton>
-            <ToggleButton Content="Info" Height="70" Name="info_toggleButton" Width="50" Padding="3" Margin="2.5" Checked="info_toggleButton_Checked" Unchecked="info_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
+            
+            <ToggleButton Name="info_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="info_toggleButton_Checked" Unchecked="info_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_info1.png" />
-                </ToggleButton.Background>
+                </ToggleButton.Background> Info
             </ToggleButton>
-            <ToggleButton Content="Remove" Height="70" Name="remove_toggleButton" Width="50" Padding="3" Margin="2.5" Click="remove_toggleButton_Click" Visibility="Hidden" FontSize="11" FontFamily="Arial" Checked="remove_toggleButton_Checked">
+            
+            <ToggleButton Name="remove_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="remove_toggleButton_Checked" Click="remove_toggleButton_Click" Visibility="Hidden" FontFamily="Arial" >
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_remove1.png" />
-                </ToggleButton.Background>
+                </ToggleButton.Background> Remove
             </ToggleButton>
         </StackPanel>
 

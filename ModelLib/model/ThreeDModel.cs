@@ -335,6 +335,24 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox.Add(Model.boundingBox); // Copy TopoModel's Bounding Box to PrintModel.
         }
 
+        public void ObjectMoved(float dx, float dy)
+        {
+            float maxX = SettingsService.Instance.Settings.PrintAreaWidth * 1.2f;
+            float minX = -SettingsService.Instance.Settings.PrintAreaWidth * 0.2f;
+            float maxY = SettingsService.Instance.Settings.PrintAreaDepth * 1.2f;
+            float minY = -SettingsService.Instance.Settings.PrintAreaDepth * 0.2f;
+
+            if (dx < 0 && Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
+                PositionX += dx;
+            else if (Position.X + dx < maxX && Position.X + dx > minX)
+                PositionX += dx;
+
+            if (dy < 0 && Position.Y + dy > minY)
+                PositionY += dy;
+            else if (Position.Y + dy < maxY && Position.Y + dy > minY)
+                PositionY += dy;
+        }
+
         public string Name { get; set; } = "Unknown";
 
         public int Triangles

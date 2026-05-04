@@ -353,30 +353,6 @@ namespace View3D.view
             MainWindow.main.threeDControl.UpdateChanges();
         }
 
-        // =====================================================================
-        //  objectMoved / objectSelected  (called from ThreeDControl)
-        // =====================================================================
-        public void ObjectMoved(float dx, float dy)
-        {
-            float maxX = SettingsService.Instance.Settings.PrintAreaWidth * 1.2f;
-            float minX = -SettingsService.Instance.Settings.PrintAreaWidth * 0.2f;
-            float maxY = SettingsService.Instance.Settings.PrintAreaDepth * 1.2f;
-            float minY = -SettingsService.Instance.Settings.PrintAreaDepth * 0.2f;
-
-            ThreeDModel stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-
-            if ( dx < 0 && stl.Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
-                stl.PositionX += dx;
-            else if (stl.Position.X + dx < maxX && stl.Position.X + dx > minX) 
-                stl.PositionX += dx;
-
-            if (dy < 0 && stl.Position.Y + dy > minY)
-                stl.PositionY += dy;
-            else if (stl.Position.Y + dy < maxY && stl.Position.Y + dy > minY) 
-                stl.PositionY += dy;
-        }
-
         private bool AskUserToChangeUnit()
         {
             var sb = new StringBuilder(Trans.T("M_RESIZE_MODEL_TOO_BIG")).AppendLine()

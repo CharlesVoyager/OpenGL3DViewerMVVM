@@ -501,5 +501,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 Outside = false;
             }
         }
+
+        public string OriginalModelSize
+        {
+            get { return Model.boundingBox.Size.ToString(); }
+        }
     }
 }

@@ -196,7 +196,7 @@ namespace View3D.model.geom
 
         public override string ToString()
         {
-            return "(" + x.ToString() + ";" + y.ToString() + ";" + z.ToString() + ")";
+            return "(" + x.ToString("0.000") + ", " + y.ToString("0.000") + ", " + z.ToString("0.000") + ")";
         }
     }
 }

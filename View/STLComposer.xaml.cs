@@ -398,92 +398,6 @@ namespace View3D.view
             return true;
         }
 
-  
-        // =====================================================================
-        //  Event handlers – text boxes (Trans / Scale / Rotate)
-        // =====================================================================
-        private bool _suppressTextEvents = false;
-
-        private void textScaleX_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            double.TryParse(textScaleX.Text, out stl.Scale.x);
-            stl.UpdateBoundingBoxAndMatrix();
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void textScaleY_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            double.TryParse(textScaleY.Text, out stl.Scale.y);
-            stl.UpdateBoundingBoxAndMatrix();
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void textScaleZ_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            double old = stl.Scale.z;
-            double.TryParse(textScaleZ.Text, out stl.Scale.z);
-            stl.UpdateBoundingBoxAndMatrix();
-            if (old != stl.Scale.z) stl.Land();
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        public void textRotX_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            float oriZmin = stl.zMin;
-            double old = stl.Rotation.x;
-            double.TryParse(textRotX.Text, out stl.Rotation.x);
-            if (Math.Abs(old - stl.Rotation.x) < 0.001f) return;
-            stl.UpdateBoundingBoxAndMatrix();
-            stl.LandToMinZ(oriZmin);
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void textRotY_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            float oriZmin = stl.zMin;
-            double old = stl.Rotation.y;
-            double.TryParse(textRotY.Text, out stl.Rotation.y);
-            if (Math.Abs(old - stl.Rotation.y) < 0.001f) return;
-            stl.UpdateBoundingBoxAndMatrix();
-            stl.LandToMinZ(oriZmin);
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void textRotZ_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_suppressTextEvents) return;
-            var stl = ViewModel.SelectedModel;
-            if (stl == null) return;
-            float oriZmin = stl.zMin;
-            double old = stl.Rotation.z;
-            double.TryParse(textRotZ.Text, out stl.Rotation.z);
-            if (Math.Abs(old - stl.Rotation.z) < 0.001f) return;
-            stl.UpdateBoundingBoxAndMatrix();
-            stl.LandToMinZ(oriZmin);
-            UpdateOutOfBound();
-            MainWindow.main.threeDControl.UpdateChanges();
-        }
-
         // =====================================================================
         //  Event handlers – buttons
         // =====================================================================
@@ -506,6 +420,7 @@ namespace View3D.view
             float minY = -SettingsService.Instance.Settings.PrintAreaDepth * 0.2f;
 
             ThreeDModel stl = ViewModel.SelectedModel;
+            if (stl == null) return;
 
             if ( dx < 0 && stl.Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
                 stl.Position.X += dx;
@@ -517,16 +432,8 @@ namespace View3D.view
             else if (stl.Position.Y + dy < maxY && stl.Position.Y + dy > minY) 
                 stl.Position.Y += dy;
 
-            if (ViewModel.SelectedModel != null)
-            {
-                _suppressTextEvents = true;
-                textTransX.Text = stl.Position.X.ToString("0.000");
-                textTransY.Text = stl.Position.Y.ToString("0.000");
-                _suppressTextEvents = false;
-            }
             stl.UpdateTransMatrix();
             UpdateOutOfBound();
-      
             MainWindow.main.threeDControl.UpdateChanges();
         }
 

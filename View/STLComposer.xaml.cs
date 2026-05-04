@@ -15,7 +15,7 @@ namespace View3D.view
 {
     public partial class STLComposer : Window
     {
-        public STLComposerViewModel ViewModel = new STLComposerViewModel();
+        public STLComposerViewModel ViewModel;
 
         // ── Private fields ────────────────────────────────────────────────────
         private List<ThreeDModel> cloneModels = new List<ThreeDModel>();
@@ -36,6 +36,7 @@ namespace View3D.view
             }
             catch { }
 
+            ViewModel = new STLComposerViewModel();
             DataContext = ViewModel;
         }
 

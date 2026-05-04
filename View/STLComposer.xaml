@@ -73,16 +73,15 @@
                     <TextBox x:Name="textTransX" Grid.Row="0" Grid.Column="2"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="textTransX_TextChanged"/>
+                             Text="{Binding SelectedItem.PositionX, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textTransY" Grid.Row="0" Grid.Column="4"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="textTransY_TextChanged"/>
+                             Text="{Binding SelectedItem.PositionY, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox x:Name="textTransZ" Grid.Row="0" Grid.Column="6"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="textTransZ_TextChanged"/>
-
+                             Text="{Binding SelectedItem.PositionZ, UpdateSourceTrigger=PropertyChanged}"/>
                     <!-- Scale -->
                     <TextBox x:Name="textScaleX" Grid.Row="1" Grid.Column="2" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"

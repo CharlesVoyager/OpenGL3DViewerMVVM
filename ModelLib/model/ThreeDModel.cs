@@ -354,5 +354,55 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         {
             get { return scale; }
         }
+
+        public double PositionX
+        {
+            get { return position.X; }
+            set { position.X = value; }
+        }
+
+        public double PositionY
+        {
+            get { return position.Y; }
+            set { position.Y = value; }
+        }
+
+        public double PositionZ
+        {
+            get { return position.Z; }
+            set { position.Z = value; }
+        }
+
+        public double RotationX
+        {
+            get { return rotation.x; }
+            set { rotation.x = value; }
+        }
+        public double RotationY
+        {
+            get { return rotation.y; }
+            set { rotation.y = value; }
+        }
+        public double RotationZ
+        {
+            get { return rotation.z; }
+            set { rotation.z = value; }
+        }
+
+        public double ScaleX
+        {
+            get { return scale.x; }
+            set { scale.x = value; }
+        }
+        public double ScaleY
+        {
+            get { return scale.y; }
+            set { scale.y = value; }
+        }
+        public double ScaleZ
+        {
+            get { return scale.z; }
+            set { scale.z = value; }
+        }
     }
 }

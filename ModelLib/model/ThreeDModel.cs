@@ -241,30 +241,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox.MinPoint.z += shiftZ;
         }
 
-        public void TransformPoint(ref Vector3 v, out float x, out float y, out float z)
-        {
-            Vector4 v4 = new Vector4(v, 1);
-            x = Vector4.Dot(trans.Column0, v4);
-            y = Vector4.Dot(trans.Column1, v4);
-            z = Vector4.Dot(trans.Column2, v4);
-        }
-
-        public void TransformPoint(RHVector3 v, out float x, out float y, out float z)
-        {
-            Vector4 v4 = v.asVector4();
-            x = Vector4.Dot(trans.Column0, v4);
-            y = Vector4.Dot(trans.Column1, v4);
-            z = Vector4.Dot(trans.Column2, v4);
-        }
-
-        public void TransformPoint(RHVector3 v, RHVector3 outv)
-        {
-            Vector4 v4 = v.asVector4();
-            outv.x = Vector4.Dot(trans.Column0, v4);
-            outv.y = Vector4.Dot(trans.Column1, v4);
-            outv.z = Vector4.Dot(trans.Column2, v4);
-        }
-
         public void ModelToMesh()
         {
             //Stopwatch sw = Stopwatch.StartNew();

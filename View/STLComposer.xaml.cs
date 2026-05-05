@@ -58,127 +58,127 @@ namespace View3D.view
                    (Math.Floor(boundingBox.Size.z * 1000) / 1000 > SettingsService.Instance.Settings.PrintAreaHeight);
         }
 
-        public static readonly ManualResetEventSlim _meshDataReady = new ManualResetEventSlim(true);
+        //public static readonly ManualResetEventSlim _meshDataReady = new ManualResetEventSlim(true);
 
-        public async void OpenAndAddObject(string file)
-        {
-            if (MainWindow.main == null) return;
+        //public async void OpenAndAddObject(string file)
+        //{
+        //    if (MainWindow.main == null) return;
 
-            ThreeDModel newModel = new ThreeDModel();
-            bool modelToLand    = true;
-            var  modelIO        = new MeshIOWrapper();
-            MainWindow.main.BusyWindow.EnableBusyWindow();
-            _meshDataReady.Reset();
-            // Offload heavy work to background thread — UI thread is free immediately
-            await Task.Run(() =>
-            {
-                try
-                {
-                    modelIO.LoadWOCatch(file, newModel.Model);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
-                    return;
-                }
+        //    ThreeDModel newModel = new ThreeDModel();
+        //    bool modelToLand    = true;
+        //    var  modelIO        = new MeshIOWrapper();
+        //    MainWindow.main.BusyWindow.EnableBusyWindow();
+        //    _meshDataReady.Reset();
+        //    // Offload heavy work to background thread — UI thread is free immediately
+        //    await Task.Run(() =>
+        //    {
+        //        try
+        //        {
+        //            modelIO.LoadWOCatch(file, newModel.Model);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
+        //            return;
+        //        }
 
-                // NOTES:
-                // 1. Model (TopoModel): Original STL file triangles data.
-                // 2. Mesh (Submesh): Centerized triangles data. 
-                newModel.ModelToMesh();
+        //        // NOTES:
+        //        // 1. Model (TopoModel): Original STL file triangles data.
+        //        // 2. Mesh (Submesh): Centerized triangles data. 
+        //        newModel.ModelToMesh();
 
-                // NOTES:
-                // 1. Auto position needs bounding box information.
-                // 2. Current bounding box is for orignal STL data. 
-                newModel.CopyTopoModelBoundingBoxToPrintModel();
+        //        // NOTES:
+        //        // 1. Auto position needs bounding box information.
+        //        // 2. Current bounding box is for orignal STL data. 
+        //        newModel.CopyTopoModelBoundingBoxToPrintModel();
 
-                _meshDataReady.Set();
-                Console.WriteLine("LoadWOCatch Done.");
-            });
-            MainWindow.main.BusyWindow.DisableBusyWindow();
-            if (_meshDataReady.Wait(0) == false)// It means some expection happens when loading a STL file.
-            {
-                _meshDataReady.Set();
-                return; 
-            }
-            if (MainWindow.main.BusyWindow.killed || newModel.Model.drawTriangles.Count == 0)
-            {
-                newModel.Model.Clear();
-                return;
-            }
-            newModel.Name = Path.GetFileName(file);
+        //        _meshDataReady.Set();
+        //        Console.WriteLine("LoadWOCatch Done.");
+        //    });
+        //    MainWindow.main.BusyWindow.DisableBusyWindow();
+        //    if (_meshDataReady.Wait(0) == false)// It means some expection happens when loading a STL file.
+        //    {
+        //        _meshDataReady.Set();
+        //        return; 
+        //    }
+        //    if (MainWindow.main.BusyWindow.killed || newModel.Model.drawTriangles.Count == 0)
+        //    {
+        //        newModel.Model.Clear();
+        //        return;
+        //    }
+        //    newModel.Name = Path.GetFileName(file);
 
-            if (isTooSmall(newModel.BoundingBox) && newModel.Name.Contains(".glb"))
-                DoAutoScale(newModel);
-            else if (isTooSmall(newModel.BoundingBox))
-                check_stl_size_too_small(newModel);
-            else if (isTooBig(newModel.BoundingBox))  // the object is too big.
-            {
-                double tXBound = newModel.BoundingBox.Size.x / SettingsService.Instance.Settings.PrintAreaWidth;
-                double tYBound = newModel.BoundingBox.Size.y / SettingsService.Instance.Settings.PrintAreaDepth;
-                double tZBound = newModel.BoundingBox.Size.z / SettingsService.Instance.Settings.PrintAreaHeight;
-                double tMax = Math.Max(Math.Max(tXBound, tYBound), Math.Max(tYBound, tZBound));
-                double scaleValue = 0;
+        //    if (isTooSmall(newModel.BoundingBox) && newModel.Name.Contains(".glb"))
+        //        DoAutoScale(newModel);
+        //    else if (isTooSmall(newModel.BoundingBox))
+        //        check_stl_size_too_small(newModel);
+        //    else if (isTooBig(newModel.BoundingBox))  // the object is too big.
+        //    {
+        //        double tXBound = newModel.BoundingBox.Size.x / SettingsService.Instance.Settings.PrintAreaWidth;
+        //        double tYBound = newModel.BoundingBox.Size.y / SettingsService.Instance.Settings.PrintAreaDepth;
+        //        double tZBound = newModel.BoundingBox.Size.z / SettingsService.Instance.Settings.PrintAreaHeight;
+        //        double tMax = Math.Max(Math.Max(tXBound, tYBound), Math.Max(tYBound, tZBound));
+        //        double scaleValue = 0;
 
-                if (tMax == tXBound) scaleValue = SettingsService.Instance.Settings.PrintAreaWidth / newModel.BoundingBox.Size.x;
-                else if (tMax == tYBound) scaleValue = SettingsService.Instance.Settings.PrintAreaDepth / newModel.BoundingBox.Size.y;
-                else if (tMax == tZBound) scaleValue = SettingsService.Instance.Settings.PrintAreaHeight / newModel.BoundingBox.Size.z;
+        //        if (tMax == tXBound) scaleValue = SettingsService.Instance.Settings.PrintAreaWidth / newModel.BoundingBox.Size.x;
+        //        else if (tMax == tYBound) scaleValue = SettingsService.Instance.Settings.PrintAreaDepth / newModel.BoundingBox.Size.y;
+        //        else if (tMax == tZBound) scaleValue = SettingsService.Instance.Settings.PrintAreaHeight / newModel.BoundingBox.Size.z;
 
-                var result = MessageBox.Show(
-                    Trans.T("M_OBJ_SCALE_DOWN") + " " + (int)(scaleValue * 100) + "%",
-                    Trans.T("W_OBJ_TOO_LARGE"),
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
+        //        var result = MessageBox.Show(
+        //            Trans.T("M_OBJ_SCALE_DOWN") + " " + (int)(scaleValue * 100) + "%",
+        //            Trans.T("W_OBJ_TOO_LARGE"),
+        //            MessageBoxButton.YesNo,
+        //            MessageBoxImage.Question);
 
-                if (result == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        newModel.Scale.x = newModel.Scale.y = newModel.Scale.z = scaleValue;
-                        newModel.UpdateBoundingBoxAndMatrix();
-                        newModel.Land();
-                    }
-                    catch { }
-                }
-            }
-            else
-            {
-                newModel.UpdateBoundingBoxAndMatrix();
-            }
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            try
+        //            {
+        //                newModel.Scale.x = newModel.Scale.y = newModel.Scale.z = scaleValue;
+        //                newModel.UpdateBoundingBoxAndMatrix();
+        //                newModel.Land();
+        //            }
+        //            catch { }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        newModel.UpdateBoundingBoxAndMatrix();
+        //    }
 
-            newModel.Position.Z = newModel.BoundingBox.Size.z / 2;
-            if (modelToLand)
-            {
-                Autoposition(newModel);
-            }
-            else
-            {
-                newModel.Position.X = (float)newModel.BoundingBox.Center.x;
-                newModel.Position.Y = (float)newModel.BoundingBox.Center.y;
-                newModel.UpdateTransMatrix();
-            }
+        //    newModel.Position.Z = newModel.BoundingBox.Size.z / 2;
+        //    if (modelToLand)
+        //    {
+        //        Autoposition(newModel);
+        //    }
+        //    else
+        //    {
+        //        newModel.Position.X = (float)newModel.BoundingBox.Center.x;
+        //        newModel.Position.Y = (float)newModel.BoundingBox.Center.y;
+        //        newModel.UpdateTransMatrix();
+        //    }
 
-            // Remember initial positions for all ViewModel.Models after Autoposition.
-            foreach (var m in MainWindow.main.viewModel.Models)
-            {
-                m.InitialPosition.x = m.Position.X;
-                m.InitialPosition.y = m.Position.Y;
-                m.InitialPosition.z = m.Position.Z;
-            }
+        //    // Remember initial positions for all ViewModel.Models after Autoposition.
+        //    foreach (var m in MainWindow.main.viewModel.Models)
+        //    {
+        //        m.InitialPosition.x = m.Position.X;
+        //        m.InitialPosition.y = m.Position.Y;
+        //        m.InitialPosition.z = m.Position.Z;
+        //    }
 
-            newModel.InitialPosition.x = newModel.Position.X;
-            newModel.InitialPosition.y = newModel.Position.Y;
-            newModel.InitialPosition.z = newModel.Position.Z;
+        //    newModel.InitialPosition.x = newModel.Position.X;
+        //    newModel.InitialPosition.y = newModel.Position.Y;
+        //    newModel.InitialPosition.z = newModel.Position.Z;
               
-            MainWindow.main.viewModel.Models.Add(newModel);
-            MainWindow.main.viewModel.SelectedModel = newModel;
+        //    MainWindow.main.viewModel.Models.Add(newModel);
+        //    MainWindow.main.viewModel.SelectedModel = newModel;
 
-            MainWindow.main.threeDControl.InvokeGL(() =>
-            {
-                newModel.Drawer.Init();
-                MainWindow.main.threeDControl.UpdateChanges();
-            });
-        }
+        //    MainWindow.main.threeDControl.InvokeGL(() =>
+        //    {
+        //        newModel.Drawer.Init();
+        //        MainWindow.main.threeDControl.UpdateChanges();
+        //    });
+        //}
 
         // =====================================================================
         //  CloneObject
@@ -241,7 +241,7 @@ namespace View3D.view
         // =====================================================================
         //  Autoposition
         // =====================================================================
-        bool Autoposition(ThreeDModel newModel)
+        public bool Autoposition(ThreeDModel newModel)
         {
             List<ThreeDModel> allModels = new List<ThreeDModel>(MainWindow.main.viewModel.Models);
 

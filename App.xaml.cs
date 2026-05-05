@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using OpenGL3DViewerMVVM.View;
+using System.IO;
 using View3D;
 using View3D.view;
 
@@ -44,7 +45,7 @@ namespace OpenGL3DViewerMVVM
             mainWindow.threeDCamera.OnIsometricView();
 
             // Wait until STL model data is ready if import STL file through command line before starting rendering loop
-            STLComposer._meshDataReady.Wait();
+            ViewModel._meshDataReady.Wait();
 
             // Blocks main thread for lifetime of GL window — correct!
             mainWindow.threeDControl.Run();
@@ -59,8 +60,8 @@ namespace OpenGL3DViewerMVVM
             for (int i = 1; i < args.Length; i++)
             {
                 string file = args[i];
-                if (File.Exists(file))
-                    main.stlComposer.OpenAndAddObject(file);
+                //if (File.Exists(file))
+                //    main.stlComposer.OpenAndAddObject(file);
             }
         }
     }

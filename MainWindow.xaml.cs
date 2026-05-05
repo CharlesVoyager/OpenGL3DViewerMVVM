@@ -84,8 +84,8 @@ namespace View3D
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 foreach (string file in files)
                 {
-                    if (modelIO.IsFileSupported(file))
-                        stlComposer.OpenAndAddObject(file);
+                    //if (modelIO.IsFileSupported(file))
+                    //    stlComposer.OpenAndAddObject(file);
                 }
             }
         }
@@ -314,8 +314,8 @@ namespace View3D
                                         "GLB Files (*.glb)|*.glb";
             bool? result = openFileDialog.ShowDialog();
 
-            if (result == true)
-                 stlComposer.OpenAndAddObject(openFileDialog.FileName);
+            //if (result == true)
+            //     stlComposer.OpenAndAddObject(openFileDialog.FileName);
         }
 
         private void about_button_Click(object sender, RoutedEventArgs e)

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using View3D;
 
 namespace OpenGL3DViewerMVVM.View
@@ -9,6 +10,9 @@ namespace OpenGL3DViewerMVVM.View
     public class ViewModel : ViewModelBase
     {
         public ObservableCollection<ThreeDModel> Models { get; set; }
+
+        public RelayCommand AddCommand => new RelayCommand(execute => AddModel());
+        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => SelectedModel != null);
 
         public ViewModel()
         {
@@ -26,9 +30,9 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     if (selectedModel != null)
                         selectedModel.Selected = false;
-                    
+
                     selectedModel = value;
-                  
+
                     if (selectedModel != null)
                         selectedModel.Selected = true;
 
@@ -44,7 +48,7 @@ namespace OpenGL3DViewerMVVM.View
         {
             get
             {
-                foreach(var m in Models)
+                foreach (var m in Models)
                 {
                     if (m.Outside)
                         return true;
@@ -54,6 +58,15 @@ namespace OpenGL3DViewerMVVM.View
         }
 
         public void UpdateOutOfBound() => OnPropertyChanged(nameof(IsOutOfBound));
+    
+        public void AddModel()
+        {
+        }
+
+        public void DeleteModel()
+        {
+            Models.Remove(SelectedModel);
+        }
     }
 
     public class ViewModelBase : INotifyPropertyChanged
@@ -63,5 +76,23 @@ namespace OpenGL3DViewerMVVM.View
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public class RelayCommand : ICommand
+    {
+        private readonly Action<object?> execute;
+        private readonly Func<object?, bool>? canExecute;
+        public RelayCommand(Action<object?> execute, Func<object?, bool>? canExecute = null)
+        {
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
+        public event EventHandler? CanExecuteChanged
+        {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
+        public bool CanExecute(object? parameter) => canExecute == null || canExecute(parameter);
+        public void Execute(object? parameter) => execute(parameter);
     }
 }

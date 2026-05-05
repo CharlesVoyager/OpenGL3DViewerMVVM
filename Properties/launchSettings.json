@@ -2,7 +2,7 @@
   "profiles": {
     "OpenGL3DViewerMVVM": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\..\\Stl\\10_10_10.stl\r\n..\\..\\..\\..\\Stl\\bowser.stl"
+      "commandLineArgs": "..\\..\\..\\Testfiles\\10_10_10.stl\r\n..\\..\\..\\Testfiles\\bowser.stl"
     }
   }
 }

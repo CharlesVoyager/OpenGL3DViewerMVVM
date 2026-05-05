@@ -41,24 +41,30 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="180"/> <!-- List -->
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <DataGrid
             ItemsSource="{Binding Models}"
             SelectedItem="{Binding SelectedModel}"
-            CanUserAddRows="False" CanUserDeleteRows="False"
+            CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
             AutoGenerateColumns="False"
-            IsReadOnly="True">
+            IsReadOnly="True"
+            Margin="4,2">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="200"/>
                 <DataGridTextColumn Header="Trangles" Binding="{Binding Triangles}" Width="80"/>
                 <DataGridTextColumn Header="Outside" Binding="{Binding Outside}" Width="60"/>
             </DataGrid.Columns>
-
         </DataGrid>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Content="Add" Margin="4,2" Padding="6,2" Command="{Binding AddCommand}"/>
+            <Button Content="Delete" Margin="4,2" Padding="6,2" Command="{Binding DeleteCommand}"/>
+        </StackPanel>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical">
+        <StackPanel Grid.Row="2" Orientation="Vertical">
             <!-- ═══════════════════════════════════════════
                  panel1  –  Trans / Scale / Rotate controls
                  ═══════════════════════════════════════════ -->
@@ -129,7 +135,7 @@
             <!-- ═══════════════════════════════════════════
                  panelAnalysis  –  Object Analysis GroupBox
                  ═══════════════════════════════════════════ -->
-            <Border Height="200" Style="{StaticResource panelAnalysisBorderStyle}">
+            <Border Height="150" Style="{StaticResource panelAnalysisBorderStyle}" Visibility="Visible">
                 <GroupBox Header="Object Analysis" Margin="4,2" Background="White" x:Name="groupBoxObjectAnalysis">
                     <Grid Margin="4">
                         <Grid.ColumnDefinitions>
@@ -137,7 +143,6 @@
                             <ColumnDefinition Width="35*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="24"/>
                             <RowDefinition Height="24"/>
                             <RowDefinition Height="24"/>
                             <RowDefinition Height="24"/>
@@ -159,12 +164,11 @@
                         <TextBlock Grid.Row="1" Grid.Column="1"
                                    Text="{Binding SelectedModel.Triangles, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
 
-                        <!-- Row 6 – Debug Info -->
-                        <TextBlock Grid.Row="3" Grid.Column="0"
+                        <!-- Row 2 – Debug Info -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
                                    Text="Debug Info:" VerticalAlignment="Center"/>
                         <TextBlock x:Name="txtDebugInfo"
-                                   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="80,0,0,0"
-                                   Text="" VerticalAlignment="Center"/>
+                                   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="" VerticalAlignment="Center"/>
                     </Grid>
                 </GroupBox>
             </Border>

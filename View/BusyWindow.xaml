@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             Background="#9B000000">
+             mc:Ignorable="d"
+             Background="Transparent">
 
     <UserControl.Resources>
+
         <Style x:Key="busyWindowBorderStyle" TargetType="Border">
             <Setter Property="Visibility" Value="Collapsed"/>
             <Style.Triggers>
@@ -15,11 +16,11 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
     </UserControl.Resources>
 
     <Grid>
-        <Border Style="{StaticResource busyWindowBorderStyle}">
-
+        <Border Style="{StaticResource busyWindowBorderStyle}" Background="#9B000000">
             <Grid MinWidth="289" MinHeight="140" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -34,7 +35,6 @@
                 <TextBlock Name="textBlock_time" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,20,8" Text="00:00:00" VerticalAlignment="Top" TextAlignment="Right"/>
                 <Button x:Name="buttonCancel" Grid.Row="2" Grid.ColumnSpan="2" Content="X" FontFamily="Arial" HorizontalAlignment="Right" Margin="0,0,25,0" VerticalAlignment="Center" Background="{x:Null}" FontWeight="Bold" FontSize="16" BorderBrush="{x:Null}" Click="buttonCancel_Click" />
             </Grid>
-
         </Border>
     </Grid>
 </UserControl>

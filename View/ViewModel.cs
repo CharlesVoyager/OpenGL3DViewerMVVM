@@ -65,7 +65,7 @@ namespace OpenGL3DViewerMVVM.View
 
         bool _isLoadingModel = false;
         public bool IsLoadingModel 
-        {  
+        {
             get { return _isLoadingModel; }
             set
             {
@@ -111,14 +111,14 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel newModel = new ThreeDModel();
             bool modelToLand = true;
             var modelIO = new MeshIOWrapper();
- 
+
+            IsLoadingModel = true;
             _meshDataReady.Reset();
             // Offload heavy work to background thread — UI thread is free immediately
             await Task.Run(() =>
             {
                 try
                 {           
-                    IsLoadingModel = true;
                     modelIO.LoadWOCatch(file, newModel.Model);
                 }
                 catch (Exception)

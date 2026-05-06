@@ -161,9 +161,6 @@ namespace View3D
 
             // About
             gridAbout.Visibility = Visibility.Hidden;
-
-            // BusyWindow
-            BusyWindow.Visibility = Visibility.Hidden;
         }
 
         /// <summary>

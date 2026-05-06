@@ -39,10 +39,6 @@ namespace View3D.view
             bool isVisible = (bool)e.NewValue;
             if (isVisible)
             {
-                busyProgressbar.IsIndeterminate = false;
-                busyProgressbar.Maximum = 100;
-                busyProgressbar.Value = 0;
-
                 if (stopWatch == null || timer == null) return;
 
                 textBlock_time.Text = "00:00:00";
@@ -52,7 +48,6 @@ namespace View3D.view
             }
             else
             {
-
                 if (stopWatch == null || timer == null) return;
 
                 textBlock_time.Text = "00:00:00";

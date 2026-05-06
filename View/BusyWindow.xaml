@@ -29,7 +29,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Rectangle Stroke="Black" Fill="#FFF0F0F0" RadiusX="10" RadiusY="10" Grid.RowSpan="4" />
-                <ProgressBar Name="busyProgressbar" Height="32" Margin="20,0" IsIndeterminate="True" Grid.Row="2" />
+                <ProgressBar Name="busyProgressbar" Height="32" Margin="20,0" IsIndeterminate="False" Grid.Row="2" />
                 <TextBlock Text="Loading a model..." HorizontalAlignment="Center" Margin="0,10" VerticalAlignment="Center" Width="265" FontFamily="Arial" FontWeight="Bold" DataContext="{Binding}" FontSize="26" TextAlignment="Center" />
                 <TextBlock Name="labelElapsedTime" Text="Elapsed Time" FontFamily="Arial" HorizontalAlignment="Left" Margin="20,10,0,8" VerticalAlignment="Center" Grid.Row="3" />
                 <TextBlock Name="textBlock_time" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,20,8" Text="00:00:00" VerticalAlignment="Top" TextAlignment="Right"/>

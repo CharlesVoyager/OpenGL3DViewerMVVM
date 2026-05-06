@@ -32,10 +32,10 @@
                     <RowDefinition Height="10*"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Rectangle Name="rectangle1"  Fill="Red" RadiusX="10" RadiusY="10" Grid.RowSpan="3" Grid.Column="0" />
-                <Rectangle Name="rectangle2"  Fill="Red" RadiusX="10" RadiusY="10" Grid.RowSpan="3" Grid.Column="2" />
-                <Rectangle Name="rectangle3"  Fill="Red" RadiusX="10" RadiusY="10" Grid.Row="0" Grid.ColumnSpan="3" />
-                <Rectangle Name="rectangle4" Fill="Red" RadiusX="10" RadiusY="10" Grid.Row="3" Grid.ColumnSpan="3" />
+                <Rectangle Fill="Red" RadiusX="10" RadiusY="10" Grid.RowSpan="3" Grid.Column="0" />
+                <Rectangle Fill="Red" RadiusX="10" RadiusY="10" Grid.RowSpan="3" Grid.Column="2" />
+                <Rectangle Fill="Red" RadiusX="10" RadiusY="10" Grid.Row="0" Grid.ColumnSpan="3" />
+                <Rectangle Fill="Red" RadiusX="10" RadiusY="10" Grid.Row="3" Grid.ColumnSpan="3" />
                 <TextBlock x:Name="txt_WarningMsg" Text="Out of Boundary - Please resize or move your object (S)." Grid.ColumnSpan="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" TextWrapping="Wrap"  Foreground="White" FontWeight="Bold" FontFamily="Microsoft JhengHei"/>
             </Grid>
         </Border>

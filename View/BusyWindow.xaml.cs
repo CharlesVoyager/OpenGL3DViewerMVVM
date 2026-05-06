@@ -61,7 +61,7 @@ namespace View3D.view
         public void EnableBusyWindow()
         {
             Visibility = Visibility.Visible;
-            buttonCancel.Visibility = Visibility.Visible;
+
             busyProgressbar.IsIndeterminate = false;
             busyProgressbar.Maximum = 100;
             busyProgressbar.Value = 0;

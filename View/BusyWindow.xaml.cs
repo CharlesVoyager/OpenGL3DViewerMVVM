@@ -15,8 +15,6 @@ namespace View3D.view
         Stopwatch? stopWatch;
 
         public bool killed = false;
-        public double increment = 0;
-        public double firstStagePercent = 20.0;
 
         public BusyWindow()
         {
@@ -49,13 +47,13 @@ namespace View3D.view
         {
             if (stopWatch == null) return;
 
-            textBlock_time.Text = stopWatch.Elapsed.Hours.ToString("00")
-                + ":" + stopWatch.Elapsed.Minutes.ToString("00")
-                + ":" + stopWatch.Elapsed.Seconds.ToString("00");
+            textBlock_time.Text =   stopWatch.Elapsed.Hours.ToString("00")
+                            + ":" + stopWatch.Elapsed.Minutes.ToString("00")
+                            + ":" + stopWatch.Elapsed.Seconds.ToString("00");
 
         }
 
-        public void buttonCancel_Click(object sender, RoutedEventArgs e)
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
             killed = true;
 

@@ -82,15 +82,5 @@ namespace View3D.view
             if (AbortTask != null)
                 AbortTask(this, new EventArgs());
         }
-
-        public void EnableBusyWindow()
-        {
-            //Visibility = Visibility.Visible;
-        }
-
-        public void DisableBusyWindow()
-        {
-            //Visibility = Visibility.Hidden;
-        }
     }
 }

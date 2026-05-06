@@ -11,10 +11,10 @@ namespace View3D.view
     public partial class BusyWindow : System.Windows.Controls.UserControl
     {
         public event EventHandler? AbortTask;
+        public bool killed = false;
+
         DispatcherTimer? timer;
         Stopwatch? stopWatch;
-
-        public bool killed = false;
 
         public BusyWindow()
         {

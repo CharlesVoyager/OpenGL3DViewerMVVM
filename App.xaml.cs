@@ -60,8 +60,8 @@ namespace OpenGL3DViewerMVVM
             for (int i = 1; i < args.Length; i++)
             {
                 string file = args[i];
-                //if (File.Exists(file))
-                //    main.stlComposer.OpenAndAddObject(file);
+                if (File.Exists(file))
+                    main.viewModel.AddModel(file);
             }
         }
     }

@@ -79,22 +79,23 @@ namespace OpenGL3DViewerMVVM.View
         }
 
         public static readonly ManualResetEventSlim _meshDataReady = new ManualResetEventSlim(true);
-        public async void AddModel()
+        public async void AddModel(string? file = null)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            if (file == null)
+            {
+                Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
-            openFileDialog.Title = "Select a File";
-            openFileDialog.Filter = "3D Files (*.stl;*.glb)|*.stl;*.glb|" +
-                                        "STL Files (*.stl)|*.stl|" +
-                                        "GLB Files (*.glb)|*.glb";
-            bool? resultDlg = openFileDialog.ShowDialog();
+                openFileDialog.Title = "Select a File";
+                openFileDialog.Filter = "3D Files (*.stl;*.glb)|*.stl;*.glb|" +
+                                            "STL Files (*.stl)|*.stl|" +
+                                            "GLB Files (*.glb)|*.glb";
+                bool? resultDlg = openFileDialog.ShowDialog();
 
-            string file = "";
-
-            if (resultDlg == true)
-                file = openFileDialog.FileName;
-            else
-                return;
+                if (resultDlg == true)
+                    file = openFileDialog.FileName;
+                else
+                    return;
+            }
 
             ThreeDModel newModel = new ThreeDModel();
             bool modelToLand = true;

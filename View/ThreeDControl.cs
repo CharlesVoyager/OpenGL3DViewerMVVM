@@ -426,8 +426,8 @@ namespace View3D.view
                 MainWindow.main.Dispatcher.InvokeAsync(() =>
                 {
                     var modelIO = new MeshIOWrapper();
-                    //if (modelIO.IsFileSupported(file))
-                    //    MainWindow.main.stlComposer.OpenAndAddObject(file);
+                    if (modelIO.IsFileSupported(file))
+                        MainWindow.main.viewModel.AddModel(file);
                 });
             }
         }

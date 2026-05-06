@@ -28,8 +28,6 @@ namespace View3D.view
             timer.Tick += dispatcherTimerTick_;
             timer.Interval = new TimeSpan(0, 0, 1);
 
-            IsVisibleChanged += OnVisibilityChanged;
-
             if (MainWindow.main != null)
                 DataContext = MainWindow.main.viewModel;
         }

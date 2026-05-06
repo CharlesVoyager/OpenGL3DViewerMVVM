@@ -21,14 +21,51 @@ namespace View3D.view
 
             try
             {
+                MainWindow.main.languageChanged += translate;
+
                 stopWatch = new Stopwatch();
 
-                MainWindow.main.languageChanged += translate;
                 timer = new DispatcherTimer();
                 timer.Tick += dispatcherTimerTick_;
                 timer.Interval = new TimeSpan(0, 0, 1);
+
+                IsVisibleChanged += OnVisibilityChanged;
             }
             catch { }
+
+            if (MainWindow.main != null)
+                DataContext = MainWindow.main.viewModel;
+        }
+
+        private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            bool isVisible = (bool)e.NewValue;
+            if (isVisible)
+            {
+                Visibility = Visibility.Visible;
+                // Control became visible
+                busyProgressbar.IsIndeterminate = false;
+                busyProgressbar.Maximum = 100;
+                busyProgressbar.Value = 0;
+
+                if (stopWatch == null || timer == null) return;
+
+                textBlock_time.Text = "00:00:00";
+                stopWatch.Reset();
+                stopWatch.Start();
+                timer.Start();
+            }
+            else
+            {
+                Visibility = Visibility.Collapsed;
+
+                // Control became hidden
+                if (stopWatch == null || timer == null) return;
+
+                textBlock_time.Text = "00:00:00";
+                stopWatch.Stop();
+                timer.Stop();
+            }
         }
 
         private void translate()
@@ -60,29 +97,12 @@ namespace View3D.view
 
         public void EnableBusyWindow()
         {
-            Visibility = Visibility.Visible;
-
-            busyProgressbar.IsIndeterminate = false;
-            busyProgressbar.Maximum = 100;
-            busyProgressbar.Value = 0;
-
-            if (stopWatch == null || timer == null) return;
-
-            textBlock_time.Text = "00:00:00";
-            stopWatch.Reset();
-            stopWatch.Start();
-            timer.Start();
+            //Visibility = Visibility.Visible;
         }
 
         public void DisableBusyWindow()
         {
-            Visibility = Visibility.Hidden;
-
-            if (stopWatch == null || timer == null) return;
-
-            textBlock_time.Text = "00:00:00";
-            stopWatch.Stop();
-            timer.Stop();
+            //Visibility = Visibility.Hidden;
         }
     }
 }

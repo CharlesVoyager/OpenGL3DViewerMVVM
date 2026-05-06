@@ -23,7 +23,7 @@
 
     <Border Style="{StaticResource outOfBoundBorderStyle}">
 
-        <Grid Name="grid1" MinWidth="289" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid MinWidth="289" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="10*" />

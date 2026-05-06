@@ -136,7 +136,7 @@
             <!-- ═══════════════════════════════════════════
                  panelAnalysis  –  Object Analysis GroupBox
                  ═══════════════════════════════════════════ -->
-            <Border Height="150" Style="{StaticResource panelAnalysisBorderStyle}" Visibility="Visible">
+            <Border Height="150" Style="{StaticResource panelAnalysisBorderStyle}">
                 <GroupBox Header="Object Analysis" Margin="4,2" Background="White" x:Name="groupBoxObjectAnalysis">
                     <Grid Margin="4">
                         <Grid.ColumnDefinitions>

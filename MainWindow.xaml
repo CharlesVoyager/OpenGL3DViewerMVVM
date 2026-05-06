@@ -486,7 +486,6 @@
                     </Setter>
                 </Style>
             </StackPanel.Resources>
-
         </StackPanel>
 
         <!--About-->

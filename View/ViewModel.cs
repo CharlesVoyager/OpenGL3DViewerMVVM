@@ -63,6 +63,17 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
+        bool _isLoadingModel = false;
+        public bool IsLoadingModel 
+        {  
+            get { return _isLoadingModel; }
+            set
+            {
+                _isLoadingModel = value;
+                OnPropertyChanged(nameof(IsLoadingModel));
+            }
+        }
+
         public void UpdateOutOfBound() => OnPropertyChanged(nameof(IsOutOfBound));
 
         bool isTooSmall(RHBoundingBox boundingBox)
@@ -100,13 +111,14 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel newModel = new ThreeDModel();
             bool modelToLand = true;
             var modelIO = new MeshIOWrapper();
-            MainWindow.main.BusyWindow.EnableBusyWindow();
+ 
             _meshDataReady.Reset();
             // Offload heavy work to background thread — UI thread is free immediately
             await Task.Run(() =>
             {
                 try
-                {
+                {           
+                    IsLoadingModel = true;
                     modelIO.LoadWOCatch(file, newModel.Model);
                 }
                 catch (Exception)
@@ -128,7 +140,7 @@ namespace OpenGL3DViewerMVVM.View
                 _meshDataReady.Set();
                 Console.WriteLine("LoadWOCatch Done.");
             });
-            MainWindow.main.BusyWindow.DisableBusyWindow();
+            IsLoadingModel = false;
             if (_meshDataReady.Wait(0) == false)// It means some expection happens when loading a STL file.
             {
                 _meshDataReady.Set();

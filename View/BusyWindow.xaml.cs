@@ -19,19 +19,16 @@ namespace View3D.view
         {
             InitializeComponent();
 
-            try
-            {
+            if (MainWindow.main != null)
                 MainWindow.main.languageChanged += translate;
 
-                stopWatch = new Stopwatch();
+            stopWatch = new Stopwatch();
 
-                timer = new DispatcherTimer();
-                timer.Tick += dispatcherTimerTick_;
-                timer.Interval = new TimeSpan(0, 0, 1);
+            timer = new DispatcherTimer();
+            timer.Tick += dispatcherTimerTick_;
+            timer.Interval = new TimeSpan(0, 0, 1);
 
-                IsVisibleChanged += OnVisibilityChanged;
-            }
-            catch { }
+            IsVisibleChanged += OnVisibilityChanged;
 
             if (MainWindow.main != null)
                 DataContext = MainWindow.main.viewModel;
@@ -42,8 +39,6 @@ namespace View3D.view
             bool isVisible = (bool)e.NewValue;
             if (isVisible)
             {
-                Visibility = Visibility.Visible;
-                // Control became visible
                 busyProgressbar.IsIndeterminate = false;
                 busyProgressbar.Maximum = 100;
                 busyProgressbar.Value = 0;
@@ -57,9 +52,7 @@ namespace View3D.view
             }
             else
             {
-                Visibility = Visibility.Collapsed;
 
-                // Control became hidden
                 if (stopWatch == null || timer == null) return;
 
                 textBlock_time.Text = "00:00:00";

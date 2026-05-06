@@ -203,8 +203,8 @@ namespace OpenGL3DViewerMVVM.View
             newModel.InitialPosition.y = newModel.Position.Y;
             newModel.InitialPosition.z = newModel.Position.Z;
 
-            MainWindow.main.viewModel.Models.Add(newModel);
-            MainWindow.main.viewModel.SelectedModel = newModel;
+            Models.Add(newModel);
+            SelectedModel = newModel;
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
@@ -215,7 +215,8 @@ namespace OpenGL3DViewerMVVM.View
 
         public void DeleteModel()
         {
-            Models.Remove(SelectedModel);
+            if (SelectedModel != null)
+                Models.Remove(SelectedModel);
         }
     }
 

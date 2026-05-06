@@ -62,7 +62,7 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button Content="Add" Margin="4,2" Padding="6,2" Command="{Binding AddCommand}"/>
             <Button Content="Delete" Margin="4,2" Padding="6,2" Command="{Binding DeleteCommand}"/>
-            <Button Content="Save" Margin="4,2" Padding="6,2" Command="{Binding SaveCommand}" IsEnabled="False"/>
+            <Button Content="Clone" Margin="4,2" Padding="6,2" Command="{Binding CloneCommand}" IsEnabled="False"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Vertical">

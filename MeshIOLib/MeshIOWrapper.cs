@@ -35,13 +35,9 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
             MainWindow.main.BusyWindow.AbortTask -= fileMesh.TaskAbort;
         }
 
-        public void OnProcessUpdate(int rate)
+        void OnProcessUpdate(int rate)
         {
-            MainWindow.main.Dispatcher.InvokeAsync(() =>
-            {
-                if (MainWindow.main.BusyWindow.Visibility == System.Windows.Visibility.Visible)
-                    MainWindow.main.BusyWindow.busyProgressbar.Value = rate;
-            });
+            MainWindow.main.viewModel.LoadModelProgress = rate;
         }
     }
 }

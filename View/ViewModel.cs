@@ -74,6 +74,17 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
+        int _loadModelProgress = 0;
+        public int LoadModelProgress 
+        { 
+            get { return _loadModelProgress; }
+            set
+            {
+                _loadModelProgress = value;
+                OnPropertyChanged(nameof(LoadModelProgress));
+            }
+        }
+
         public void UpdateOutOfBound() => OnPropertyChanged(nameof(IsOutOfBound));
 
         bool isTooSmall(RHBoundingBox boundingBox)

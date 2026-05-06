@@ -134,7 +134,7 @@ namespace OpenGL3DViewerMVVM.View
                 _meshDataReady.Set();
                 return;
             }
-            if (MainWindow.main.BusyWindow.killed || newModel.Model.drawTriangles.Count == 0)
+            if (newModel.Model.drawTriangles.Count == 0)
             {
                 newModel.Model.Clear();
                 return;

@@ -11,7 +11,6 @@ namespace View3D.view
     public partial class BusyWindow : System.Windows.Controls.UserControl
     {
         public event EventHandler? AbortTask;
-        public bool killed = false;
 
         DispatcherTimer? timer;
         Stopwatch? stopWatch;
@@ -55,15 +54,12 @@ namespace View3D.view
 
         private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
-            killed = true;
-
             if (AbortTask != null)
                 AbortTask(this, new EventArgs());
         }
 
         public void EnableBusyWindow()
         {
-            killed = false;
             Visibility = Visibility.Visible;
             buttonCancel.Visibility = Visibility.Visible;
             busyProgressbar.IsIndeterminate = false;

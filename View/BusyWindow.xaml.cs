@@ -19,9 +19,6 @@ namespace View3D.view
         {
             InitializeComponent();
 
-            if (MainWindow.main != null)
-                MainWindow.main.languageChanged += translate;
-
             stopWatch = new Stopwatch();
 
             timer = new DispatcherTimer();
@@ -29,7 +26,10 @@ namespace View3D.view
             timer.Interval = TimeSpan.FromMilliseconds(1000);
 
             if (MainWindow.main != null)
+            {
+                MainWindow.main.languageChanged += translate;
                 DataContext = MainWindow.main.viewModel;
+            }
         }
 
         private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)

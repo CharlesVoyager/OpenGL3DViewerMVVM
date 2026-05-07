@@ -78,7 +78,7 @@ namespace View3D.view
             base.OnPreviewTextInput(e);
         }
 
-        public void Initial()
+        void SetSliderMinimumMaximum()
         {
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
@@ -96,9 +96,9 @@ namespace View3D.view
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
-            slider_moveX.Value = stl.InitialPosition.x;
-            slider_moveY.Value = stl.InitialPosition.y;
-            slider_moveZ.Value = stl.InitialPosition.z;
+            stl.PositionX = stl.InitialPosition.x;
+            stl.PositionY = stl.InitialPosition.y;
+            stl.PositionZ = stl.InitialPosition.z;
         }
 
         public void button_land_Click(object sender, RoutedEventArgs e)
@@ -110,6 +110,7 @@ namespace View3D.view
             stl.UpdateOutOfBound();
             MainWindow.main.threeDControl.UpdateChanges();
 
+            // Land() will NOT trigger OnPropertyChanged(). Therefore, update slider values manually.
             slider_moveX.Value = stl.Position.X;
             slider_moveY.Value = stl.Position.Y;
             slider_moveZ.Value = stl.Position.Z;
@@ -210,7 +211,7 @@ namespace View3D.view
 
         private void OnSelectionChange(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            Initial();
+            SetSliderMinimumMaximum();
         }
     }
 }

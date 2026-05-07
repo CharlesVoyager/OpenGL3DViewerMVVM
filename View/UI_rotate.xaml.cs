@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using OpenGL3DViewerMVVM.ModelLib.model;
+using OpenGL3DViewerMVVM.ModelLib.Utils;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using OpenGL3DViewerMVVM.ModelLib.Utils;
 
 #nullable disable
 
@@ -22,8 +23,10 @@ namespace View3D.view
             try
             {
                 if (MainWindow.main != null)
+                {
                     MainWindow.main.languageChanged += translate;
-
+                    DataContext = MainWindow.main.viewModel;
+                }
             }
             catch { }
         }
@@ -48,10 +51,13 @@ namespace View3D.view
 
         private void StackPanelX_MouseMove(object sender, MouseEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
             labelX.Visibility = Visibility.Hidden;
             textRotX.Visibility = Visibility.Visible;
             if (e.LeftButton == MouseButtonState.Pressed && textRotX.IsMouseDirectlyOver == false)
-                textRotX.Text = ConvertPositionAngel(new Point(stackpanelX.Width / 2, stackpanelX.Height / 2), e.GetPosition(stackpanelX)).ToString();
+                model.RotationX = ConvertPositionAngel(new Point(stackpanelX.Width / 2, stackpanelX.Height / 2), e.GetPosition(stackpanelX));
         }
 
         private void StackPanelY_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -61,10 +67,13 @@ namespace View3D.view
 
         private void StackPanelY_MouseMove(object sender, MouseEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
             labelY.Visibility = Visibility.Hidden;
             textRotY.Visibility = Visibility.Visible;
             if (e.LeftButton == MouseButtonState.Pressed && textRotY.IsMouseDirectlyOver == false)
-                textRotY.Text = ConvertPositionAngel(new Point(stackpanelY.Width / 2, stackpanelY.Height / 2), e.GetPosition(stackpanelY)).ToString();
+                model.RotationY = ConvertPositionAngel(new Point(stackpanelY.Width / 2, stackpanelY.Height / 2), e.GetPosition(stackpanelY));
         }
 
         private void StackPanelZ_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -74,27 +83,23 @@ namespace View3D.view
 
         private void StackPanelZ_MouseMove(object sender, MouseEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
             labelZ.Visibility = Visibility.Hidden;
             textRotZ.Visibility = Visibility.Visible;
             if (e.LeftButton == MouseButtonState.Pressed && textRotZ.IsMouseDirectlyOver == false)
-                textRotZ.Text = ConvertPositionAngel(new Point(stackpanelZ.Width / 2, stackpanelZ.Height / 2), e.GetPosition(stackpanelZ)).ToString();
+                model.RotationZ = ConvertPositionAngel(new Point(stackpanelZ.Width / 2, stackpanelZ.Height / 2), e.GetPosition(stackpanelZ));
         }
 
         public void button_rotate_reset_Click(object sender, RoutedEventArgs e)
         {
-            if (textRotX.Text == "0" && textRotY.Text == "0" && textRotZ.Text == "0")
-            {
-                // Consider the case: Load a model -> Load another model then rotate -> Select a model then reset -> Select second model -> Click reset -> It will hit here...
-                textRotX_TextChanged(null, null);
-                textRotY_TextChanged(null, null);
-                textRotZ_TextChanged(null, null);
-            }
-            else
-            {
-                textRotX.Text = "0";
-                textRotY.Text = "0";
-                textRotZ.Text = "0";
-            }
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
+            model.RotationX = 0;
+            model.RotationY = 0;
+            model.RotationZ = 0;
         }
 
         private void stackpanelX_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -254,38 +259,6 @@ namespace View3D.view
             base.OnPreviewTextInput(e);
         }
 
-        private void textRotX_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                limitRotateAngle(textRotX);
-                orangeX.Angle = Convert.ToDouble(textRotX.Text);
-                MainWindow.main.stlComposer.textRotX.Text = textRotX.Text;
-            }
-            catch { }
-        }
-        private void textRotY_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                limitRotateAngle(textRotY);
-                orangeY.Angle = Convert.ToDouble(textRotY.Text);
-                MainWindow.main.stlComposer.textRotY.Text = textRotY.Text;
-            }
-            catch { }
-        }
-
-        private void textRotZ_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            try
-            {
-                limitRotateAngle(textRotZ);
-                orangeZ.Angle = Convert.ToDouble(textRotZ.Text);
-                MainWindow.main.stlComposer.textRotZ.Text = textRotZ.Text;
-            }
-            catch { }
-        }
-
         // Input angle must between 0~360 degree
         private void limitRotateAngle(System.Windows.Controls.TextBox textbox)
         {
@@ -297,6 +270,11 @@ namespace View3D.view
             {
                 textbox.Text = "0";
             }
+        }
+
+        private void OnSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

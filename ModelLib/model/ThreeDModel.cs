@@ -506,9 +506,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public double ScaleX
         {
             get { return scale.x; }
-            set 
-            { 
-                scale.x = value;
+            set
+            {
+                if (value < 0)
+                    scale.x = 0;
+                else
+                    scale.x = value;
                 updateChange(nameof(ScaleX));
             }
         }
@@ -516,9 +519,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public double ScaleY
         {
             get { return scale.y; }
-            set 
-            { 
-                scale.y = value;
+            set
+            {
+                if (value < 0)
+                    scale.y = 0;
+                else
+                    scale.y = value;
                 updateChange(nameof(ScaleY));
             }
         }
@@ -528,7 +534,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             get { return scale.z; }
             set 
             { 
-                scale.z = value;
+                if (value < 0)
+                    scale.z = 0;
+                else
+                    scale.z = value;
                 updateChange(nameof(ScaleZ));
             }
         }

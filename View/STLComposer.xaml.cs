@@ -27,14 +27,6 @@ namespace View3D.view
 
         public void translate() { }
 
-        public List<ThreeDModel> GetAllPrintModels()
-        {
-            var list = new List<ThreeDModel>();
-            foreach (var m in MainWindow.main.viewModel.Models)
-                if (IsValidPrintModel(m)) list.Add(m);
-            return list;
-        }
-
         bool isTooSmall(RHBoundingBox boundingBox)
         {
             // Don't use z size here because some STL files may have very small z size but large x/y size, and they should not be considered as "too small".
@@ -58,13 +50,6 @@ namespace View3D.view
                 else if (dlg.gIsInch) DoMmToInch(model);
             }
         }
-
-        private bool IsValidPrintModel(ThreeDModel model)
-            => model.Name != "Unknown" &&
-               typeof(ThreeDModel) == model.GetType() &&
-               model.Model != null;
-
-       
 
         private bool AskUserToChangeUnit()
         {

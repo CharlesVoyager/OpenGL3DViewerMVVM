@@ -137,7 +137,7 @@ namespace View3D.view
         {
             RHBoundingBox b = new RHBoundingBox();
 
-            foreach (ThreeDModel model in MainWindow.main.stlComposer.GetAllPrintModels())
+            foreach (ThreeDModel model in MainWindow.main.viewModel.Models)
             {
                 b.Add(model.BoundingBox.minPoint);
                 b.Add(model.BoundingBox.maxPoint);

@@ -64,76 +64,7 @@ namespace View3D.view
                typeof(ThreeDModel) == model.GetType() &&
                model.Model != null;
 
-        // =====================================================================
-        //  Autoposition
-        // =====================================================================
-        public bool Autoposition(ThreeDModel newModel)
-        {
-            List<ThreeDModel> allModels = new List<ThreeDModel>(MainWindow.main.viewModel.Models);
-
-            allModels.Add(newModel);
-
-            float maxW = SettingsService.Instance.Settings.PrintAreaWidth;
-            float maxH = SettingsService.Instance.Settings.PrintAreaDepth;
-
-            if (allModels.Count == 1)
-            {
-                var model = allModels[0];
-                model.Position.X = maxW / 2;
-                model.Position.Y = maxH / 2;
-                model.UpdateTransMatrix();
-                return true;
-            }
-
-            var packer    = new RectPacker(1, 1);
-            var outPacker = new OutRectPacker(1000);
-            int border    = 1;
-            float xOff = 0, yOff = 0;
-            outPacker.SetPlatformSize(maxW, maxH);
-            bool autosizeFailed = false;
-
-            foreach (var stl in allModels)
-            {
-                int w = 2 * border + (int)Math.Ceiling(stl.xMax - stl.xMin);
-                int h = 2 * border + (int)Math.Ceiling(stl.yMax - stl.yMin);
-                if (!packer.addAtEmptySpotAutoGrow(new PackerRect(0, 0, w, h, stl), (int)maxW, (int)maxH))
-                {
-                    autosizeFailed = true;
-                    outPacker.addOutsideSpotAutoGrow(new PackerRect(0, 0, w, h, stl));
-                }
-            }
-
-            if (autosizeFailed)
-            {
-                float xCenter   = (2000 - outPacker.w) / 2f;
-                float yCenter   = (2000 - outPacker.h) / 2f;
-                float xOrigPos  = xOff + xCenter + outPacker.vRects[0].x + border - 1000;
-                float yOrigPos  = yOff + yCenter + outPacker.vRects[0].y + border - 1000;
-                for (int i = 1; i < outPacker.vRects.Count; i++)
-                {
-                    var s = (ThreeDModel)outPacker.vRects[i].obj;
-                    s.Position.X += xOff + xCenter + outPacker.vRects[i].x + border - 1000 - xOrigPos - s.xMin;
-                    s.Position.Y += yOff + yCenter + outPacker.vRects[i].y + border - 1000 - yOrigPos - s.yMin;
-                    s.UpdateTransMatrix();
-                }
-                MessageBox.Show(Trans.T("M_PRINTER_BED_FULL_TEXT"),
-                                Trans.T("W_PRINTER_BED_FULL"),
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-                return false;
-            }
-
-            float xAdd = (maxW - packer.w) / 2f;
-            float yAdd = (maxH - packer.h) / 2f;
-            foreach (PackerRect rect in packer.vRects)
-            {
-                var s = (ThreeDModel)rect.obj;
-                s.Position.X += xOff + xAdd + rect.x + border - s.xMin;
-                s.Position.Y += yOff + yAdd + rect.y + border - s.yMin;
-                s.UpdateTransMatrix();
-            }
-            return true;
-        }
+       
 
         private bool AskUserToChangeUnit()
         {

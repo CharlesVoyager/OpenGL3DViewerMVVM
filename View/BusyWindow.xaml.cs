@@ -25,8 +25,8 @@ namespace View3D.view
             stopWatch = new Stopwatch();
 
             timer = new DispatcherTimer();
-            timer.Tick += dispatcherTimerTick_;
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += dispatcherTimerTick;
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
 
             if (MainWindow.main != null)
                 DataContext = MainWindow.main.viewModel;
@@ -65,7 +65,7 @@ namespace View3D.view
             return Convert.ToInt16(stopWatch.Elapsed.Seconds);
         }
 
-        private void dispatcherTimerTick_(object? sender, EventArgs e)
+        private void dispatcherTimerTick(object? sender, EventArgs e)
         {
             if (stopWatch == null) return;
 

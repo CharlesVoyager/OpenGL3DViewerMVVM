@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using View3D;
@@ -165,9 +166,9 @@ namespace OpenGL3DViewerMVVM.View
             newModel.Name = Path.GetFileName(file);
 
             if (isTooSmall(newModel.BoundingBox) && newModel.Name.Contains(".glb"))
-                MainWindow.main.stlComposer.DoAutoScale(newModel);
+                DoAutoScale(newModel);
             else if (isTooSmall(newModel.BoundingBox))
-                MainWindow.main.stlComposer.check_stl_size_too_small(newModel);
+                check_stl_size_too_small(newModel);
             else if (isTooBig(newModel.BoundingBox))  // the object is too big.
             {
                 double tXBound = newModel.BoundingBox.Size.x / SettingsService.Instance.Settings.PrintAreaWidth;
@@ -323,6 +324,122 @@ namespace OpenGL3DViewerMVVM.View
                 s.UpdateTransMatrix();
             }
             return true;
+        }
+
+        public void check_stl_size_too_small(ThreeDModel model)
+        {
+            if (model == null) return;
+
+            if (isTooSmall(model.BoundingBox))
+            {
+                var dlg = new ObjectResizeDialog(
+                    model.BoundingBox.Size.x,
+                    model.BoundingBox.Size.y,
+                    model.BoundingBox.Size.z);
+                if (MainWindow.main.Visibility == Visibility.Visible)
+                    dlg.Owner = MainWindow.main;
+                dlg.ShowDialog();
+                if (dlg.gIsScale) DoAutoScale(model);
+                else if (dlg.gIsInch) DoMmToInch(model);
+            }
+        }
+
+        private bool AskUserToChangeUnit()
+        {
+            var sb = new StringBuilder(Trans.T("M_RESIZE_MODEL_TOO_BIG")).AppendLine()
+                                                                         .Append(Trans.T("M_RESIZE_ASK_TO_SCALE_UP"));
+            return System.Windows.MessageBox.Show(sb.ToString(),
+                                   Trans.T("M_RESIZE_SCALE_UP_TITLE"),
+                                   MessageBoxButton.YesNo,
+                                   MessageBoxImage.Warning) == MessageBoxResult.Yes;
+        }
+
+        // Auto scale the model to fit the half printer bed in X axis on the largest dimension.
+        public void DoAutoScale(ThreeDModel model)
+        {
+            try
+            {
+                var bbox = model.BoundingBox;
+
+                // Find the largest dimension of the model.
+                double maxDim = Math.Max(Math.Max(bbox.Size.x, bbox.Size.y), bbox.Size.z);
+                double scaleFactor = (SettingsService.Instance.Settings.PrintAreaWidth / 2) / maxDim;
+
+                model.Scale.x = (float)scaleFactor;
+                model.Scale.y = (float)scaleFactor;
+                model.Scale.z = (float)scaleFactor;
+
+                model.UpdateBoundingBoxAndMatrix();
+                model.Land();
+                model.UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
+            catch { }
+        }
+
+        public void DoMmToInch(ThreeDModel? model = null)
+        {
+            if (model == null)
+                model = SelectedModel;
+
+            if (model == null) return;
+            try
+            {
+                var ui = MainWindow.main.UI_resize_advance;
+                ui.button_mmtoinch.IsEnabled = false;
+                ui.button_inchtomm.IsEnabled = true;
+
+                double tempX = model.BoundingBox.Size.x * 25.4, tempY = model.BoundingBox.Size.y * 25.4, tempZ = model.BoundingBox.Size.z * 25.4;
+                if (tempX > SettingsService.Instance.Settings.PrintAreaWidth ||
+                    tempY > SettingsService.Instance.Settings.PrintAreaDepth ||
+                    tempZ > SettingsService.Instance.Settings.PrintAreaHeight)
+                {
+                    if (!AskUserToChangeUnit())
+                    {
+                        ui.button_mmtoinch.IsEnabled = true;
+                        ui.button_inchtomm.IsEnabled = false;
+                        return;
+                    }
+                }
+
+                double scaleFactor = 25.4; // 1 inch = 25.4 mm
+
+                model.Scale.x *= (float)scaleFactor;
+                model.Scale.y *= (float)scaleFactor;
+                model.Scale.z *= (float)scaleFactor;
+
+                model.UpdateBoundingBoxAndMatrix();
+                model.Land();
+                model.UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
+            catch { }
+        }
+
+        public void DoInchToMm(ThreeDModel? model = null)
+        {
+            if (model == null)
+                model = SelectedModel;
+
+            if (model == null) return;
+            try
+            {
+                var ui = MainWindow.main.UI_resize_advance;
+                ui.button_mmtoinch.IsEnabled = true;
+                ui.button_inchtomm.IsEnabled = false;
+
+                double scaleFactor = 25.4; // 1 inch = 25.4 mm
+
+                model.Scale.x /= (float)scaleFactor;
+                model.Scale.y /= (float)scaleFactor;
+                model.Scale.z /= (float)scaleFactor;
+
+                model.UpdateBoundingBoxAndMatrix();
+                model.Land();
+                model.UpdateOutOfBound();
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
+            catch { }
         }
     }
 

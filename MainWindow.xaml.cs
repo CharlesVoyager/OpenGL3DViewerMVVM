@@ -151,8 +151,8 @@ namespace View3D
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[1]).Click += (s, e) => OnResetObject();
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[2]).Click += (s, e) => OnRemoveObject();
             // index 3 is Separator
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[4]).Click += (s, e) => OnMmToInch();
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[5]).Click += (s, e) => OnInchToMm();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[4]).Click += (s, e) => viewModel.DoMmToInch();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[5]).Click += (s, e) => viewModel.DoInchToMm();
             // index 6 is Separator
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[7]).Click += (s, e) => viewModel.CloneModel();
             // index 8 is Separator
@@ -192,18 +192,6 @@ namespace View3D
         }
     
         private void OnRemoveObject() => remove_toggleButton_Click(null, null);
-
-        private void OnMmToInch() 
-        {
-            ThreeDModel m = viewModel.SelectedModel;
-            if (m != null) stlComposer.DoMmToInch(m);
-        }
-
-        private void OnInchToMm()
-        {
-            ThreeDModel m = viewModel.SelectedModel;
-            if (m != null) stlComposer.DoInchtomm(m);
-        }
 
         private void translate()
         {

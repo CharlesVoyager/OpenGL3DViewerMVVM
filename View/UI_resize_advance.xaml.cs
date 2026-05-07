@@ -285,7 +285,7 @@ namespace View3D.view
             gIsShow = false;
             checkMin();
 
-            MainWindow.main.stlComposer.check_stl_size_too_small(stl);
+            MainWindow.main.viewModel.check_stl_size_too_small(stl);
 
             gIsShow = true;
             updateTxt();
@@ -302,7 +302,7 @@ namespace View3D.view
             button_mmtoinch.IsEnabled = false;
             button_inchtomm.IsEnabled = true;
 
-            MainWindow.main.stlComposer.DoMmToInch(stl);
+            MainWindow.main.viewModel.DoMmToInch(stl);
             txt_Scale.Text = (Convert.ToDouble(MainWindow.main.stlComposer.textScaleX.Text) * 100).ToString("0");
 
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
@@ -322,7 +322,7 @@ namespace View3D.view
             button_mmtoinch.IsEnabled = true;
             button_inchtomm.IsEnabled = false;
 
-            MainWindow.main.stlComposer.DoInchtomm(model);
+            MainWindow.main.viewModel.DoInchToMm(model);
             txt_Scale.Text = (Convert.ToDouble(MainWindow.main.stlComposer.textScaleX.Text) * 100).ToString("0");
             
             slider_resize.ValueChanged -= slider_resize_ValueChanged;

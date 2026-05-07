@@ -96,7 +96,7 @@ namespace View3D
             {
                 if (e.Key == Key.Delete)
                 {
-                    stlComposer.buttonRemoveSTL_Click(null, null);
+                    viewModel.DeleteModel();
                     threeDControl.UpdateChanges();
                 }
                 else if (e.Key == Key.Subtract) 
@@ -387,7 +387,7 @@ namespace View3D
             UI_move.slider_moveY.Minimum = -1000;
             UI_move.slider_moveY.Maximum = 1000;
 
-            stlComposer.buttonRemoveSTL_Click(null, null);
+            viewModel.DeleteModel();
             Focus();
         }
 

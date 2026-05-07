@@ -440,7 +440,7 @@ namespace View3D.view
             {
                 MainWindow.main.Dispatcher.Invoke(() =>
                 {
-                    stlComp.buttonRemoveSTL_Click(null, null);
+                    MainWindow.main.viewModel.DeleteModel();
                 });
                 Invalidate();
             }

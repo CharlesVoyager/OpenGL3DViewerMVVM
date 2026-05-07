@@ -35,22 +35,11 @@ namespace View3D.view
             return list;
         }
 
-        public List<ThreeDModel> GetSelectedPrintModels()
-        {
-            var list = new List<ThreeDModel>();
-            foreach (var m in MainWindow.main.viewModel.Models)
-                if (IsValidPrintModel(m) && m.Selected) list.Add(m);
-            return list;
-        }
-
         bool isTooSmall(RHBoundingBox boundingBox)
         {
             // Don't use z size here because some STL files may have very small z size but large x/y size, and they should not be considered as "too small".
             return (boundingBox.Size.x < 10 && boundingBox.Size.y < 10 && boundingBox.Size.z < 10); 
         }
-
-    
-    
 
         public void check_stl_size_too_small(ThreeDModel model)
         {
@@ -69,17 +58,6 @@ namespace View3D.view
                 else if (dlg.gIsInch) DoMmToInch(model);
             }
         }
-
-        // =====================================================================
-        //  RemoveModel / RemoveAllSelectedModels
-        // =====================================================================
-        private void RemoveModel(ThreeDModel model)
-        {
-            model.Clear();
-            MainWindow.main.viewModel.Models.Remove(model);
-        }
-
-        public void buttonRemoveSTL_Click(object sender, EventArgs e) => RemoveModel(MainWindow.main.viewModel.SelectedModel);
 
         private bool IsValidPrintModel(ThreeDModel model)
             => model.Name != "Unknown" &&

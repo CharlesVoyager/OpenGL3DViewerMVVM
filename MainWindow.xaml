@@ -35,7 +35,105 @@
             <MenuItem x:Name="menuSTLComposerWindow"     Header="STLComposer Window"/>
             <MenuItem x:Name="menuThreeDSettingsWindow"  Header="ThreeDSettings Window"/>
         </ContextMenu>
+
+        <Style TargetType="ToggleButton">
+                <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+                <Setter Property="Background" Value="#FF1F3B53"/>
+                <Setter Property="Foreground" Value="#FF000000"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.5">
+                            <GradientStop Color="#FFA3AEB9" Offset="0"/>
+                            <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                            <GradientStop Color="#FF718597" Offset="0.375"/>
+                            <GradientStop Color="#FF617584" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <DoubleAnimation To="0.3" Duration="0:00:00.2" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="(UIElement.Opacity)" />
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#F2FFFFFF"/>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#CCFFFFFF"/>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#7FFFFFFF"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Black"/>
+                                                <DoubleAnimation Duration="0" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity" To="0.5"/>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" To="#D8FFFFFF"/>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#C6FFFFFF"/>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#8CFFFFFF"/>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#3FFFFFFF"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity" To=".5"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Black"/>
+                                                <PointAnimation Duration="0" To="0.7,1" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.StartPoint)"/>
+                                                <PointAnimation Duration="0" To="0.7,0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.EndPoint)"/>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="FocusStates">
+                                        <VisualState x:Name="Focused">
+                                            <Storyboard>
+
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unfocused" />
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Border x:Name="Background" CornerRadius="3" Background="White" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
+                                    <Grid Background="{TemplateBinding Background}"  Margin="1">
+                                        <Border Opacity="0"  x:Name="BackgroundAnimation" Background="#FF448DCA" />
+                                        <Rectangle x:Name="BackgroundGradient" >
+                                            <Rectangle.Fill>
+                                                <LinearGradientBrush StartPoint=".7,0" EndPoint=".7,1" Opacity="0.1">
+                                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                                    <GradientStop Color="#F9FFFFFF" Offset="0.375" />
+                                                    <GradientStop Color="#E5FFFFFF" Offset="0.625" />
+                                                    <GradientStop Color="#C6FFFFFF" Offset="1" />
+                                                </LinearGradientBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Grid>
+                                </Border>
+                                <ContentPresenter
+                          x:Name="contentPresenter"
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          Margin="{TemplateBinding Padding}"/>
+                                <Rectangle x:Name="DisabledVisualElement" RadiusX="3" RadiusY="3" Fill="#FFFFFFFF" Opacity="0" IsHitTestVisible="false" />
+                                <Rectangle x:Name="FocusVisualElement" RadiusX="2" RadiusY="2" Margin="1" Stroke="#FF6DBDD1" StrokeThickness="1" Opacity="0" IsHitTestVisible="false" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
     </Window.Resources>
+    
     <Grid>
         <local:BusyWindow x:Name="BusyWindow"/>
         <local:OutofBound x:Name="OutofBound" Margin="14,40,0,0"/>
@@ -46,204 +144,7 @@
         <local:UI_object_information x:Name="UI_object_information" Margin="102,211,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
         <StackPanel x:Name="left_stackPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,60,0,0">
-            <StackPanel.Resources>
-                <Style TargetType="ToggleButton">
-                    <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-                    <Setter Property="Background" Value="#FF1F3B53"/>
-                    <Setter Property="Foreground" Value="#FF000000"/>
-                    <Setter Property="Padding" Value="3"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="BorderBrush">
-                        <Setter.Value>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" Opacity="0.5">
-                                <GradientStop Color="#FFA3AEB9" Offset="0"/>
-                                <GradientStop Color="#FF8399A9" Offset="0.375"/>
-                                <GradientStop Color="#FF718597" Offset="0.375"/>
-                                <GradientStop Color="#FF617584" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ToggleButton">
-                                <Grid>
-                                    <VisualStateManager.VisualStateGroups>
-                                        <VisualStateGroup x:Name="CommonStates">
-                                            <VisualState x:Name="Normal"/>
-                                            <VisualState x:Name="MouseOver">
-                                                <Storyboard>
-                                                    <DoubleAnimation To="0.3" Duration="0:00:00.2" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="(UIElement.Opacity)" />
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#F2FFFFFF"/>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#CCFFFFFF"/>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#7FFFFFFF"/>
-                                                </Storyboard>
-                                            </VisualState>
-                                            <VisualState x:Name="Pressed">
-                                                <Storyboard>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Black"/>
-                                                    <DoubleAnimation Duration="0" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity" To="0.5"/>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" To="#D8FFFFFF"/>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#C6FFFFFF"/>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#8CFFFFFF"/>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#3FFFFFFF"/>
-                                                </Storyboard>
-                                            </VisualState>
-                                            <VisualState x:Name="Disabled">
-                                                <Storyboard>
-                                                    <DoubleAnimation Duration="0" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity" To=".5"/>
-                                                </Storyboard>
-                                            </VisualState>
-                                        </VisualStateGroup>
-                                        <VisualStateGroup x:Name="CheckStates">
-                                            <VisualState x:Name="Checked">
-                                                <Storyboard>
-                                                    <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Black"/>
-                                                    <PointAnimation Duration="0" To="0.7,1" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.StartPoint)"/>
-                                                    <PointAnimation Duration="0" To="0.7,0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.EndPoint)"/>
-                                                </Storyboard>
-                                            </VisualState>
-                                            <VisualState x:Name="Unchecked"/>
-                                        </VisualStateGroup>
-                                        <VisualStateGroup x:Name="FocusStates">
-                                            <VisualState x:Name="Focused">
-                                                <Storyboard>
-
-                                                </Storyboard>
-                                            </VisualState>
-                                            <VisualState x:Name="Unfocused" />
-                                        </VisualStateGroup>
-                                    </VisualStateManager.VisualStateGroups>
-                                    <Border x:Name="Background" CornerRadius="3" Background="White" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}">
-                                        <Grid Background="{TemplateBinding Background}"  Margin="1">
-                                            <Border Opacity="0"  x:Name="BackgroundAnimation" Background="#FF448DCA" />
-                                            <Rectangle x:Name="BackgroundGradient" >
-                                                <Rectangle.Fill>
-                                                    <LinearGradientBrush StartPoint=".7,0" EndPoint=".7,1" Opacity="0.1">
-                                                        <GradientStop Color="#FFFFFFFF" Offset="0" />
-                                                        <GradientStop Color="#F9FFFFFF" Offset="0.375" />
-                                                        <GradientStop Color="#E5FFFFFF" Offset="0.625" />
-                                                        <GradientStop Color="#C6FFFFFF" Offset="1" />
-                                                    </LinearGradientBrush>
-                                                </Rectangle.Fill>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Border>
-                                    <ContentPresenter
-                              x:Name="contentPresenter"
-                              Content="{TemplateBinding Content}"
-                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              Margin="{TemplateBinding Padding}"/>
-                                    <Rectangle x:Name="DisabledVisualElement" RadiusX="3" RadiusY="3" Fill="#FFFFFFFF" Opacity="0" IsHitTestVisible="false" />
-                                    <Rectangle x:Name="FocusVisualElement" RadiusX="2" RadiusY="2" Margin="1" Stroke="#FF6DBDD1" StrokeThickness="1" Opacity="0" IsHitTestVisible="false" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </StackPanel.Resources>
             <StackPanel Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <Style TargetType="ToggleButton">
-                        <Setter Property="Control.VerticalContentAlignment" Value="Bottom" />
-                        <Setter Property="Control.Background" Value="#FF1F3B53" />
-                        <Setter Property="Control.Foreground" Value="#FF000000" />
-                        <Setter Property="Control.Padding" Value="3" />
-                        <Setter Property="Control.BorderThickness" Value="1" />
-                        <Setter Property="Control.BorderBrush">
-                            <Setter.Value>
-                                <LinearGradientBrush EndPoint="0.5,1" Opacity="0.5" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFA3AEB9" Offset="0" />
-                                    <GradientStop Color="#FF8399A9" Offset="0.375" />
-                                    <GradientStop Color="#FF718597" Offset="0.375" />
-                                    <GradientStop Color="#FF617584" Offset="1" />
-                                </LinearGradientBrush>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Control.Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ToggleButton">
-                                    <Grid>
-                                        <VisualStateManager.VisualStateGroups>
-                                            <VisualStateGroup Name="CommonStates">
-                                                <VisualState Name="Normal" />
-                                                <VisualState Name="MouseOver">
-                                                    <VisualState.Storyboard>
-                                                        <Storyboard>
-                                                            <DoubleAnimation Duration="0:00:00.2" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.3" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#F2FFFFFF" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#CCFFFFFF" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#7FFFFFFF" />
-                                                        </Storyboard>
-                                                    </VisualState.Storyboard>
-                                                </VisualState>
-                                                <VisualState Name="Pressed">
-                                                    <VisualState.Storyboard>
-                                                        <Storyboard>
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF6DBDD1" />
-                                                            <DoubleAnimation Duration="0" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity" To="0.5" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" To="#D8FFFFFF" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#C6FFFFFF" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#8CFFFFFF" />
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#3FFFFFFF" />
-                                                        </Storyboard>
-                                                    </VisualState.Storyboard>
-                                                </VisualState>
-                                                <VisualState Name="Disabled">
-                                                    <VisualState.Storyboard>
-                                                        <Storyboard>
-                                                            <DoubleAnimation Duration="0" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity" To=".5" />
-                                                        </Storyboard>
-                                                    </VisualState.Storyboard>
-                                                </VisualState>
-                                            </VisualStateGroup>
-                                            <VisualStateGroup Name="CheckStates">
-                                                <VisualState Name="Checked">
-                                                    <VisualState.Storyboard>
-                                                        <Storyboard>
-                                                            <PointAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.StartPoint)" To="0.7,1" />
-                                                            <PointAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.EndPoint)" To="0.7,0" />
-                                                        </Storyboard>
-                                                    </VisualState.Storyboard>
-                                                </VisualState>
-                                                <VisualState Name="Unchecked" />
-                                            </VisualStateGroup>
-                                            <VisualStateGroup Name="FocusStates">
-                                                <VisualState Name="Focused">
-                                                    <VisualState.Storyboard>
-                                                        <Storyboard>
-                                                            <DoubleAnimation Duration="0" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="Opacity" To="0.5" />
-                                                        </Storyboard>
-                                                    </VisualState.Storyboard>
-                                                </VisualState>
-                                                <VisualState Name="Unfocused" />
-                                            </VisualStateGroup>
-                                        </VisualStateManager.VisualStateGroups>
-                                        <Border Background="White" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}" CornerRadius="3" Name="Background">
-                                            <Grid Background="{TemplateBinding Control.Background}" Margin="1">
-                                                <Border Background="#FF448DCA" Name="BackgroundAnimation" Opacity="0" />
-                                                <Rectangle Name="BackgroundGradient">
-                                                    <Rectangle.Fill>
-                                                        <LinearGradientBrush EndPoint=".7,1" Opacity="0.1" StartPoint=".7,0">
-                                                            <GradientStop Color="#FFFFFFFF" Offset="0" />
-                                                            <GradientStop Color="#F9FFFFFF" Offset="0.375" />
-                                                            <GradientStop Color="#E5FFFFFF" Offset="0.625" />
-                                                            <GradientStop Color="#C6FFFFFF" Offset="1" />
-                                                        </LinearGradientBrush>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                            </Grid>
-                                        </Border>
-                                        <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" Margin="{TemplateBinding Control.Padding}" Name="contentPresenter" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" />
-                                        <Rectangle Fill="#FFFFFFFF" IsHitTestVisible="false" Name="DisabledVisualElement" Opacity="0" RadiusX="3" RadiusY="3" />
-                                        <Rectangle IsHitTestVisible="false" Margin="1" Name="FocusVisualElement" Opacity="0" RadiusX="2" RadiusY="2" Stroke="#FF6DBDD1" StrokeThickness="1" />
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </StackPanel.Resources>
                 <ToggleButton Height="24" Margin="2.5" Name="zoomout_toggleButton" Padding="3" Width="24" Click="zoomout_toggleButton_Click">
                     <ToggleButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_zoomOut1.png" />
@@ -255,11 +156,13 @@
                     </ToggleButton.Background>
                 </ToggleButton>
             </StackPanel>
+            
             <ToggleButton Name="view_toggleButton" Width="50" Unchecked="view_toggleButton_Unchecked" Height="70" Padding="3" Margin="2.5" Checked="view_toggleButton_Checked" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_view1.png" />
                 </ToggleButton.Background> View
             </ToggleButton>
+           
             <Image Name="image3" Source="/OpenGL3DViewerMVVM;component/Resources/bar2.png" Stretch="None" Height="8" />
            
             <ToggleButton Name="move_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" FontFamily="Arial">
@@ -294,95 +197,6 @@
         </StackPanel>
 
         <StackPanel x:Name="top_stackPanel" Margin="0,60,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <StackPanel.Resources>
-                <Style TargetType="ToggleButton">
-                    <Setter Property="Control.VerticalContentAlignment" Value="Bottom" />
-                    <Setter Property="Control.Background" Value="#FF1F3B53" />
-                    <Setter Property="Control.Foreground" Value="#FF000000" />
-                    <Setter Property="Control.Padding" Value="3" />
-                    <Setter Property="Control.BorderThickness" Value="1" />
-                    <Setter Property="Control.BorderBrush">
-                        <Setter.Value>
-                            <LinearGradientBrush EndPoint="0.5,1" Opacity="0.5" StartPoint="0.5,0">
-                                <GradientStop Color="#FFA3AEB9" Offset="0" />
-                                <GradientStop Color="#FF8399A9" Offset="0.375" />
-                                <GradientStop Color="#FF718597" Offset="0.375" />
-                                <GradientStop Color="#FF617584" Offset="1" />
-                            </LinearGradientBrush>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Control.Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ToggleButton">
-                                <Grid>
-                                    <VisualStateManager.VisualStateGroups>
-                                        <VisualStateGroup Name="CommonStates">
-                                            <VisualState Name="Normal" />
-                                            <VisualState Name="MouseOver">
-                                                <VisualState.Storyboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Duration="0:00:00.2" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.3" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#F2FFFFFF" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#CCFFFFFF" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#7FFFFFFF" />
-                                                    </Storyboard>
-                                                </VisualState.Storyboard>
-                                            </VisualState>
-                                            <VisualState Name="Pressed">
-                                                <VisualState.Storyboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF6DBDD1" />
-                                                        <DoubleAnimation Duration="0" Storyboard.TargetName="BackgroundAnimation" Storyboard.TargetProperty="Opacity" To="0.5" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" To="#D8FFFFFF" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" To="#C6FFFFFF" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[2].(GradientStop.Color)" To="#8CFFFFFF" />
-                                                        <ColorAnimation Duration="0" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Rectangle.Fill).(GradientBrush.GradientStops)[3].(GradientStop.Color)" To="#3FFFFFFF" />
-                                                    </Storyboard>
-                                                </VisualState.Storyboard>
-                                            </VisualState>
-                                            <VisualState Name="Disabled">
-                                                <VisualState.Storyboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Duration="0" Storyboard.TargetName="DisabledVisualElement" Storyboard.TargetProperty="Opacity" To=".5" />
-                                                    </Storyboard>
-                                                </VisualState.Storyboard>
-                                            </VisualState>
-                                        </VisualStateGroup>
-                                        <VisualStateGroup Name="FocusStates">
-                                            <VisualState Name="Focused">
-                                                <VisualState.Storyboard>
-                                                    <Storyboard>
-                                                        <DoubleAnimation Duration="0" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="Opacity" To="0.5" />
-                                                    </Storyboard>
-                                                </VisualState.Storyboard>
-                                            </VisualState>
-                                            <VisualState Name="Unfocused" />
-                                        </VisualStateGroup>
-                                    </VisualStateManager.VisualStateGroups>
-                                    <Border Background="White" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}" CornerRadius="3" Name="Background">
-                                        <Grid Background="{TemplateBinding Control.Background}" Margin="1">
-                                            <Border Background="#FF448DCA" Name="BackgroundAnimation" Opacity="0" />
-                                            <Rectangle Name="BackgroundGradient">
-                                                <Rectangle.Fill>
-                                                    <LinearGradientBrush EndPoint=".7,1" Opacity="0.1" StartPoint=".7,0">
-                                                        <GradientStop Color="#FFFFFFFF" Offset="0" />
-                                                        <GradientStop Color="#F9FFFFFF" Offset="0.375" />
-                                                        <GradientStop Color="#E5FFFFFF" Offset="0.625" />
-                                                        <GradientStop Color="#C6FFFFFF" Offset="1" />
-                                                    </LinearGradientBrush>
-                                                </Rectangle.Fill>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Border>
-                                    <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" Margin="{TemplateBinding Control.Padding}" Name="contentPresenter" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" />
-                                    <Rectangle Fill="#FFFFFFFF" IsHitTestVisible="false" Name="DisabledVisualElement" Opacity="0" RadiusX="3" RadiusY="3" />
-                                    <Rectangle IsHitTestVisible="false" Margin="1" Name="FocusVisualElement" Opacity="0" RadiusX="2" RadiusY="2" Stroke="#FF6DBDD1" StrokeThickness="1" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </StackPanel.Resources>
             <ToggleButton Content="Import" Height="70" Margin="2.5" Name="import_button" Padding="3" Width="50" Click="import_button_Click" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_import1.png" />

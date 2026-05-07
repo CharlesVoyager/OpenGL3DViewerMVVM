@@ -462,8 +462,13 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         {
             get { return rotation.x; }
             set 
-            { 
-                rotation.x = value;
+            {
+                if (value > 360)
+                    rotation.x = 360;
+                else if (value < 0)
+                    rotation.x = 0;
+                else 
+                    rotation.x = value;
                 updateChange(nameof(RotationX));
             }
         }
@@ -471,9 +476,14 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public double RotationY
         {
             get { return rotation.y; }
-            set 
-            { 
-                rotation.y = value;
+            set
+            {
+                if (value > 360)
+                    rotation.y = 360;
+                else if (value < 0)
+                    rotation.y = 0;
+                else
+                    rotation.y = value;
                 updateChange(nameof(RotationY));
             }
         }
@@ -481,9 +491,14 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public double RotationZ
         {
             get { return rotation.z; }
-            set 
-            { 
-                rotation.z = value;
+            set
+            {
+                if (value > 360)
+                    rotation.z = 360;
+                else if (value < 0)
+                    rotation.z = 0;
+                else
+                    rotation.z = value;
                 updateChange(nameof(RotationZ));
             }
         }

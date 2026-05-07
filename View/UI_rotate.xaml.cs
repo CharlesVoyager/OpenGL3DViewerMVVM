@@ -128,28 +128,34 @@ namespace View3D.view
 
         private void orangeX_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
             if (e.Delta > 0)
-                textRotX.Text = (Convert.ToDouble(textRotX.Text) + 1).ToString();
+                model.RotationX += 1;
             else
-                textRotX.Text = (Convert.ToDouble(textRotX.Text) - 1).ToString();
+                model.RotationX -= 1;
             e.Handled = true;
         }
 
         private void orangeY_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
             if (e.Delta > 0)
-                textRotY.Text = (Convert.ToDouble(textRotY.Text) + 1).ToString();
+                model.RotationY += 1;
             else
-                textRotY.Text = (Convert.ToDouble(textRotY.Text) - 1).ToString();
+                model.RotationY -= 1;
             e.Handled = true;
         }
 
         private void orangeZ_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
             if (e.Delta > 0)
-                textRotZ.Text = (Convert.ToDouble(textRotZ.Text) + 1).ToString();
+                model.RotationZ += 1;
             else
-                textRotZ.Text = (Convert.ToDouble(textRotZ.Text) - 1).ToString();
+                model.RotationZ -= 1;
             e.Handled = true;
         }
 
@@ -173,47 +179,35 @@ namespace View3D.view
 
         private void textboxX_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
             if (e.Key == Key.Up)
-            {
-                textRotX.Text = (Convert.ToDouble(textRotX.Text) + 1).ToString();
-            }
+                model.RotationX += 1;
             else if (e.Key == Key.Down)
-            {
-                textRotX.Text = (Convert.ToDouble(textRotX.Text) - 1).ToString();
-            }
-            else if (e.Key == Key.Enter)
-            {
-            }
+                model.RotationX -= 1;
         }
 
         private void textboxY_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
             if (e.Key == Key.Up)
-            {
-                textRotY.Text = (Convert.ToDouble(textRotY.Text) + 1).ToString();
-            }
+                model.RotationY += 1;
             else if (e.Key == Key.Down)
-            {
-                textRotY.Text = (Convert.ToDouble(textRotY.Text) - 1).ToString();
-            }
-            else if (e.Key == Key.Enter)
-            {
-            }
+                model.RotationY -= 1;
         }
 
         private void textboxZ_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
             if (e.Key == Key.Up)
-            {
-                textRotZ.Text = (Convert.ToDouble(textRotZ.Text) + 1).ToString();
-            }
+                model.RotationZ += 1;
             else if (e.Key == Key.Down)
-            {
-                textRotZ.Text = (Convert.ToDouble(textRotZ.Text) - 1).ToString();
-            }
-            else if (e.Key == Key.Enter)
-            {
-            }
+                model.RotationZ -= 1;
         }
 
         protected override void OnPreviewTextInput(TextCompositionEventArgs e)
@@ -257,24 +251,6 @@ namespace View3D.view
                 }
             }
             base.OnPreviewTextInput(e);
-        }
-
-        // Input angle must between 0~360 degree
-        private void limitRotateAngle(System.Windows.Controls.TextBox textbox)
-        {
-            if (Convert.ToDouble(textbox.Text) >= 360 || textbox.Text.Length > 3)
-            {
-                textbox.Text = "360";
-            }
-            else if (Convert.ToDouble(textbox.Text) <= 0)
-            {
-                textbox.Text = "0";
-            }
-        }
-
-        private void OnSelectionChange(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

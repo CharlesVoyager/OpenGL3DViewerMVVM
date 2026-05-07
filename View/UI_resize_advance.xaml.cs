@@ -92,12 +92,12 @@ namespace View3D.view
 
                 Double tScalex = dimX / Math.Max(stl.Model.boundingBox.Size.x, MIN_DIMENSION);
  
-                MainWindow.main.stlComposer.textScaleX.Text = tScalex.ToString("0.000");
+                stl.ScaleX = tScalex;
                 if (chk_Uniform.IsChecked == true)
                 {
-                    MainWindow.main.stlComposer.textScaleY.Text = tScalex.ToString("0.000");
-                    MainWindow.main.stlComposer.textScaleZ.Text = tScalex.ToString("0.000");
-     
+                    stl.ScaleY = tScalex;
+                    stl.ScaleZ = tScalex;
+                        
                     gIsShow = true;
                     updateSliderValue(xyzbind);
                     updateTxt();
@@ -121,12 +121,12 @@ namespace View3D.view
                 if (dimY == 0) dimY = MIN_DIMENSION;
 
                 Double tScaley = dimY / Math.Max(stl.Model.boundingBox.Size.y, MIN_DIMENSION);
-                MainWindow.main.stlComposer.textScaleY.Text = tScaley.ToString("0.000");
+                stl.ScaleY = tScaley;
                 if (chk_Uniform.IsChecked == true)
                 {
-                    MainWindow.main.stlComposer.textScaleX.Text = tScaley.ToString("0.000");
-                    MainWindow.main.stlComposer.textScaleZ.Text = tScaley.ToString("0.000");
-  
+                    stl.ScaleX = tScaley;
+                    stl.ScaleZ = tScaley;
+
                     gIsShow = true;
                     updateSliderValue(xyzbind);
                     updateTxt();
@@ -157,12 +157,12 @@ namespace View3D.view
                 if (dimZ == 0) dimZ = MIN_DIMENSION;
 
                 Double tScalez = dimZ / Math.Max(stl.Model.boundingBox.Size.z, MIN_DIMENSION);
-                MainWindow.main.stlComposer.textScaleZ.Text = tScalez.ToString("0.000");
+                stl.ScaleZ = tScalez;
                 if (chk_Uniform.IsChecked == true)
                 {
-                    MainWindow.main.stlComposer.textScaleX.Text = tScalez.ToString("0.000");
-                    MainWindow.main.stlComposer.textScaleY.Text = tScalez.ToString("0.000");
-        
+                    stl.ScaleX = tScalez;
+                    stl.ScaleY = tScalez;
+
                     gIsShow = true;
                     updateSliderValue(xyzbind);
                     updateTxt();
@@ -299,14 +299,14 @@ namespace View3D.view
 
         private void button_mmtoinch_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
 
             button_mmtoinch.IsEnabled = false;
             button_inchtomm.IsEnabled = true;
 
-            MainWindow.main.viewModel.DoMmToInch(stl);
-            txt_Scale.Text = (Convert.ToDouble(MainWindow.main.stlComposer.textScaleX.Text) * 100).ToString("0");
+            MainWindow.main.viewModel.DoMmToInch(model);
+            txt_Scale.Text = (model.ScaleX * 100).ToString("0");
 
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
             slider_resize.Value = Convert.ToDouble(txt_Scale.Text);
@@ -326,7 +326,7 @@ namespace View3D.view
             button_inchtomm.IsEnabled = false;
 
             MainWindow.main.viewModel.DoInchToMm(model);
-            txt_Scale.Text = (Convert.ToDouble(MainWindow.main.stlComposer.textScaleX.Text) * 100).ToString("0");
+            txt_Scale.Text = (model.ScaleX * 100).ToString("0");
             
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
             slider_resize.Value = Convert.ToDouble(txt_Scale.Text);
@@ -339,16 +339,16 @@ namespace View3D.view
 
         private void btn_Scale_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
 
             try
             {
                 Double scaleValue = Convert.ToDouble(txt_Scale.Text) / 100;
 
-                MainWindow.main.stlComposer.textScaleX.Text = scaleValue.ToString("0.000");
-                MainWindow.main.stlComposer.textScaleY.Text = scaleValue.ToString("0.000");
-                MainWindow.main.stlComposer.textScaleZ.Text = scaleValue.ToString("0.000");
+                model.ScaleX = scaleValue;
+                model.ScaleY = scaleValue;
+                model.ScaleZ = scaleValue;
             
                 gIsShow = true;
                 updateTxt();

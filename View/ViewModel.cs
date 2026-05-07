@@ -244,6 +244,7 @@ namespace OpenGL3DViewerMVVM.View
 
         public void CloneModel()
         {
+            if (SelectedModel == null) return;
             ThreeDModel newModel = new ThreeDModel();
             SelectedModel?.CopyTo(newModel);
             MainWindow.main.stlComposer.Autoposition(newModel);

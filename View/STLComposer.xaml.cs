@@ -49,29 +49,8 @@ namespace View3D.view
             return (boundingBox.Size.x < 10 && boundingBox.Size.y < 10 && boundingBox.Size.z < 10); 
         }
 
-        // =====================================================================
-        //  CloneObject
-        // =====================================================================
-        private bool CloneObject(ThreeDModel model)
-        {
-            ThreeDModel newModel = new ThreeDModel();
-            model.CopyTo(newModel); 
-            Autoposition(newModel);
-            newModel.UpdateOutOfBound();
-            MainWindow.main.viewModel.Models.Add(newModel);
-
-            MainWindow.main.threeDControl.InvokeGL(() =>
-            {
-                newModel.Drawer.Init();
-            });
-            return true;
-        }
-
-        public void CloneObject()
-        {
-            List<ThreeDModel> cloneModels = GetSelectedPrintModels();
-            foreach (var pm in cloneModels) CloneObject(pm);
-        }
+    
+    
 
         public void check_stl_size_too_small(ThreeDModel model)
         {

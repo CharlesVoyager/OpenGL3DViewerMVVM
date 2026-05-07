@@ -154,7 +154,7 @@ namespace View3D
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[4]).Click += (s, e) => OnMmToInch();
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[5]).Click += (s, e) => OnInchToMm();
             // index 6 is Separator
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[7]).Click += (s, e) => OnClone();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[7]).Click += (s, e) => viewModel.CloneModel();
             // index 8 is Separator
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[9]).Click += (s, e) => stlComposer.Show();
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[10]).Click += (s, e) => threeDSettings.Show();
@@ -204,8 +204,6 @@ namespace View3D
             ThreeDModel m = viewModel.SelectedModel;
             if (m != null) stlComposer.DoInchtomm(m);
         }
-
-        private void OnClone() => stlComposer.CloneObject();
 
         private void translate()
         {

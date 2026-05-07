@@ -144,7 +144,7 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.ModelToMesh();
 
                 // NOTES:
-                // 1. Auto position needs bounding box information.
+                // 1. Auto position and checking model size need bounding box information.
                 // 2. Current bounding box is for orignal STL data. 
                 newModel.CopyTopoModelBoundingBoxToPrintModel();
 

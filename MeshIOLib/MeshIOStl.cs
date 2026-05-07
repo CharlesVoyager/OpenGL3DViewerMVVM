@@ -266,6 +266,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                             {
                                 Command = COMMAND.None;
                                 Status = STATUS.UserAbort;
+                                model.Clear();
                                 return;
                             }
                         }
@@ -424,6 +425,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                         {
                             Command = COMMAND.None;
                             Status = STATUS.UserAbort;
+                            model.Clear();
                             return;
                         }
                         if (!ModelLib.Utils.RamTools.IsRamSizeValid())
@@ -492,6 +494,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                             {
                                 Command = COMMAND.None;
                                 Status = STATUS.UserAbort;
+                                model.Clear();
                                 return;
                             }
                         }
@@ -539,6 +542,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                     {
                         Command = COMMAND.None;
                         Status = STATUS.UserAbort;
+                        model.Clear();
                         return;
                     }
 

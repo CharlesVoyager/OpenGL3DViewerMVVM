@@ -1,5 +1,4 @@
 ﻿using OpenGL3DViewerMVVM.MeshIOLib;
-using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
 using OpenGL3DViewerMVVM.View;
 using System.Globalization;
@@ -389,10 +388,6 @@ namespace View3D
 
         void DebugLog()
         {
-            foreach(var m in viewModel.Models)
-            {
-                System.Diagnostics.Debug.WriteLine($"Model: {m.Name}, Position: {m.Position.ToString()}, Rotation: {m.Rotation.ToString()}, Scale: {m.Scale.ToString()}");
-            }
         }
     }
 }

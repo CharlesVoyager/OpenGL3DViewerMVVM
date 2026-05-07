@@ -218,7 +218,7 @@ namespace OpenGL3DViewerMVVM.View
             }
 
             // Remember initial positions for all ViewModel.Models after Autoposition.
-            foreach (var m in MainWindow.main.viewModel.Models)
+            foreach (var m in Models)
             {
                 m.InitialPosition.x = m.Position.X;
                 m.InitialPosition.y = m.Position.Y;
@@ -262,7 +262,7 @@ namespace OpenGL3DViewerMVVM.View
  
         bool Autoposition(ThreeDModel newModel)
         {
-            List<ThreeDModel> allModels = new List<ThreeDModel>(MainWindow.main.viewModel.Models);
+            List<ThreeDModel> allModels = new List<ThreeDModel>(Models);
 
             allModels.Add(newModel);
 

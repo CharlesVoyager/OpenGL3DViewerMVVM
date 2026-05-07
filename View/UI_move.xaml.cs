@@ -214,32 +214,23 @@ namespace View3D.view
 
         private void slider_moveX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try
-            {
-                if (Math.Abs(e.OldValue - e.NewValue) > 0.01)
-                    MainWindow.main.stlComposer.textTransX.Text = slider_moveX.Value.ToString("0.000");
-            }
-            catch { }
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+            model.PositionX = slider_moveX.Value;
         }
 
         private void slider_moveY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try
-            {
-                if (Math.Abs(e.OldValue - e.NewValue) > 0.01)
-                    MainWindow.main.stlComposer.textTransY.Text = slider_moveY.Value.ToString("0.000");
-            }
-            catch { }
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+            model.PositionY = slider_moveY.Value;
         }
 
         private void slider_moveZ_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            try
-            {
-                if (Math.Abs(e.OldValue - e.NewValue) > 0.0001)
-                    MainWindow.main.stlComposer.textTransZ.Text = slider_moveZ.Value.ToString("0.000");
-            }
-            catch { }
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+            model.PositionZ = slider_moveZ.Value;
         }
 
         private void moveX_textbox_KeyDown(object sender, KeyEventArgs e)

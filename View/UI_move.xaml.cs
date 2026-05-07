@@ -83,20 +83,12 @@ namespace View3D.view
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
-            slider_moveX.ValueChanged -= slider_moveX_ValueChanged;
-            slider_moveY.ValueChanged -= slider_moveY_ValueChanged;
-            slider_moveZ.ValueChanged -= slider_moveZ_ValueChanged;
-
             slider_moveX.Maximum = SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.Size.x / 2);
             slider_moveX.Minimum = stl.BoundingBox.Size.x / 2;
             slider_moveY.Maximum = SettingsService.Instance.Settings.PrintAreaDepth - (stl.BoundingBox.Size.y / 2);
             slider_moveY.Minimum = stl.BoundingBox.Size.y / 2;
             slider_moveZ.Maximum = SettingsService.Instance.Settings.PrintAreaHeight - (stl.BoundingBox.Size.z / 2);
             slider_moveZ.Minimum = stl.BoundingBox.Size.z / 2;
-
-            slider_moveX.ValueChanged += slider_moveX_ValueChanged;
-            slider_moveY.ValueChanged += slider_moveY_ValueChanged;
-            slider_moveZ.ValueChanged += slider_moveZ_ValueChanged;
         }
 
         public void button_move_reset_Click(object sender, RoutedEventArgs e)
@@ -148,27 +140,6 @@ namespace View3D.view
             else
                 slider_moveZ.Value--;
             e.Handled = true;   
-        }
-
-        private void slider_moveX_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
-            if (model == null) return;
-            model.PositionX = slider_moveX.Value;
-        }
-
-        private void slider_moveY_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
-            if (model == null) return;
-            model.PositionY = slider_moveY.Value;
-        }
-
-        private void slider_moveZ_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
-            if (model == null) return;
-            model.PositionZ = slider_moveZ.Value;
         }
 
         private void moveX_textbox_KeyDown(object sender, KeyEventArgs e)

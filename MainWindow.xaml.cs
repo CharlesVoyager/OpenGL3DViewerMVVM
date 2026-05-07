@@ -313,8 +313,6 @@ namespace View3D
             move_toggleButton.IsChecked = false;
             rotate_toggleButton.IsChecked = false;
             info_toggleButton.IsChecked = false;
-
-            UI_resize_advance.Init();
         }
 
         private void resize_toggleButton_Unchecked(object sender, RoutedEventArgs e)

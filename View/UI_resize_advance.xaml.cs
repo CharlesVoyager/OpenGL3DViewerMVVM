@@ -51,7 +51,8 @@ namespace View3D.view
             button_inchtomm.Content = Trans.T("B_SCALE_DOWN") + " (" + Trans.T("L_INCH") + "->" + Trans.T("L_MM") + ")";
         }
 
-        public void Init()
+        // Update UI when selection changed.
+        private void OnSelectionChange(object sender, SelectionChangedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
             ThreeDModel model = MainWindow.main.viewModel.SelectedModel;

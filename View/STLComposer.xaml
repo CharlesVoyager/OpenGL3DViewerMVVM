@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              Height="540" 
              Width="400"
-             Title="STLCompoer"
+             Title="STLComposer"
              ResizeMode="NoResize" Closing="Window_Closing">
 
     <Window.Resources>

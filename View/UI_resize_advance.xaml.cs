@@ -270,7 +270,6 @@ namespace View3D.view
             if (MainWindow.main == null) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
-         
             MainWindow.main.stlComposer.textScaleX.Text = "1";
             MainWindow.main.stlComposer.textScaleY.Text = "1";
             MainWindow.main.stlComposer.textScaleZ.Text = "1";
@@ -379,6 +378,7 @@ namespace View3D.view
 
         void updateSliderValue(Axis axis)
         {
+            if (MainWindow.main.viewModel.SelectedModel == null) return;
             switch (axis)
             {
                 case Axis.X:

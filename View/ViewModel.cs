@@ -339,10 +339,15 @@ namespace OpenGL3DViewerMVVM.View
                     model.BoundingBox.Size.y,
                     model.BoundingBox.Size.z);
                 if (MainWindow.main.Visibility == Visibility.Visible)
-                    dlg.Owner = MainWindow.main;
+                    dlg.Owner = MainWindow.main;    // Ensure the dialog is on top of main window, otherwise user may miss the dialog and think the software is not responding.
                 dlg.ShowDialog();
                 if (dlg.gIsScale) DoAutoScale(model);
                 else if (dlg.gIsInch) DoMmToInch(model);
+                else
+                {
+                    model.Land();
+                    MainWindow.main.threeDControl.UpdateChanges();
+                }
             }
         }
 

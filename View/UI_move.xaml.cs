@@ -18,7 +18,10 @@ namespace View3D.view
             try
             {
                 if (MainWindow.main != null)
+                {
                     MainWindow.main.languageChanged += translate;
+                    DataContext = MainWindow.main.viewModel;
+                }
             }
             catch { }
         }
@@ -79,6 +82,10 @@ namespace View3D.view
         {
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
+
+            slider_moveX.ValueChanged -= slider_moveX_ValueChanged;
+            slider_moveY.ValueChanged -= slider_moveY_ValueChanged;
+            slider_moveZ.ValueChanged -= slider_moveZ_ValueChanged  ;
 
             slider_moveX.Maximum = 1000;
             slider_moveX.Minimum = -1000;
@@ -159,6 +166,10 @@ namespace View3D.view
                 slider_moveZ.Value = moveMin;
             slider_moveZ.Maximum = moveMax;
             slider_moveZ.Minimum = moveMin;
+
+            slider_moveX.ValueChanged += slider_moveX_ValueChanged;
+            slider_moveY.ValueChanged += slider_moveY_ValueChanged;
+            slider_moveZ.ValueChanged += slider_moveZ_ValueChanged;
         }
 
         public void button_move_reset_Click(object sender, RoutedEventArgs e)

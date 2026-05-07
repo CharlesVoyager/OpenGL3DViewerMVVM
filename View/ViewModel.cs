@@ -44,11 +44,14 @@ namespace OpenGL3DViewerMVVM.View
                         selectedModel.Selected = true;
 
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsModelSelected));
                     MainWindow.main.threeDControl.UpdateChanges();
                 }
                 MainWindow.main.setbuttonVisable(selectedModel != null);
             }
         }
+
+        public bool IsModelSelected => selectedModel != null;
 
         // Check if all models are in print bed area.
         public bool IsOutOfBound

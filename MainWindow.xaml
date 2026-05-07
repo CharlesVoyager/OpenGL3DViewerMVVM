@@ -14,6 +14,7 @@
         Drop="MainWindow_Drop">
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         <Storyboard x:Key="sbShowTopMenu" >
             <ThicknessAnimation Storyboard.TargetProperty="Margin" From="0,-60,0,0" To="0,0,0,0" DecelerationRatio=".9" Duration="0:0:1" />
         </Storyboard>
@@ -261,31 +262,31 @@
             </ToggleButton>
             <Image Name="image3" Source="/OpenGL3DViewerMVVM;component/Resources/bar2.png" Stretch="None" Height="8" />
            
-            <ToggleButton Name="move_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" Visibility="Hidden" FontFamily="Arial">
+            <ToggleButton Name="move_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_move1.png" />
                 </ToggleButton.Background> Move
             </ToggleButton>
 
-            <ToggleButton Name="rotate_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="rotate_toggleButton_Checked" Unchecked="rotate_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
+            <ToggleButton Name="rotate_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="rotate_toggleButton_Checked" Unchecked="rotate_toggleButton_Unchecked" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_turn1.png" />
                 </ToggleButton.Background> Rotate
             </ToggleButton>
 
-            <ToggleButton Name="resize_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="resize_toggleButton_Checked" Unchecked="resize_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
+            <ToggleButton Name="resize_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="resize_toggleButton_Checked" Unchecked="resize_toggleButton_Unchecked" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_scale1.png" />
                 </ToggleButton.Background> Resize
             </ToggleButton>
-            
-            <ToggleButton Name="info_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="info_toggleButton_Checked" Unchecked="info_toggleButton_Unchecked" Visibility="Hidden" FontFamily="Arial">
+
+            <ToggleButton Name="info_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Checked="info_toggleButton_Checked" Unchecked="info_toggleButton_Unchecked" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_info1.png" />
                 </ToggleButton.Background> Info
             </ToggleButton>
-            
-            <ToggleButton Name="remove_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Click="remove_toggleButton_Click" Visibility="Hidden" FontFamily="Arial" >
+
+            <ToggleButton Name="remove_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Click="remove_toggleButton_Click" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" FontFamily="Arial" >
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_remove1.png" />
                 </ToggleButton.Background> Remove

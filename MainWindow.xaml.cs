@@ -66,6 +66,9 @@ namespace View3D
             threeDCamera = new ThreeDCamera();
 
             InitializeComponent();
+          
+            DataContext = viewModel;
+       
             initializeUi();
 
             if (languageChanged != null)
@@ -209,12 +212,6 @@ namespace View3D
 
             if (flag == true)
             {
-                move_toggleButton.Visibility = Visibility.Visible;
-                rotate_toggleButton.Visibility = Visibility.Visible;
-                resize_toggleButton.Visibility = Visibility.Visible;
-                info_toggleButton.Visibility = Visibility.Visible;
-                remove_toggleButton.Visibility = Visibility.Visible;
-
                 move_toggleButton.IsChecked = false;
                 rotate_toggleButton.IsChecked = false;
                 resize_toggleButton.IsChecked = false;
@@ -223,12 +220,6 @@ namespace View3D
             }
             else
             {
-                move_toggleButton.Visibility = Visibility.Hidden;
-                rotate_toggleButton.Visibility = Visibility.Hidden;
-                resize_toggleButton.Visibility = Visibility.Hidden;
-                info_toggleButton.Visibility = Visibility.Hidden;
-                remove_toggleButton.Visibility = Visibility.Hidden;
-
                 VisualStateManager.GoToState(UI_move, "StateHidden", true);
                 VisualStateManager.GoToState(UI_rotate, "StateHidden", true);
                 VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);

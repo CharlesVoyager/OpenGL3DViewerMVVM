@@ -85,87 +85,14 @@ namespace View3D.view
 
             slider_moveX.ValueChanged -= slider_moveX_ValueChanged;
             slider_moveY.ValueChanged -= slider_moveY_ValueChanged;
-            slider_moveZ.ValueChanged -= slider_moveZ_ValueChanged  ;
+            slider_moveZ.ValueChanged -= slider_moveZ_ValueChanged;
 
-            slider_moveX.Maximum = 1000;
-            slider_moveX.Minimum = -1000;
-            slider_moveY.Maximum = 1000;
-            slider_moveY.Minimum = -1000;
-            slider_moveZ.Maximum = 1000;
-            slider_moveZ.Minimum = -1000;
-            slider_moveX.Value = stl.Position.X;
-            slider_moveY.Value = stl.Position.Y;
-            slider_moveZ.Value = stl.Position.Z;
-
-            double moveMax, moveMin;
-
-            moveMax = (int)Math.Floor((SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.xMax - stl.Position.X)) * 100) * 0.01;
-            moveMin = (int)Math.Ceiling((stl.Position.X - stl.BoundingBox.xMin) * 100) * 0.01;
-
-            double a = SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.xMax - stl.Position.X);
-            double b = stl.Position.X - stl.BoundingBox.xMin;
-
-            a += 0;
-            b += 0;
-
-            //module is out of bound,it cannot move. 
-            if (moveMin > moveMax)
-                slider_moveX.Value = (float)(moveMin + moveMax) / 2;
-            else if (moveMin <= stl.Position.X && stl.Position.X <= moveMax)//module is in of bound.
-                slider_moveX.Value = stl.Position.X;
-            else if (stl.Position.X > moveMax)//model is out of bound(too big), but it can move.
-                slider_moveX.Value = moveMax;
-            else // (moveMin > stl.Position.X)//model is out of bound(too small), but it can move.
-                slider_moveX.Value = moveMin;
-
-            if (moveMin > moveMax)
-            {
-                slider_moveX.Maximum = (float)(moveMin + moveMax) / 2;
-                slider_moveX.Minimum = (float)(moveMin + moveMax) / 2;
-            }
-            else
-            {
-                slider_moveX.Maximum = moveMax;
-                slider_moveX.Minimum = moveMin;
-            }
-
-
-            moveMax = (int)Math.Floor((SettingsService.Instance.Settings.PrintAreaDepth - (stl.BoundingBox.yMax - stl.Position.Y)) * 100) * 0.01;
-            moveMin = (int)Math.Ceiling((stl.Position.Y - stl.BoundingBox.yMin) * 100) * 0.01;
-
-            //module is out of bound,it can not move. 
-            if (moveMin > moveMax)
-                slider_moveY.Value = (float)(moveMin + moveMax) / 2;
-            else if (moveMin <= stl.Position.Y && stl.Position.Y <= moveMax)//module is in of bound.
-                slider_moveY.Value = stl.Position.Y;
-            else if (stl.Position.Y > moveMax)//model is out of bound(too big), but it can move.
-                slider_moveY.Value = moveMax;
-            else // (moveMin > stl.Position.Y)//model is out of bound(too small), but it can move.
-                slider_moveY.Value = moveMin;
-
-            if (moveMin > moveMax)
-            {
-                slider_moveY.Maximum = (float)(moveMin + moveMax) / 2;
-                slider_moveY.Minimum = (float)(moveMin + moveMax) / 2;
-            }
-            else
-            {
-                slider_moveY.Maximum = moveMax;
-                slider_moveY.Minimum = moveMin;
-            }
-
-            moveMax = SettingsService.Instance.Settings.PrintAreaHeight - (stl.BoundingBox.zMax - stl.Position.Z);
-            moveMin = stl.Position.Z - stl.BoundingBox.zMin;
-            if (moveMin > moveMax)
-                moveMin = moveMax;
-            if (moveMin <= stl.Position.Z && moveMax >= stl.Position.Z)
-                slider_moveZ.Value = stl.Position.Z;
-            else if (moveMax < stl.Position.Z)
-                slider_moveZ.Value = moveMax;
-            else // (moveMin > stl.Position.Z)
-                slider_moveZ.Value = moveMin;
-            slider_moveZ.Maximum = moveMax;
-            slider_moveZ.Minimum = moveMin;
+            slider_moveX.Maximum = SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.Size.x / 2);
+            slider_moveX.Minimum = stl.BoundingBox.Size.x / 2;
+            slider_moveY.Maximum = SettingsService.Instance.Settings.PrintAreaDepth - (stl.BoundingBox.Size.y / 2);
+            slider_moveY.Minimum = stl.BoundingBox.Size.y / 2;
+            slider_moveZ.Maximum = SettingsService.Instance.Settings.PrintAreaHeight - (stl.BoundingBox.Size.z / 2);
+            slider_moveZ.Minimum = stl.BoundingBox.Size.z / 2;
 
             slider_moveX.ValueChanged += slider_moveX_ValueChanged;
             slider_moveY.ValueChanged += slider_moveY_ValueChanged;
@@ -308,6 +235,11 @@ namespace View3D.view
             {
                 moveZ_textbox.Text = slider_moveZ.Value.ToString();
             }
+        }
+
+        private void OnSelectionChange(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Initial();
         }
     }
 }

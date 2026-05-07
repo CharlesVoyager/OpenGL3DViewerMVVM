@@ -36,6 +36,17 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
+        <!-- DataGrid is used for receiving SelectedModel changed. -->
+        <DataGrid
+            ItemsSource="{Binding Models}"
+            SelectedItem="{Binding SelectedModel}"
+            SelectionChanged="OnSelectionChange"
+            CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
+            AutoGenerateColumns="False"
+            IsReadOnly="True"
+            Visibility="Hidden">
+        </DataGrid>
+
         <Border Name="State1Panel" Opacity="1">
             
             <Border.Background>

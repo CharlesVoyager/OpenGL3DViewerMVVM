@@ -166,7 +166,7 @@
            
             <Image Name="image3" Source="/OpenGL3DViewerMVVM;component/Resources/bar2.png" Stretch="None" Height="8" />
 
-            <StackPanel Orientation="Vertical" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}">
+            <StackPanel Orientation="Vertical" Visibility="{Binding IsModelSelected, Converter={StaticResource BoolToVis}}" IsVisibleChanged="OnVisibilityChanged">
                 <ToggleButton Name="move_toggleButton" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" FontFamily="Arial">
                     <ToggleButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_move1.png" />

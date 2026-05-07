@@ -204,12 +204,14 @@ namespace View3D
             about_button.Content = Trans.T("B_ABOUT");
         }
 
-        public void setbuttonVisable(bool flag)
+        // Move/Rotate/Scale/Info/Remove button visibility changed.
+        private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             view_toggleButton.IsChecked = false;
             VisualStateManager.GoToState(UI_view, "StateHidden", true);
 
-            if (flag == true)
+            bool isVisible = (bool)e.NewValue;
+            if (isVisible)
             {
                 move_toggleButton.IsChecked = false;
                 rotate_toggleButton.IsChecked = false;

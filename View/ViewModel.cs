@@ -47,7 +47,6 @@ namespace OpenGL3DViewerMVVM.View
                     OnPropertyChanged(nameof(IsModelSelected));
                     MainWindow.main.threeDControl.UpdateChanges();
                 }
-                MainWindow.main.setbuttonVisable(selectedModel != null);
             }
         }
 

@@ -343,11 +343,7 @@ namespace OpenGL3DViewerMVVM.View
                 dlg.ShowDialog();
                 if (dlg.gIsScale) DoAutoScale(model);
                 else if (dlg.gIsInch) DoMmToInch(model);
-                else
-                {
-                    model.Land();
-                    MainWindow.main.threeDControl.UpdateChanges();
-                }
+                else model.Land();
             }
         }
 

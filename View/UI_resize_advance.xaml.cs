@@ -228,9 +228,9 @@ namespace View3D.view
 
             txt_Scale.Text = slider_resize.Value.ToString("0");
 
-            MainWindow.main.stlComposer.textScaleX.Text = (slider_resize.Value / 100).ToString("0.000");
-            MainWindow.main.stlComposer.textScaleY.Text = (slider_resize.Value / 100).ToString("0.000");
-            MainWindow.main.stlComposer.textScaleZ.Text = (slider_resize.Value / 100).ToString("0.000");
+            stl.ScaleX = slider_resize.Value / 100;
+            stl.ScaleY = slider_resize.Value / 100;
+            stl.ScaleZ = slider_resize.Value / 100;
 
             gIsShow = true;
             updateTxt();
@@ -270,9 +270,11 @@ namespace View3D.view
             if (MainWindow.main == null) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
-            MainWindow.main.stlComposer.textScaleX.Text = "1";
-            MainWindow.main.stlComposer.textScaleY.Text = "1";
-            MainWindow.main.stlComposer.textScaleZ.Text = "1";
+
+            stl.ScaleX = 1;
+            stl.ScaleY = 1;
+            stl.ScaleZ = 1;
+
             txt_Scale.Text = "100";
             chk_Uniform.IsChecked = true;
             button_mmtoinch.IsEnabled = true;
@@ -285,6 +287,8 @@ namespace View3D.view
             checkMin();
 
             MainWindow.main.viewModel.check_stl_size_too_small(stl);
+            stl.Land();
+            MainWindow.main.threeDControl.UpdateChanges();
 
             gIsShow = true;
             updateTxt();

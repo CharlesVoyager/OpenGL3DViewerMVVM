@@ -157,6 +157,23 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             });
         }
 
+        public void Reset()
+        {
+            PositionX = InitialPosition.x;
+            PositionY = InitialPosition.y;
+            PositionZ = InitialPosition.z;
+            RotationX = 0;
+            RotationY = 0;
+            RotationZ = 0;
+            ScaleX = 1;
+            ScaleY = 1;
+            ScaleZ = 1;
+
+            UpdateBoundingBoxAndMatrix();
+            Land();
+        }
+
+
         /// <summary>
         /// Translate Object, so that the lowest point is 0.
         /// </summary>

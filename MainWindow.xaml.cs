@@ -147,9 +147,9 @@ namespace View3D
             _contextMenu = (System.Windows.Controls.ContextMenu)this.Resources["ViewerContextMenu"];
 
             // Wire up click handlers
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[0]).Click += (s, e) => OnLandObject();
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[1]).Click += (s, e) => OnResetObject();
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[2]).Click += (s, e) => OnRemoveObject();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[0]).Click += (s, e) => viewModel.SelectedModel?.Land();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[1]).Click += (s, e) => viewModel.SelectedModel?.Reset();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[2]).Click += (s, e) => viewModel.DeleteModel();
             // index 3 is Separator
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[4]).Click += (s, e) => viewModel.DoMmToInch();
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[5]).Click += (s, e) => viewModel.DoInchToMm();
@@ -180,18 +180,6 @@ namespace View3D
 
             _contextMenu.IsOpen = true;
         }
-
-        // Actions of context menu.
-        private void OnLandObject() => UI_move.button_land_Click(null, null);
-
-        private void OnResetObject()
-        {
-            UI_resize_advance.button_Reset_Click(null, null);
-            UI_rotate.button_rotate_reset_Click(null, null);
-            UI_move.button_move_reset_Click(null, null);
-        }
-    
-        private void OnRemoveObject() => remove_toggleButton_Click(null, null);
 
         private void translate()
         {

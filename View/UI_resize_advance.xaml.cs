@@ -233,6 +233,8 @@ namespace View3D.view
             stl.ScaleY = slider_resize.Value / 100;
             stl.ScaleZ = slider_resize.Value / 100;
 
+            stl.Land();
+
             gIsShow = true;
             updateTxt();
             gIsShow = false;

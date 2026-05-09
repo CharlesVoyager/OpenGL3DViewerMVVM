@@ -93,16 +93,17 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public void UpdateOutOfBound()
         {
-            double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2);
-            double xMinimum = BoundingBox.Size.x / 2;
-            double yMaximum = SettingsService.Instance.Settings.PrintAreaDepth - (BoundingBox.Size.y / 2);
-            double yMinimum = BoundingBox.Size.y / 2;
-            double zMaximum = SettingsService.Instance.Settings.PrintAreaHeight - (BoundingBox.Size.z / 2);
-            double zMinimum = BoundingBox.Size.z / 2;
+            double epsilon = 1e-4; // 0.0001
+            double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2) + epsilon;
+            double xMinimum = (BoundingBox.Size.x / 2) - epsilon;
+            double yMaximum = SettingsService.Instance.Settings.PrintAreaDepth - (BoundingBox.Size.y / 2) + epsilon;
+            double yMinimum = (BoundingBox.Size.y / 2) - epsilon;
+            double zMaximum = SettingsService.Instance.Settings.PrintAreaHeight - (BoundingBox.Size.z / 2) + epsilon;
+            double zMinimum = (BoundingBox.Size.z / 2) - epsilon;
 
-            if (    position.X >= xMinimum && position.X <= xMaximum &&
-                    position.Y >= yMinimum && position.Y <= yMaximum &&
-                    position.Z >= zMinimum && position.Z <= zMaximum)   
+            if (    position.X > xMinimum && position.X < xMaximum &&
+                    position.Y > yMinimum && position.Y < yMaximum &&
+                    position.Z > zMinimum && position.Z < zMaximum)   
             {
                 Outside = false;
             }

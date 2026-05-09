@@ -107,7 +107,6 @@ namespace View3D.view
             if (stl == null) return;
 
             stl.Land();
-            stl.UpdateOutOfBound();
             MainWindow.main.threeDControl.UpdateChanges();
 
             // Land() will NOT trigger OnPropertyChanged(). Therefore, update slider values manually.

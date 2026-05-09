@@ -142,16 +142,8 @@ namespace View3D.view
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
 
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-         
             if (stl == null) return;
 
-            if (gIsShow == true)
-            {
-                MainWindow.main.UI_move.slider_moveZ.Value = stl.Position.Z;
-                MainWindow.main.UI_move.slider_moveZ.Minimum = stl.Position.Z - stl.BoundingBox.zMin;
-                stl.UpdateOutOfBound();
-                return;
-            }
             try
             { 
                 double dimZ = Convert.ToDouble(txtZ.Text);

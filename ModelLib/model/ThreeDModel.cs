@@ -420,7 +420,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             else
                 UpdateBoundingBoxAndMatrix();
 
-            if (propertyName.Contains("Rotation"))
+            if (propertyName.Contains("Rotation") || propertyName.Contains("ScaleZ"))
             {
                 // Update position Z after rotation but keep X and Y.
                 position.SetPositionWOUpdateBoundingBox(PositionX, PositionY, BoundingBox.Center.z);

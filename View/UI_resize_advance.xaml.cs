@@ -92,9 +92,7 @@ namespace View3D.view
         private void txtX_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            if (gIsShow == true)
-                return;
-
+            if (gIsShow == true) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
             try
@@ -104,17 +102,22 @@ namespace View3D.view
 
                 Double tScalex = dimX / Math.Max(stl.Model.boundingBox.Size.x, MIN_DIMENSION);
  
-                stl.ScaleX = tScalex;
+                stl.Scale.x = tScalex;
                 if (chk_Uniform.IsChecked == true)
                 {
-                    stl.ScaleY = tScalex;
-                    stl.ScaleZ = tScalex;
-                        
-                    gIsShow = true;
-                    updateSliderValue(xyzbind);
-                    updateTxt();
-                    gIsShow = false;
+                    stl.Scale.y = tScalex;
+                    stl.Scale.z = tScalex;
                 }
+                stl.UpdateBoundingBoxAndMatrix();
+                gIsShow = true;
+                updateSliderValue(xyzbind);
+                updateTxt();
+                gIsShow = false;
+
+                // NOTE: Position Z needs to be updated after scale z is changed.
+                stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
+                stl.Land();
+                MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
         }
@@ -122,9 +125,7 @@ namespace View3D.view
         private void txtY_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            if (gIsShow == true)
-                return;
-
+            if (gIsShow == true) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
             try
@@ -133,17 +134,21 @@ namespace View3D.view
                 if (dimY == 0) dimY = MIN_DIMENSION;
 
                 Double tScaley = dimY / Math.Max(stl.Model.boundingBox.Size.y, MIN_DIMENSION);
-                stl.ScaleY = tScaley;
+                stl.Scale.y = tScaley;
                 if (chk_Uniform.IsChecked == true)
                 {
-                    stl.ScaleX = tScaley;
-                    stl.ScaleZ = tScaley;
-
-                    gIsShow = true;
-                    updateSliderValue(xyzbind);
-                    updateTxt();
-                    gIsShow = false;
-                }
+                    stl.Scale.x = tScaley;
+                    stl.Scale.z = tScaley;
+                 }
+                stl.UpdateBoundingBoxAndMatrix();
+                gIsShow = true;
+                updateSliderValue(xyzbind);
+                updateTxt();
+                gIsShow = false;
+                // NOTE: Position Z needs to be updated after scale z is changed.
+                stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
+                stl.Land();
+                MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
         }
@@ -151,8 +156,7 @@ namespace View3D.view
         private void txtZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            if (gIsShow == true)
-                return;
+            if (gIsShow == true) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
@@ -162,18 +166,22 @@ namespace View3D.view
                 if (dimZ == 0) dimZ = MIN_DIMENSION;
 
                 Double tScalez = dimZ / Math.Max(stl.Model.boundingBox.Size.z, MIN_DIMENSION);
-                stl.ScaleZ = tScalez;
+                stl.Scale.z = tScalez;
                 if (chk_Uniform.IsChecked == true)
                 {
-                    stl.ScaleX = tScalez;
-                    stl.ScaleY = tScalez;
-
-                    gIsShow = true;
-                    updateSliderValue(xyzbind);
-                    updateTxt();
-                    gIsShow = false;
+                    stl.Scale.x = tScalez;
+                    stl.Scale.y = tScalez;
                 }
+                stl.UpdateBoundingBoxAndMatrix();
+                gIsShow = true;
+                updateSliderValue(xyzbind);
+                updateTxt();
+                gIsShow = false;
+
+                // NOTE: Position Z needs to be updated after scale z is changed.
+                stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
+                MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
         }
@@ -226,6 +234,7 @@ namespace View3D.view
         private void slider_resize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (MainWindow.main == null) return;
+            if (gIsShow == true) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
@@ -236,9 +245,11 @@ namespace View3D.view
             stl.Scale.z = slider_resize.Value / 100;
             stl.UpdateBoundingBoxAndMatrix();
 
-            stl.PositionZ = (stl.zMax + stl.zMin) / 2.0f;  // NOTE: Position Z needs to be updated after scale is changed.
+            // NOTE: Position Z needs to be updated after scale is changed.
+            stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
 
             stl.Land();
+            MainWindow.main.threeDControl.UpdateChanges();
 
             gIsShow = true;
             updateTxt();

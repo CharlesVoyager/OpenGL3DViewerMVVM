@@ -64,10 +64,17 @@ namespace View3D.view
 
             gIsShow = true;
             updateTxt();
-            chk_Uniform.IsChecked = true;
-            chk_Uniform_Checked(null, null);
+            if (model.Scale.x == model.Scale.y && model.Scale.y == model.Scale.z)
+            {
+                chk_Uniform.IsChecked = true;
+                chk_Uniform_Checked(null, null);
+            }
+            else
+            {
+                chk_Uniform.IsChecked = false;
+                chk_Uniform_UnChecked(null, null);
+            }
             gIsShow = false;
-
             button_mmtoinch.IsEnabled = true;
             button_inchtomm.IsEnabled = true;
 
@@ -144,7 +151,8 @@ namespace View3D.view
         private void txtZ_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-
+            if (gIsShow == true)
+                return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 

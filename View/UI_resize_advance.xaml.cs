@@ -55,7 +55,7 @@ namespace View3D.view
             button_inchtomm.Content = Trans.T("B_SCALE_DOWN") + " (" + Trans.T("L_INCH") + "->" + Trans.T("L_MM") + ")";
         }
 
-        // Update UI when selection changed.
+        // Since text boxes are not binding to properties, update text boxes after SelectionModel is changed.
         private void OnSelectionChange(object sender, SelectionChangedEventArgs e)
         {
             if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.

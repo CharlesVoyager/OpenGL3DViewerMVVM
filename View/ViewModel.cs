@@ -248,7 +248,7 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel newModel = new ThreeDModel();
             SelectedModel?.CopyTo(newModel);
             Autoposition(newModel);
-            newModel.UpdateOutOfBound();
+            newModel.UpdateOutside();
             Models.Add(newModel);
 
             MainWindow.main.threeDControl.InvokeGL(() =>
@@ -371,7 +371,7 @@ namespace OpenGL3DViewerMVVM.View
 
                 model.UpdateBoundingBoxAndMatrix();
                 model.Land();
-                model.UpdateOutOfBound();
+                model.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
@@ -410,7 +410,7 @@ namespace OpenGL3DViewerMVVM.View
 
                 model.UpdateBoundingBoxAndMatrix();
                 model.Land();
-                model.UpdateOutOfBound();
+                model.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
@@ -436,7 +436,7 @@ namespace OpenGL3DViewerMVVM.View
 
                 model.UpdateBoundingBoxAndMatrix();
                 model.Land();
-                model.UpdateOutOfBound();
+                model.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }

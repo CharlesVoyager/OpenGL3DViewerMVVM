@@ -162,8 +162,7 @@ namespace View3D.view
                     gIsShow = false;
                 }
                 stl.Land();
-                MainWindow.main.UI_move.slider_moveZ.Minimum = stl.Position.Z - stl.BoundingBox.zMin;
-                stl.UpdateOutOfBound();
+                stl.UpdateOutside();
             }
             catch { }
         }

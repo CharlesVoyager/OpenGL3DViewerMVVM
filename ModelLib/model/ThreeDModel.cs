@@ -91,7 +91,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox = new RHBoundingBox();
         }
 
-        public void UpdateOutOfBound()
+        public void UpdateOutside()
         {
             double epsilon = 1e-4; // 0.0001
             double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2) + epsilon;
@@ -414,7 +414,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             if (propertyName.Contains("Rotation"))
                 Land();  
 
-            UpdateOutOfBound();
+            UpdateOutside();
             MainWindow.main.threeDControl.UpdateChanges();
         }
 

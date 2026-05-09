@@ -98,17 +98,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public void UpdateOutside()
         {
-            double epsilon = 1e-4; // 0.0001
-            double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2.0) + epsilon;
-            double xMinimum = (BoundingBox.Size.x / 2.0) - epsilon;
-            double yMaximum = SettingsService.Instance.Settings.PrintAreaDepth - (BoundingBox.Size.y / 2.0) + epsilon;
-            double yMinimum = (BoundingBox.Size.y / 2.0) - epsilon;
-            double zMaximum = SettingsService.Instance.Settings.PrintAreaHeight - (BoundingBox.Size.z / 2.0) + epsilon;
-            double zMinimum = (BoundingBox.Size.z / 2.0) - epsilon;
-
-            if (    position.X > xMinimum && position.X < xMaximum &&
-                    position.Y > yMinimum && position.Y < yMaximum &&
-                    position.Z > zMinimum && position.Z < zMaximum)   
+            if ( xMin >=0 && xMax <= SettingsService.Instance.Settings.PrintAreaWidth &&
+                 yMin >=0 && yMax <= SettingsService.Instance.Settings.PrintAreaDepth &&
+                 zMin >=0 && zMax <= SettingsService.Instance.Settings.PrintAreaHeight)
             {
                 Outside = false;
             }

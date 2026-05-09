@@ -109,13 +109,14 @@ namespace View3D.view
                     stl.Scale.z = tScalex;
                 }
                 stl.UpdateBoundingBoxAndMatrix();
+                stl.Land();
+                stl.UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+                MainWindow.main.UI_move.SetSliderMinimumMaximum();
                 gIsShow = true;
                 updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
-                stl.Land();
-                MainWindow.main.threeDControl.UpdateChanges();
-                MainWindow.main.UI_move.SetSliderMinimumMaximum();
             }
             catch { }
         }
@@ -137,15 +138,16 @@ namespace View3D.view
                 {
                     stl.Scale.x = tScaley;
                     stl.Scale.z = tScaley;
-                 }
+                }
                 stl.UpdateBoundingBoxAndMatrix();
+                stl.Land();
+                stl.UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+                MainWindow.main.UI_move.SetSliderMinimumMaximum();
                 gIsShow = true;
                 updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
-                stl.Land();
-                MainWindow.main.threeDControl.UpdateChanges();
-                MainWindow.main.UI_move.SetSliderMinimumMaximum();
             }
             catch { }
         }
@@ -170,13 +172,14 @@ namespace View3D.view
                     stl.Scale.y = tScalez;
                 }
                 stl.UpdateBoundingBoxAndMatrix();
+                stl.Land();
+                stl.UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+                MainWindow.main.UI_move.SetSliderMinimumMaximum();
                 gIsShow = true;
                 updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
-                stl.Land();
-                MainWindow.main.threeDControl.UpdateChanges();
-                MainWindow.main.UI_move.SetSliderMinimumMaximum();
             }
             catch { }
         }
@@ -240,9 +243,10 @@ namespace View3D.view
             stl.Scale.z = slider_resize.Value / 100;
             stl.UpdateBoundingBoxAndMatrix();
             stl.Land();
+            stl.UpdateOutside();
+
             MainWindow.main.threeDControl.UpdateChanges();
             MainWindow.main.UI_move.SetSliderMinimumMaximum();
-
             gIsShow = true;
             updateTxt();
             gIsShow = false;

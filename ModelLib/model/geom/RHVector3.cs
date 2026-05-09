@@ -109,9 +109,9 @@ namespace View3D.model.geom
 
         public void Scale(double factor)
         {
-            x *= (float)factor;
-            y *= (float)factor;
-            z *= (float)factor;
+            x *= factor;
+            y *= factor;
+            z *= factor;
         }
         public void Scale(float factor)
         {

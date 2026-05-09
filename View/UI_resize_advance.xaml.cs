@@ -236,7 +236,7 @@ namespace View3D.view
             stl.Scale.z = slider_resize.Value / 100;
             stl.UpdateBoundingBoxAndMatrix();
 
-            stl.PositionZ = (stl.zMax - stl.zMin) / 2;  // NOTE: Position Z needs to be updated after scale is changed.
+            stl.PositionZ = (stl.zMax + stl.zMin) / 2.0f;  // NOTE: Position Z needs to be updated after scale is changed.
 
             stl.Land();
 

@@ -54,6 +54,17 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateBoundingBoxByShift(0, 0, z - old);
             }
         }
+        public void SetPositionWOUpdateBoundingBox(double newx, double newy, double newz)
+        {
+            x = newx;
+            y = newy;
+            z = newz;
+        }
+
+        public override string ToString()
+        {
+            return "(" + x.ToString("0.000") + ", " + y.ToString("0.000") + ", " + z.ToString("0.000") + ")";
+        }
     }
 
     public class ThreeDModel : INotifyPropertyChanged
@@ -94,12 +105,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public void UpdateOutside()
         {
             double epsilon = 1e-4; // 0.0001
-            double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2) + epsilon;
-            double xMinimum = (BoundingBox.Size.x / 2) - epsilon;
-            double yMaximum = SettingsService.Instance.Settings.PrintAreaDepth - (BoundingBox.Size.y / 2) + epsilon;
-            double yMinimum = (BoundingBox.Size.y / 2) - epsilon;
-            double zMaximum = SettingsService.Instance.Settings.PrintAreaHeight - (BoundingBox.Size.z / 2) + epsilon;
-            double zMinimum = (BoundingBox.Size.z / 2) - epsilon;
+            double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2.0) + epsilon;
+            double xMinimum = (BoundingBox.Size.x / 2.0) - epsilon;
+            double yMaximum = SettingsService.Instance.Settings.PrintAreaDepth - (BoundingBox.Size.y / 2.0) + epsilon;
+            double yMinimum = (BoundingBox.Size.y / 2.0) - epsilon;
+            double zMaximum = SettingsService.Instance.Settings.PrintAreaHeight - (BoundingBox.Size.z / 2.0) + epsilon;
+            double zMinimum = (BoundingBox.Size.z / 2.0) - epsilon;
 
             if (    position.X > xMinimum && position.X < xMaximum &&
                     position.Y > yMinimum && position.Y < yMaximum &&
@@ -170,11 +181,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public void Land() => LandToMinZ(0);
 
         // Keep same height to the printer base after rotation.
-        public void LandToMinZ(float targetMinZ)
+        public void LandToMinZ(double targetMinZ)
         {
             if (Math.Abs(targetMinZ - zMin) < 0.001) return;
 
-            float shiftZ = targetMinZ - zMin;
+            double shiftZ = targetMinZ - zMin;
             Position.Z += shiftZ;
 
             UpdateTransMatrix();
@@ -404,16 +415,18 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         void updateChange(string propertyName = null)
         {
-            OnPropertyChanged(propertyName);    // Notify UI that property has changed.
-       
             if (propertyName.Contains("Position"))
                 UpdateTransMatrix();    // Bounding box will be automatically updated by position change.
             else
                 UpdateBoundingBoxAndMatrix();
 
             if (propertyName.Contains("Rotation"))
-                Land();  
-
+            {
+                // Update position Z after rotation but keep X and Y.
+                position.SetPositionWOUpdateBoundingBox(PositionX, PositionY, BoundingBox.Center.z);
+                Land();
+            }
+            OnPropertyChanged(propertyName);    // Notify UI that property has changed.
             UpdateOutside();
             MainWindow.main.threeDControl.UpdateChanges();
         }

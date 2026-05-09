@@ -31,7 +31,11 @@ namespace View3D.view
                 button_inchtomm.IsEnabled = false;
                 slider_resize.Minimum = 1;  // NOTE: The value of resize cannot be zero; otherwise, exception happens.
                 if (MainWindow.main != null)
+                {                 
                     MainWindow.main.languageChanged += translate;
+                    DataContext = MainWindow.main.viewModel;
+                }
+   
             }
             catch { }
         }
@@ -162,7 +166,6 @@ namespace View3D.view
                     gIsShow = false;
                 }
                 stl.Land();
-                stl.UpdateOutside();
             }
             catch { }
         }
@@ -220,9 +223,12 @@ namespace View3D.view
 
             txt_Scale.Text = slider_resize.Value.ToString("0");
 
-            stl.ScaleX = slider_resize.Value / 100;
-            stl.ScaleY = slider_resize.Value / 100;
-            stl.ScaleZ = slider_resize.Value / 100;
+            stl.Scale.x = slider_resize.Value / 100;
+            stl.Scale.y = slider_resize.Value / 100;
+            stl.Scale.z = slider_resize.Value / 100;
+            stl.UpdateBoundingBoxAndMatrix();
+
+            stl.PositionZ = (stl.zMax - stl.zMin) / 2;  // NOTE: Position Z needs to be updated after scale is changed.
 
             stl.Land();
 

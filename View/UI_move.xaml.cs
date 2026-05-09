@@ -78,7 +78,7 @@ namespace View3D.view
             base.OnPreviewTextInput(e);
         }
 
-        void SetSliderMinimumMaximum()
+        public void SetSliderMinimumMaximum()
         {
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;

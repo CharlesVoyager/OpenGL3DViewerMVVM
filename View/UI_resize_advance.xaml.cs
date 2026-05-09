@@ -118,6 +118,7 @@ namespace View3D.view
                 stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
                 MainWindow.main.threeDControl.UpdateChanges();
+                MainWindow.main.UI_move.SetSliderMinimumMaximum();
             }
             catch { }
         }
@@ -149,6 +150,7 @@ namespace View3D.view
                 stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
                 MainWindow.main.threeDControl.UpdateChanges();
+                MainWindow.main.UI_move.SetSliderMinimumMaximum();
             }
             catch { }
         }
@@ -182,6 +184,7 @@ namespace View3D.view
                 stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
                 MainWindow.main.threeDControl.UpdateChanges();
+                MainWindow.main.UI_move.SetSliderMinimumMaximum();
             }
             catch { }
         }
@@ -250,6 +253,7 @@ namespace View3D.view
 
             stl.Land();
             MainWindow.main.threeDControl.UpdateChanges();
+            MainWindow.main.UI_move.SetSliderMinimumMaximum();
 
             gIsShow = true;
             updateTxt();

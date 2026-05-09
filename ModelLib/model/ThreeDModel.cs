@@ -91,35 +91,24 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox = new RHBoundingBox();
         }
 
-        bool pointInPrintArea(float x, float y, float z)
-        {
-            double epsilon = 1e-4; // 0.0001
-
-            if (z < -0.1 || z > SettingsService.Instance.Settings.PrintAreaHeight)
-                return false;
-
-            if (x < -epsilon || x > SettingsService.Instance.Settings.PrintAreaWidth + epsilon) return false;
-            if (y < -epsilon || y > SettingsService.Instance.Settings.PrintAreaDepth + epsilon) return false;
-
-            return true;
-        }
-
         public void UpdateOutOfBound()
         {
-            if (    !pointInPrintArea(xMin, yMin, zMin) ||
-                    !pointInPrintArea(xMax, yMin, zMin) ||
-                    !pointInPrintArea(xMin, yMax, zMin) ||
-                    !pointInPrintArea(xMax, yMax, zMin) ||
-                    !pointInPrintArea(xMin, yMin, zMax) ||
-                    !pointInPrintArea(xMax, yMin, zMax) ||
-                    !pointInPrintArea(xMin, yMax, zMax) ||
-                    !pointInPrintArea(xMax, yMax, zMax))
+            double xMaximum = SettingsService.Instance.Settings.PrintAreaWidth - (BoundingBox.Size.x / 2);
+            double xMinimum = BoundingBox.Size.x / 2;
+            double yMaximum = SettingsService.Instance.Settings.PrintAreaDepth - (BoundingBox.Size.y / 2);
+            double yMinimum = BoundingBox.Size.y / 2;
+            double zMaximum = SettingsService.Instance.Settings.PrintAreaHeight - (BoundingBox.Size.z / 2);
+            double zMinimum = BoundingBox.Size.z / 2;
+
+            if (    position.X >= xMinimum && position.X <= xMaximum &&
+                    position.Y >= yMinimum && position.Y <= yMaximum &&
+                    position.Z >= zMinimum && position.Z <= zMaximum)   
             {
-                Outside = true;
+                Outside = false;
             }
             else
             {
-                Outside = false;
+                Outside = true;
             }
         }
 

@@ -10,14 +10,12 @@ namespace View3D.view
         public OutofBound()
         {
             InitializeComponent();
-            try
-            {
-                MainWindow.main.languageChanged += translate;
-            }
-            catch { }
 
             if ( MainWindow.main != null)  // This check is necessary for XAML designer to avoid null reference exceptions.
+            {
+                MainWindow.main.languageChanged += translate;
                 DataContext = MainWindow.main.viewModel;
+            }
         }
 
         private void translate()

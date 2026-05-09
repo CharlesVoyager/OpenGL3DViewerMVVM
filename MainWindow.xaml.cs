@@ -59,7 +59,7 @@ namespace View3D
 
             // STLComposer
             stlComposer = new STLComposer();
-            stlComposer.Show();
+            stlComposer.Hide();
 
             // Camera
             threeDCamera = new ThreeDCamera();

@@ -36,9 +36,6 @@ namespace View3D.view
                 txtSizeZ.Text = "0.000 mm";
                 txtCollision.Text = "";
                 txtFilename.Text = "";
-                txtPosX.Text = "0.000";
-                txtPosY.Text = "0.000";
-                txtPosZ.Text = "0.000";
                 return;
             }
 
@@ -61,9 +58,6 @@ namespace View3D.view
 
             txtCollision.Text = pm.Outside.ToString();
             txtFilename.Text = pm.Name;
-            txtPosX.Text = pm.Position.X.ToString("0.000");
-            txtPosY.Text = pm.Position.Y.ToString("0.000");
-            txtPosZ.Text = pm.Position.Z.ToString("0.000");
 
             //Debug.WriteLine("Elapsed time for Analyse: " + sw.ElapsedMilliseconds + " ms");
         }

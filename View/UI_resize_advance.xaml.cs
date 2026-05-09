@@ -113,9 +113,6 @@ namespace View3D.view
                 updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
-
-                // NOTE: Position Z needs to be updated after scale z is changed.
-                stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
                 MainWindow.main.threeDControl.UpdateChanges();
                 MainWindow.main.UI_move.SetSliderMinimumMaximum();
@@ -146,8 +143,6 @@ namespace View3D.view
                 updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
-                // NOTE: Position Z needs to be updated after scale z is changed.
-                stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
                 MainWindow.main.threeDControl.UpdateChanges();
                 MainWindow.main.UI_move.SetSliderMinimumMaximum();
@@ -179,9 +174,6 @@ namespace View3D.view
                 updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
-
-                // NOTE: Position Z needs to be updated after scale z is changed.
-                stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
                 stl.Land();
                 MainWindow.main.threeDControl.UpdateChanges();
                 MainWindow.main.UI_move.SetSliderMinimumMaximum();
@@ -247,10 +239,6 @@ namespace View3D.view
             stl.Scale.y = slider_resize.Value / 100;
             stl.Scale.z = slider_resize.Value / 100;
             stl.UpdateBoundingBoxAndMatrix();
-
-            // NOTE: Position Z needs to be updated after scale is changed.
-            stl.Position.SetPositionWOUpdateBoundingBox(stl.PositionX, stl.PositionY, stl.BoundingBox.Center.z);
-
             stl.Land();
             MainWindow.main.threeDControl.UpdateChanges();
             MainWindow.main.UI_move.SetSliderMinimumMaximum();

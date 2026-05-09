@@ -54,12 +54,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 updateBoundingBoxByShift(0, 0, z - old);
             }
         }
-        public void SetPositionWOUpdateBoundingBox(double newx, double newy, double newz)
-        {
-            x = newx;
-            y = newy;
-            z = newz;
-        }
 
         public override string ToString()
         {
@@ -421,11 +415,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
 
             if (propertyName.Contains("Rotation") || propertyName.Contains("ScaleZ"))
-            {
-                // Update position Z after rotation but keep X and Y.
-                position.SetPositionWOUpdateBoundingBox(PositionX, PositionY, BoundingBox.Center.z);
                 Land();
-            }
+                     
             OnPropertyChanged(propertyName);    // Notify UI that property has changed.
             UpdateOutside();
             MainWindow.main.threeDControl.UpdateChanges();

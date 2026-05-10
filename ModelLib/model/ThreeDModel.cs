@@ -385,21 +385,17 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set { selected = value; }
         }
 
-        public Coord3D Position
-        {
-            get { return position; }
-        }
 
-        public RHVector3 Rotation
-        {
-            get { return rotation; }
-        }
+        // 1. Position is the translation shift of the model. It is also used for calculating the bounding box. When Position changes, the bounding box will be automatically updated by the shift value. So, there is no need to calculate the bounding box in regular way which needs to loop through all vertices and consume a lot of time.
+        // 2. Rotation and Scale will change the shape of the model, so when they change, the bounding box needs to be calculated in regular way.
+        public Coord3D Position { get { return position; } }
 
-        public RHVector3 Scale
-        {
-            get { return scale; }
-        }
+        RHVector3 Rotation { get { return rotation; } }
 
+        public RHVector3 Scale { get { return scale; } }
+        // <>
+
+         
         void updateChange(string propertyName = null)
         {
             if (propertyName.Contains("Position"))

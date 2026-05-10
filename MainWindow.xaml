@@ -164,8 +164,8 @@
                     </ToggleButton.Background>
                 </ToggleButton>
             </StackPanel>
-            
-            <ToggleButton Name="view_toggleButton" Width="50" Unchecked="view_toggleButton_Unchecked" Height="70" Padding="3" Margin="2.5" Checked="view_toggleButton_Checked" FontFamily="Arial">
+
+            <ToggleButton Name="view_toggleButton" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Unchecked="view_toggleButton_Unchecked" Height="70" Padding="3" Margin="2.5" Checked="view_toggleButton_Checked" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_view1.png" />
                 </ToggleButton.Background> View

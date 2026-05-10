@@ -99,7 +99,7 @@ namespace OpenGL3DViewerMVVM.View
         }
 
         public static readonly ManualResetEventSlim _meshDataReady = new ManualResetEventSlim(true);
-        public async void AddModel(string? file = null)
+        public async void AddModel(string? file = null, bool isAutoPosition = true)
         {
             if (file == null)
             {
@@ -118,7 +118,6 @@ namespace OpenGL3DViewerMVVM.View
             }
 
             ThreeDModel newModel = new ThreeDModel();
-            bool modelToLand = true;
             var modelIO = new MeshIOWrapper();
 
             IsLoadingModel = true;
@@ -201,7 +200,7 @@ namespace OpenGL3DViewerMVVM.View
             }
 
             newModel.Position.Z = newModel.BoundingBox.Size.z / 2;
-            if (modelToLand)
+            if (isAutoPosition)
             {
                 Autoposition(newModel);
             }

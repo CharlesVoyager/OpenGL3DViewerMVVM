@@ -20,6 +20,7 @@ namespace OpenGL3DViewerMVVM
             var wpfThread = new Thread(() =>
             {
                 var app = new App();
+                app.InitializeComponent();  // Loads App.xaml resources (global styles, etc.)
                 mainWindow = new MainWindow();
                 app.Run(mainWindow);  // WPF message pump runs here
             });

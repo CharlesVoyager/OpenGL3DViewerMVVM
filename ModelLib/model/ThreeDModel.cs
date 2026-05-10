@@ -163,10 +163,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         /// <summary>
         /// Translate Object, so that the lowest point is 0.
         /// </summary>
-        public void Land() => LandToMinZ(0);
+        public void Land() => landToMinZ(0);
 
         // Keep same height to the printer base after rotation.
-        public void LandToMinZ(double targetMinZ)
+        void landToMinZ(double targetMinZ)
         {
             if (Math.Abs(targetMinZ - zMin) < 0.001) return;
 

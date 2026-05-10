@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace View3D.ModelObjectTool
+namespace OpenGL3DViewerMVVM.ModelObjectTool
 {
     public class ModelObjectToolHelper
     {

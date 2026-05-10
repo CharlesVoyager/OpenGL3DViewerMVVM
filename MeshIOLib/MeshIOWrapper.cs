@@ -1,5 +1,5 @@
-using View3D.model.geom;
-using View3D;
+using OpenGL3DViewerMVVM.model.geom;
+using OpenGL3DViewerMVVM;
 
 #nullable disable
 

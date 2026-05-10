@@ -1,10 +1,10 @@
 ﻿using OpenTK.Mathematics;
-using View3D.model.geom;
+using OpenGL3DViewerMVVM.model.geom;
 using OpenGL3DViewerMVVM.ModelLib.model;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     public class ThreeDCamera
     {

@@ -1,7 +1,6 @@
 ﻿using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using View3D;
 
 namespace OpenGL3DViewerMVVM.Draw
 {

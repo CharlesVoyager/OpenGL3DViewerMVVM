@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     public partial class STLComposer : Window
     {

@@ -11,12 +11,12 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using View3D.ModelObjectTool;
-using View3D.Primitive;
+using OpenGL3DViewerMVVM.ModelObjectTool;
+using OpenGL3DViewerMVVM.Primitive;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// OpenTK GameWindow replacing the WinForms UserControl + RHOpenGL child.

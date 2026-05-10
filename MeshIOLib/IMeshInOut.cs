@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using View3D.model.geom;
+using OpenGL3DViewerMVVM.model.geom;
 
 namespace OpenGL3DViewerMVVM.MeshIOLib
 {

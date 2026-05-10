@@ -3,7 +3,7 @@ using System.Windows.Media;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// Interaction logic for CircularProgressBar.xaml

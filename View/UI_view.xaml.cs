@@ -3,7 +3,7 @@ using OpenGL3DViewerMVVM.ModelLib.Utils;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml

@@ -2,7 +2,7 @@
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL;
 
-namespace View3D.Primitive
+namespace OpenGL3DViewerMVVM.Primitive
 {
     public class Ray
     {

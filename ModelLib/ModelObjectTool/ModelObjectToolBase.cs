@@ -1,7 +1,7 @@
 ﻿using OpenTK.Mathematics;
-using View3D.Primitive;
+using OpenGL3DViewerMVVM.Primitive;
 
-namespace View3D.ModelObjectTool
+namespace OpenGL3DViewerMVVM.ModelObjectTool
 {
     public class ModelMatrix
     {

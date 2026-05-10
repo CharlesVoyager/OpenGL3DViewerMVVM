@@ -3,10 +3,9 @@ using OpenTK.Mathematics;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using View3D;
-using View3D.model.geom;
-using View3D.ModelObjectTool;
-using View3D.view;
+using OpenGL3DViewerMVVM.model.geom;
+using OpenGL3DViewerMVVM.ModelObjectTool;
+using OpenGL3DViewerMVVM.View;
 
 #nullable disable
 

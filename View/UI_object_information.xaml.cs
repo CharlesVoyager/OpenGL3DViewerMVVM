@@ -1,7 +1,7 @@
 ﻿using OpenGL3DViewerMVVM.ModelLib.model;
-using View3D.model.geom;
+using OpenGL3DViewerMVVM.model.geom;
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// Interaction logic for UI_object_information.xaml

@@ -1,7 +1,6 @@
-﻿using System;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 
-namespace View3D.Extensions
+namespace OpenGL3DViewerMVVM.Extensions
 {
     public static class Vector3Extension
     {

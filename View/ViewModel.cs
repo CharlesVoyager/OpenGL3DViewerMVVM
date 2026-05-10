@@ -8,9 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using View3D;
-using View3D.model.geom;
-using View3D.view;
+using OpenGL3DViewerMVVM.model.geom;
 
 namespace OpenGL3DViewerMVVM.View
 {

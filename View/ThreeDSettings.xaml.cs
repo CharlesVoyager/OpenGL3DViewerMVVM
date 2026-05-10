@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     public class BrushToFloatConverter : IValueConverter
     {

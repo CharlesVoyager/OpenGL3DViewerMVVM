@@ -1,9 +1,8 @@
+using System.Drawing;
 using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-using System.Drawing;
-using View3D;
-using View3D.view;
+using OpenGL3DViewerMVVM.View;
 
 #nullable disable
 

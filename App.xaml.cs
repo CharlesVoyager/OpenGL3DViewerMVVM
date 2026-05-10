@@ -1,7 +1,5 @@
 ﻿using OpenGL3DViewerMVVM.View;
 using System.IO;
-using View3D;
-using View3D.view;
 
 #nullable disable
 
@@ -30,7 +28,7 @@ namespace OpenGL3DViewerMVVM
             wpfThread.Start();
 
             // Wait until MainWindow is ready before starting OpenTK
-            View3D.MainWindow._mainWindowReady.Wait();
+            OpenGL3DViewerMVVM.MainWindow._mainWindowReady.Wait();
 
             // OpenTK GameWindow runs on the main thread (required by GLFW)
             mainWindow.threeDControl = new ThreeDControl(SettingsService.Instance.Settings.InitialClientSizeWidth, SettingsService.Instance.Settings.InitialClientSizeHeight);

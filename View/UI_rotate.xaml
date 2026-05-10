@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="View3D.view.UI_rotate"
+﻿<UserControl x:Class="OpenGL3DViewerMVVM.View.UI_rotate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:DesignInControl="clr-namespace:View3D.view"
+             xmlns:DesignInControl="clr-namespace:OpenGL3DViewerMVVM.View"
              mc:Ignorable="d">
     
     <Grid Height="264" Width="280">

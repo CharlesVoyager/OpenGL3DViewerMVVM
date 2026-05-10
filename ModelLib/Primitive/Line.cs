@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace View3D.Primitive
+namespace OpenGL3DViewerMVVM.Primitive
 {
     class Line
     {

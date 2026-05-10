@@ -1,7 +1,6 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using OpenGL3DViewerMVVM.View;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
-
-using View3D.view;
 
 namespace OpenGL3DViewerMVVM.Draw
 {

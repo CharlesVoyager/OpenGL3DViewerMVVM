@@ -1,12 +1,11 @@
 ﻿using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// Interaction logic for UI_rotate.xaml

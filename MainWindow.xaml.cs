@@ -5,11 +5,10 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using View3D.view;
 
 #nullable disable
 
-namespace View3D
+namespace OpenGL3DViewerMVVM
 {
     public delegate void languageChangedEvent();
 

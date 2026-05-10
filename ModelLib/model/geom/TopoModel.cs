@@ -1,7 +1,7 @@
 using OpenTK.Mathematics;
 using System.Drawing;
 
-namespace View3D.model.geom
+namespace OpenGL3DViewerMVVM.model.geom
 {
     // ---------------------------------------------------------------------------
     // PbrMaterial: Holds all glTF pbrMetallicRoughness textures and scalar factors

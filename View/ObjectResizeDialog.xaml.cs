@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Documents;
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// Interaction logic for ObjectResizeDialog.xaml

@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace View3D.model.geom
+namespace OpenGL3DViewerMVVM.model.geom
 {
     public class RHVector3
     {

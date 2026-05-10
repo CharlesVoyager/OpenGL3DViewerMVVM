@@ -6,7 +6,7 @@ using OpenGL3DViewerMVVM.ModelLib.Utils;
 
 #nullable disable
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     enum Axis
     {

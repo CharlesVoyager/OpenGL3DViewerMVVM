@@ -1,6 +1,6 @@
 ﻿using OpenGL3DViewerMVVM.ModelLib.Utils;
 
-namespace View3D.view
+namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
     /// Interaction logic for OutofBound.xaml

@@ -173,6 +173,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             double shiftZ = targetMinZ - zMin;
             Position.Z += shiftZ;
 
+            OnPropertyChanged(nameof(PositionZ));    // Update PositionZ in UI.
+
             UpdateTransMatrix();
         }
 

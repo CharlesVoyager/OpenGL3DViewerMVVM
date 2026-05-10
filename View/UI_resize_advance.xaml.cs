@@ -112,7 +112,6 @@ namespace OpenGL3DViewerMVVM.View
                 stl.Land();
                 stl.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
-                MainWindow.main.UI_move.SetSliderMinimumMaximum();
                 gIsShow = true;
                 updateSliderValue(xyzbind);
                 updateTxt();
@@ -143,7 +142,6 @@ namespace OpenGL3DViewerMVVM.View
                 stl.Land();
                 stl.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
-                MainWindow.main.UI_move.SetSliderMinimumMaximum();
                 gIsShow = true;
                 updateSliderValue(xyzbind);
                 updateTxt();
@@ -175,7 +173,6 @@ namespace OpenGL3DViewerMVVM.View
                 stl.Land();
                 stl.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
-                MainWindow.main.UI_move.SetSliderMinimumMaximum();
                 gIsShow = true;
                 updateSliderValue(xyzbind);
                 updateTxt();
@@ -246,7 +243,6 @@ namespace OpenGL3DViewerMVVM.View
             stl.UpdateOutside();
 
             MainWindow.main.threeDControl.UpdateChanges();
-            MainWindow.main.UI_move.SetSliderMinimumMaximum();
             gIsShow = true;
             updateTxt();
             gIsShow = false;

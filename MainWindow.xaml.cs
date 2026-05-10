@@ -250,6 +250,9 @@ namespace OpenGL3DViewerMVVM
             rotate_toggleButton.IsChecked = false;
             resize_toggleButton.IsChecked = false;
             info_toggleButton.IsChecked = false;
+
+            // The model is required to reset the slider minimum and maximum after scale or rotate.
+            UI_move.SetSliderMinimumMaximum();
         }
 
         public void move_toggleButton_Unchecked(object sender, RoutedEventArgs e)

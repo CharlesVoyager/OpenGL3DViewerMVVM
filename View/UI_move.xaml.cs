@@ -83,12 +83,24 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
-            slider_moveX.Maximum = SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.Size.x / 2);
-            slider_moveX.Minimum = stl.BoundingBox.Size.x / 2;
-            slider_moveY.Maximum = SettingsService.Instance.Settings.PrintAreaDepth - (stl.BoundingBox.Size.y / 2);
-            slider_moveY.Minimum = stl.BoundingBox.Size.y / 2;
-            slider_moveZ.Maximum = SettingsService.Instance.Settings.PrintAreaHeight - (stl.BoundingBox.Size.z / 2);
-            slider_moveZ.Minimum = stl.BoundingBox.Size.z / 2;
+            double xShift = stl.BoundingBox.Center.x - stl.Position.X;
+            double yShift = stl.BoundingBox.Center.y - stl.Position.Y;
+            double zShift = stl.BoundingBox.Center.z - stl.Position.Z;
+
+            slider_moveX.Maximum = SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.Size.x / 2) - xShift;
+            slider_moveX.Minimum = stl.BoundingBox.Size.x / 2 - xShift;
+            slider_moveY.Maximum = SettingsService.Instance.Settings.PrintAreaDepth - (stl.BoundingBox.Size.y / 2) - yShift;
+            slider_moveY.Minimum = stl.BoundingBox.Size.y / 2 - yShift;
+            slider_moveZ.Maximum = SettingsService.Instance.Settings.PrintAreaHeight - (stl.BoundingBox.Size.z / 2) - zShift;
+            slider_moveZ.Minimum = stl.BoundingBox.Size.z / 2 - zShift;
+
+            slider_moveX.Maximum = Math.Floor(slider_moveX.Maximum * 10) * 0.1;
+            slider_moveY.Maximum = Math.Floor(slider_moveY.Maximum * 10) * 0.1;
+            slider_moveZ.Maximum = Math.Floor(slider_moveZ.Maximum * 10) * 0.1;
+
+            slider_moveX.Minimum = Math.Ceiling(slider_moveX.Minimum * 10) * 0.1;
+            slider_moveY.Minimum = Math.Ceiling(slider_moveY.Minimum * 10) * 0.1;
+            slider_moveZ.Minimum = Math.Ceiling(slider_moveZ.Minimum * 10) * 0.1;
         }
 
         public void button_move_reset_Click(object sender, RoutedEventArgs e)

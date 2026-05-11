@@ -283,12 +283,13 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     ? ranges[rangeIndex].MaterialIndex
                     : -1;
 
-                Mesh.DrawRanges.Add(new Submesh.DrawRange
-                {
-                    StartVertex = cnt * 3,
-                    VertexCount = 3,
-                    MaterialIndex = materialIndex
-                });
+                if (materialIndex != -1)
+                    Mesh.DrawRanges.Add(new Submesh.DrawRange
+                    {
+                        StartVertex = cnt * 3,
+                        VertexCount = 3,
+                        MaterialIndex = materialIndex
+                    });
 
                 Mesh.AddTriangle(
                     t.Vertices[0].pos.Subtract(Model.boundingBox.Center),

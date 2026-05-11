@@ -73,8 +73,8 @@ namespace OpenGL3DViewerMVVM.View
         public uint ErrorModelColor { get; set; } = 0xFFFF0000;
         public uint InsideFacesColor { get; set; } = 0xFF000000;
 
-        public uint ModelColor { get; set; } = 0xFF6BA3C6;
-        
+        public uint ModelColor { get; set; } = 0xFF1EB41E;  // Updated on 2026/5/11. Previous: 0xFF6BA3C6;
+
         public float KeyDirX { get; set; } = -0.6f;
         public float KeyDirY { get; set; } = 1.0f;
         public float KeyDirZ { get; set; } = 0.0f;

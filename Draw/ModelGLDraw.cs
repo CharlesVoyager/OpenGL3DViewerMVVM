@@ -36,7 +36,57 @@ namespace OpenGL3DViewerMVVM.Draw
             public float RoughnessFactor = 1f;
             public float[] EmissiveFactor = { 0f, 0f, 0f };
             public float[] BaseColorFactor = { 1f, 1f, 1f, 1f };
+
+            // ---------------------------------------------------------------
+            // Default PBR material applied to STL models (no embedded material).
+            // Represents brushed stainless steel:
+            //   - Steel-grey base color  (0.73, 0.73, 0.73)
+            //   - Fully metallic         (MetallicFactor  = 1.0)
+            //   - Moderate roughness     (RoughnessFactor = 0.35)
+            //     → visible highlights but not a mirror; realistic for machined metal
+            //   - No emissive, no textures (all texture IDs remain 0)
+            // ---------------------------------------------------------------
+            public static MaterialGpuState CreateStlMetalMaterial() => new MaterialGpuState
+            {
+                MetallicFactor  = 1.0f,
+                RoughnessFactor = 0.35f,
+                EmissiveFactor  = new float[] { 0f, 0f, 0f },
+                // Steel-grey albedo; replaces the plain objectColor for STL files.
+                // The shader multiplies this against objectColor when no base-color
+                // texture is bound, so the result stays grey regardless of the
+                // user's ModelColor setting — override by tinting BaseColorFactor.
+                BaseColorFactor = new float[] { 0.73f, 0.73f, 0.73f, 1.0f }
+            };
+            // High roughness scatters light broadly — no visible highlight, looks soft and chalky.
+            public static MaterialGpuState CreateMattePlasticMaterial() => new MaterialGpuState
+            {
+                MetallicFactor = 0.0f,
+                RoughnessFactor = 0.75f,
+                EmissiveFactor = new float[] { 0f, 0f, 0f },
+                // Steel-grey albedo; replaces the plain objectColor for STL files.
+                // The shader multiplies this against objectColor when no base-color
+                // texture is bound, so the result stays grey regardless of the
+                // user's ModelColor setting — override by tinting BaseColorFactor.
+                BaseColorFactor = new float[] { 0.20f, 0.20f, 0.20f, 1.0f } // dark grey
+            };
+
+            // Satin Plastic (e.g. consumer electronics shell)
+            public static MaterialGpuState CreateSatinPlasticMaterial() => new MaterialGpuState
+            {
+                MetallicFactor = 0.0f,
+                RoughnessFactor = 0.45f,
+                EmissiveFactor = new float[] { 0f, 0f, 0f },
+                // Steel-grey albedo; replaces the plain objectColor for STL files.
+                // The shader multiplies this against objectColor when no base-color
+                // texture is bound, so the result stays grey regardless of the
+                // user's ModelColor setting — override by tinting BaseColorFactor.
+                BaseColorFactor = new float[] { 0.85f, 0.85f, 0.85f, 1.0f } // light grey
+            };
         }
+
+        // True when the loaded model is an STL (no embedded materials).
+        private bool IsStlModel => printModel.Model.materials == null
+                                || printModel.Model.materials.Count == 0;
 
         ThreeDModel printModel;
 
@@ -507,20 +557,31 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.BindVertexArray(0);
 
             materialStates.Clear();
-            foreach (var mat in printModel.Model.materials)
+
+            if (IsStlModel)
             {
-                materialStates.Add(new MaterialGpuState
+                // STL files carry no material data. Synthesise a single brushed-
+                // steel PBR material so the Cook-Torrance shader renders realistic
+                // metal highlights instead of the unlit grey fallback.
+                materialStates.Add(MaterialGpuState.CreateSatinPlasticMaterial());
+            }
+            else
+            {
+                foreach (var mat in printModel.Model.materials)
                 {
-                    BaseColorTexId = LoadTexture(mat.BaseColorTexture),
-                    MetallicRoughnessTexId = LoadTexture(mat.MetallicRoughnessTexture),
-                    NormalMapId = LoadTexture(mat.NormalTexture),
-                    OcclusionTexId = LoadTexture(mat.OcclusionTexture),
-                    EmissiveTexId = LoadTexture(mat.EmissiveTexture),
-                    MetallicFactor = mat.MetallicFactor,
-                    RoughnessFactor = mat.RoughnessFactor,
-                    EmissiveFactor = (float[])mat.EmissiveFactor.Clone(),
-                    BaseColorFactor = (float[])mat.BaseColorFactor.Clone()
-                });
+                    materialStates.Add(new MaterialGpuState
+                    {
+                        BaseColorTexId         = LoadTexture(mat.BaseColorTexture),
+                        MetallicRoughnessTexId = LoadTexture(mat.MetallicRoughnessTexture),
+                        NormalMapId            = LoadTexture(mat.NormalTexture),
+                        OcclusionTexId         = LoadTexture(mat.OcclusionTexture),
+                        EmissiveTexId          = LoadTexture(mat.EmissiveTexture),
+                        MetallicFactor         = mat.MetallicFactor,
+                        RoughnessFactor        = mat.RoughnessFactor,
+                        EmissiveFactor         = (float[])mat.EmissiveFactor.Clone(),
+                        BaseColorFactor        = (float[])mat.BaseColorFactor.Clone()
+                    });
+                }
             }
         }
 
@@ -629,6 +690,12 @@ namespace OpenGL3DViewerMVVM.Draw
 
         private void BindMaterial(int materialIndex, bool hasColors)
         {
+            // For STL models, materialIndex is -1 (no draw ranges / no embedded
+            // materials).  If we synthesised a default metal material at index 0,
+            // use it so the PBR shader receives the correct metallic/roughness values.
+            if (materialIndex < 0 && materialStates.Count > 0)
+                materialIndex = 0;
+
             MaterialGpuState material = materialIndex >= 0 && materialIndex < materialStates.Count
                 ? materialStates[materialIndex]
                 : null;

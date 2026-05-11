@@ -46,6 +46,16 @@ namespace OpenGL3DViewerMVVM
             // Wait until STL model data is ready if import STL file through command line before starting rendering loop
             ViewModel._meshDataReady.Wait();
 
+            // Force the WPF MainWindow to the foreground after OpenTK's GLFW window
+            // has been created — GLFW steals focus when its native Win32 window appears.
+            System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                mainWindow.Topmost = true;   // momentarily force to top
+                mainWindow.Activate();
+                mainWindow.Focus();
+                mainWindow.Topmost = false;  // restore normal z-order
+            });
+
             // Blocks main thread for lifetime of GL window — correct!
             mainWindow.threeDControl.Run();
 

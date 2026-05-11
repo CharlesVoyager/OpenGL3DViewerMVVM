@@ -210,6 +210,7 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.Position.Y = (float)newModel.BoundingBox.Center.y;
                 newModel.UpdateTransMatrix();
             }
+            newModel.UpdateOutside();
 
             // Remember initial positions for all ViewModel.Models after Autoposition.
             foreach (var m in Models)

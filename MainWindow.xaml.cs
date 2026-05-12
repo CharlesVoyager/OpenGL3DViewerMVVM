@@ -97,7 +97,6 @@ namespace OpenGL3DViewerMVVM
                 if (e.Key == Key.Delete)
                 {
                     viewModel.DeleteModel();
-                    threeDControl.UpdateChanges();
                 }
                 else if (e.Key == Key.Subtract) 
                 {

@@ -46,6 +46,7 @@
         <DataGrid
             ItemsSource="{Binding Models}"
             SelectedItem="{Binding SelectedModel}"
+            SelectionChanged="OnSelectionChanged"
             CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
             AutoGenerateColumns="False"
             IsReadOnly="True"

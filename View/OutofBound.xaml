@@ -23,6 +23,9 @@
             <Rectangle Fill="Red" RadiusX="10" RadiusY="10" Grid.Row="0" Grid.ColumnSpan="3" />
             <Rectangle Fill="Red" RadiusX="10" RadiusY="10" Grid.Row="3" Grid.ColumnSpan="3" />
             <TextBlock x:Name="txtWarningMsg" Text="Out of Boundary - Please resize or move your object (S)." Grid.ColumnSpan="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" TextWrapping="Wrap"  Foreground="White" FontWeight="Bold" FontFamily="Microsoft JhengHei"/>
+
+            <!--Hidden CheckBox is used for receiving Outside property change to determine Out of Bound User Control visibility-->
+            <CheckBox IsChecked="{Binding SelectedModel.Outside}" Visibility="Collapsed" Checked="Outside_Checked" Unchecked="Outside_Uncheked"/>
         </Grid>
     </Grid>
 </UserControl>

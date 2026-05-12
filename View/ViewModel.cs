@@ -46,20 +46,6 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
-        // Check if all models are in print bed area.
-        public bool IsOutOfBound
-        {
-            get
-            {
-                foreach (var m in Models)
-                {
-                    if (m.Outside)
-                        return true;
-                }
-                return false;
-            }
-        }
-
         bool _isLoadingModel = false;
         public bool IsLoadingModel 
         {
@@ -81,8 +67,6 @@ namespace OpenGL3DViewerMVVM.View
                 OnPropertyChanged(nameof(LoadModelProgress));
             }
         }
-
-        public void UpdateOutOfBound() => OnPropertyChanged(nameof(IsOutOfBound));
 
         bool isTooSmall(RHBoundingBox boundingBox)
         {

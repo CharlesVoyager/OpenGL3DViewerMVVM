@@ -1,5 +1,4 @@
 ﻿using OpenTK.Mathematics;
-using OpenGL3DViewerMVVM.Extensions;
 using OpenGL3DViewerMVVM.Primitive;
 
 namespace OpenGL3DViewerMVVM.ModelObjectTool
@@ -57,15 +56,16 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             Matrix4 mat = ModelObjectToolHelper.ToMatrix4(matrix);
         
             Vector3 newPoint3 = new Vector3();
-            Vector3 temp = new Vector3();
+            Vector4 temp4 = new Vector4();
             for (int i = 0; i < destVertexArray.Length; i+=3)
             {
-                temp.X = *sourceVertexArray++;
-                temp.Y = *sourceVertexArray++;
-                temp.Z = *sourceVertexArray++;
+                temp4.X = *sourceVertexArray++;
+                temp4.Y = *sourceVertexArray++;
+                temp4.Z = *sourceVertexArray++;
+                temp4.W = 1.0f;
 
-                newPoint3 = temp.ToVector4().Mult(mat).ToVector3();
-
+                newPoint3 = Vector4.TransformRow(temp4, mat).Xyz;
+        
                 destVertexArray[i] = newPoint3.X;
                 destVertexArray[i + 1] = newPoint3.Y;
                 destVertexArray[i + 2] = newPoint3.Z;
@@ -81,14 +81,15 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             Matrix4 mat = ModelObjectToolHelper.ToMatrix4(matrix);
 
             Vector3 newPoint3 = new Vector3();
-            Vector3 temp = new Vector3();
+            Vector4 temp4 = new Vector4();
             for (int i = 0; i < destVertexArray.Length; i += 3)
             {
-                temp.X = *sourceVertexArray++;
-                temp.Y = *sourceVertexArray++;
-                temp.Z = *sourceVertexArray++;
+                temp4.X = *sourceVertexArray++;
+                temp4.Y = *sourceVertexArray++;
+                temp4.Z = *sourceVertexArray++;
+                temp4.W = 1.0f;
 
-                newPoint3 = temp.ToVector4().Mult(mat).ToVector3();
+                newPoint3 = Vector4.TransformRow(temp4, mat).Xyz;
 
                 destVertexArray[i] = newPoint3.X;
                 destVertexArray[i + 1] = newPoint3.Y;
@@ -123,7 +124,7 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             id = -1;
             bool selected = false;
             Vector3[] triangle = new Vector3[3];
-            Vector3[] mdVertices = new Vector3[3];
+            Vector4[] mdVertices = new Vector4[3];
             Matrix4 mat = ModelObjectToolHelper.ToMatrix4(matrix);            
             float length = float.MaxValue;            
             Ray ray = new Ray();
@@ -137,11 +138,13 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
                     mdVertices[n].X = *vertices++;
                     mdVertices[n].Y = *vertices++;
                     mdVertices[n].Z = *vertices++;
+                    mdVertices[n].W = 1.0f;
                 }
 
-                triangle[0] = mdVertices[0].ToVector4().Mult(mat).ToVector3();
-                triangle[1] = mdVertices[1].ToVector4().Mult(mat).ToVector3();
-                triangle[2] = mdVertices[2].ToVector4().Mult(mat).ToVector3();
+                triangle[0] = Vector4.TransformRow(mdVertices[0], mat).Xyz;
+                triangle[1] = Vector4.TransformRow(mdVertices[1], mat).Xyz;
+                triangle[2] = Vector4.TransformRow(mdVertices[2], mat).Xyz;
+
                 float temp;
                 if (RaycastTriangle(ray, triangle, out temp))
                 {                    

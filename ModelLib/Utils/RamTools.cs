@@ -5,6 +5,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
 {
     public static class RamTools
     {
+        const uint UsedLimit_64bit = 5120;     // 5GB
+        const uint UsedLimit_32bit = 1536;     // 1.5GB
+        const uint RemainMin = 100;            // 100MB
+        const ulong LimitPercent = 30;
+
         public static bool IsRamSizeValid()
         {
             bool valid = true;
@@ -18,7 +23,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
             ulong availRam = new Microsoft.VisualBasic.Devices.ComputerInfo().AvailablePhysicalMemory / 1024 / 1024;    // Unit: MB
 #endif
 
-            if (availRam < SWSetting.Memory.RemainMin || getCurMemoryUsed() >= SWSetting.Memory.UsedLimit_64bit)
+            if (availRam < RemainMin || getCurMemoryUsed() >= UsedLimit_64bit)
             {
                 valid = false;
             }

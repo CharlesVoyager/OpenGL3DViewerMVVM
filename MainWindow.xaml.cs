@@ -385,11 +385,6 @@ namespace OpenGL3DViewerMVVM
             gridAbout.Visibility = Visibility.Hidden;
         }
 
-        private void OnModelPropertiesChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
-        }
-
         void DebugLog()
         {
         }

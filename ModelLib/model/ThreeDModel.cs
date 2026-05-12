@@ -73,9 +73,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             if (propertyName.Contains("Rotation") || propertyName.Contains("ScaleZ"))
                 Land();
 
-            if (propertyName.Contains("Position") || propertyName.Contains("Rotation") || propertyName.Contains("Scale"))
-                MainWindow.main.threeDControl.UpdateChanges();
-
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // Notify UI that property has changed.
         }
 

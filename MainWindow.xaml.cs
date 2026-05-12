@@ -35,8 +35,6 @@ namespace OpenGL3DViewerMVVM
             main = this;
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
-            // Translator
-
             trans = new Trans(AppDomain.CurrentDomain.BaseDirectory + "Resources");
 
             // Retrieve DPI from WPF presentation source after initialization
@@ -50,6 +48,7 @@ namespace OpenGL3DViewerMVVM
                 }
             };
 
+            // ViewModel for MVVM pattern used on STLComposer and other UI user controls.
             viewModel = new ViewModel();
 
             // ThreeDSettings
@@ -384,6 +383,11 @@ namespace OpenGL3DViewerMVVM
         private void button_closeAbout_Click(object sender, RoutedEventArgs e)
         {
             gridAbout.Visibility = Visibility.Hidden;
+        }
+
+        private void OnModelPropertiesChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
 
         void DebugLog()

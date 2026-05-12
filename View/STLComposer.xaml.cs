@@ -23,5 +23,10 @@ namespace OpenGL3DViewerMVVM.View
             e.Cancel = true; // Prevent the window from actually closing
             this.Hide();
         }
+
+        private void OnModelPropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            MainWindow.main.threeDControl.UpdateChanges();
+        }
     }
 }

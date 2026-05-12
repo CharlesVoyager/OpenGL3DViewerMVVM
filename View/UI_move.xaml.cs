@@ -119,7 +119,6 @@ namespace OpenGL3DViewerMVVM.View
             if (stl == null) return;
 
             stl.Land();
-            MainWindow.main.threeDControl.UpdateChanges();
 
             // Land() will NOT trigger OnPropertyChanged(). Therefore, update slider values manually.
             slider_moveX.Value = stl.Position.X;

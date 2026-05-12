@@ -63,19 +63,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
     public class ThreeDModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            if (propertyName.Contains("Position"))
-                UpdateTransMatrix();    // Bounding box will be automatically updated by position change.
-            else if (propertyName.Contains("Rotation") || propertyName.Contains("Scale"))
-                UpdateBoundingBoxAndMatrix();
-
-            if (propertyName.Contains("Rotation") || propertyName.Contains("ScaleZ"))
-                Land();
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // Notify UI that property has changed.
-        }
-
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // Notify UI that property has changed.
 
         private bool selected = false;
 
@@ -414,7 +402,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 position.X = value;
                 OnPropertyChanged(nameof(PositionX));
-                UpdateOutside();
             }
         }
 
@@ -425,7 +412,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 position.Y = value;
                 OnPropertyChanged(nameof(PositionY));
-                UpdateOutside();
             }
         }
 
@@ -436,7 +422,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             { 
                 position.Z = value;
                 OnPropertyChanged(nameof(PositionZ));
-                UpdateOutside();
             }
         }
 
@@ -452,7 +437,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 else 
                     rotation.x = value;
                 OnPropertyChanged(nameof(RotationX));
-                UpdateOutside();
             }
         }
 
@@ -468,7 +452,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 else
                     rotation.y = value;
                 OnPropertyChanged(nameof(RotationY));
-                UpdateOutside();
             }
         }
 
@@ -484,7 +467,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 else
                     rotation.z = value;
                 OnPropertyChanged(nameof(RotationZ));
-                UpdateOutside();
             }
         }
 
@@ -498,7 +480,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 else
                     scale.x = value;
                 OnPropertyChanged(nameof(ScaleX));
-                UpdateOutside();
             }
         }
 
@@ -512,7 +493,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 else
                     scale.y = value;
                 OnPropertyChanged(nameof(ScaleY));
-                UpdateOutside();
             }
         }
 
@@ -526,7 +506,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 else
                     scale.z = value;
                 OnPropertyChanged(nameof(ScaleZ));
-                UpdateOutside();
             }
         }
 

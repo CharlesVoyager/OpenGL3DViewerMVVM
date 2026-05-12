@@ -24,9 +24,33 @@ namespace OpenGL3DViewerMVVM.View
             this.Hide();
         }
 
-        private void OnModelPropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void OnPositionPropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
+            if (MainWindow.main.viewModel.SelectedModel == null) return;
+
+            MainWindow.main.viewModel.SelectedModel.UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
             MainWindow.main.threeDControl.UpdateChanges();
+            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
+        }
+
+        private void OnRotatePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (MainWindow.main.viewModel.SelectedModel == null) return;
+
+            MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
+            MainWindow.main.viewModel.SelectedModel.Land();
+            MainWindow.main.threeDControl.UpdateChanges();
+            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
+        }
+
+        private void OnScalePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (MainWindow.main.viewModel.SelectedModel == null) return;
+
+            MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
+            MainWindow.main.viewModel.SelectedModel.Land();
+            MainWindow.main.threeDControl.UpdateChanges();
+            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
         }
     }
 }

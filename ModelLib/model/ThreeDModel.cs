@@ -220,16 +220,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public void UpdateBoundingBoxAndMatrix()
         {
-            //Stopwatch sw = Stopwatch.StartNew();
-
-            Matrix4 previousModelMatrix = trans;   // Store
+            Matrix4 previousModelMatrix = trans;
 
             UpdateTransMatrix(); // Must update trans Matrix before updating Bounding Box.
 
-            if (trans != previousModelMatrix)   // Comppute bounding box only when the model matrix has changed. This can save a lot of time.
+            if (trans != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
                 updateBoundingBox();
-
-            //Debug.WriteLine("[ThreeDModel.UpdateBoundingBoxAndMatrix]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
         }
 
         // This function is used when moving the object for saving bounding box compuation.

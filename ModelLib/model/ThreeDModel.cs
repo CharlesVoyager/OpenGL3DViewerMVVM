@@ -3,7 +3,6 @@ using OpenGL3DViewerMVVM.model.geom;
 using OpenGL3DViewerMVVM.ModelObjectTool;
 using OpenGL3DViewerMVVM.View;
 using OpenTK.Mathematics;
-using OpenTK.Windowing.Common.Input;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -72,9 +71,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         private RHVector3 rotation = new RHVector3(0, 0, 0);    
         private RHVector3 scale = new RHVector3(1, 1, 1);
 
-
         public RHVector3 InitialPosition = new RHVector3(0, 0, 0);
-
 
         public TopoModel Model;         // Original triangles data from 3D Model file (Stl or Glb).
 

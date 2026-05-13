@@ -1,11 +1,12 @@
 ﻿using OpenGL3DViewerMVVM.Draw;
-using OpenTK.Mathematics;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using OpenGL3DViewerMVVM.model.geom;
 using OpenGL3DViewerMVVM.ModelObjectTool;
 using OpenGL3DViewerMVVM.View;
+using OpenTK.Mathematics;
+using OpenTK.Windowing.Common.Input;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 #nullable disable
 
@@ -221,9 +222,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         {
             //Stopwatch sw = Stopwatch.StartNew();
 
+            Matrix4 previousModelMatrix = trans;   // Store
+
             UpdateTransMatrix(); // Must update trans Matrix before updating Bounding Box.
 
-            updateBoundingBox();
+            if (trans != previousModelMatrix)   // Comppute bounding box only when the model matrix has changed. This can save a lot of time.
+                updateBoundingBox();
 
             //Debug.WriteLine("[ThreeDModel.UpdateBoundingBoxAndMatrix]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
         }

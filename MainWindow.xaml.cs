@@ -324,8 +324,7 @@ namespace OpenGL3DViewerMVVM
         private void info_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_object_information, "StateVisible", true);
-            UI_object_information.Analyse(viewModel.SelectedModel);
-
+      
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
             rotate_toggleButton.IsChecked = false;

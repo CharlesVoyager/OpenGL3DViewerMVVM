@@ -20,11 +20,11 @@ namespace OpenGL3DViewerMVVM.View
             catch { }
         }
 
-        public void translate()
+        void translate()
         {
         }
 
-        public void Analyse(ThreeDModel pm)
+        void updateNonMVVMProperties(ThreeDModel pm)
         {
             //Stopwatch sw = Stopwatch.StartNew();
 
@@ -35,7 +35,6 @@ namespace OpenGL3DViewerMVVM.View
                 txtSizeY.Text = "0.000 mm";
                 txtSizeZ.Text = "0.000 mm";
                 txtCollision.Text = "";
-                txtFilename.Text = "";
                 return;
             }
 
@@ -57,9 +56,27 @@ namespace OpenGL3DViewerMVVM.View
             txtSizeZ.Text = bbox.Size.z.ToString("0.000") + " mm";
 
             txtCollision.Text = pm.Outside.ToString();
-            txtFilename.Text = pm.Name;
 
             //Debug.WriteLine("Elapsed time for Analyse: " + sw.ElapsedMilliseconds + " ms");
+        }
+
+        private void OnSelectionChange(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (State1Panel.Opacity == 0) return;
+
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
+            updateNonMVVMProperties(model);
+        }
+
+        private void OnStateVisibleCompleted(object sender, EventArgs e)
+        {
+            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            if (model == null) return;
+
+            Console.WriteLine(State1Panel.Opacity);
+            updateNonMVVMProperties(model);
         }
     }
 }

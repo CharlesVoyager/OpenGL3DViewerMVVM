@@ -506,6 +506,26 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             }
         }
 
+        double uniformScaleValue = 1;
+        public double UniformScale
+        {
+            get { return uniformScaleValue; }
+            set
+            {
+                if (value < 0)
+                    uniformScaleValue = 0;
+                else
+                {
+                    uniformScaleValue = value;
+                    scale.x = value;
+                    scale.y = value;
+                    scale.z = value;
+                }
+
+                OnPropertyChanged(nameof(UniformScale));
+            }
+        }
+
         public string OriginalModelSize
         {
             get { return Model.boundingBox.Size.ToString(); }

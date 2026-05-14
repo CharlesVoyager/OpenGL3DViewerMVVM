@@ -4,7 +4,6 @@ namespace OpenGL3DViewerMVVM.View
 {
     public partial class STLComposer : Window
     {
-        // ── Constructor ───────────────────────────────────────────────────────
         public STLComposer()
         {
             InitializeComponent();
@@ -51,6 +50,20 @@ namespace OpenGL3DViewerMVVM.View
         private void OnScalePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             if (MainWindow.main.viewModel.SelectedModel == null) return;
+
+            MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
+            MainWindow.main.viewModel.SelectedModel.Land();
+            MainWindow.main.threeDControl.UpdateChanges();
+            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
+        }
+
+        private void OnUniformScalePropertyChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (MainWindow.main.viewModel.SelectedModel == null) return;
+
+            textScaleX.Text = sliderUniformScale.Value.ToString("0.000");
+            textScaleY.Text = sliderUniformScale.Value.ToString("0.000");
+            textScaleZ.Text = sliderUniformScale.Value.ToString("0.000");
 
             MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
             MainWindow.main.viewModel.SelectedModel.Land();

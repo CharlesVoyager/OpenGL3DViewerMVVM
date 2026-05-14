@@ -227,12 +227,7 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
-            stl.Scale.x = slider_resize.Value / 100;
-            stl.Scale.y = slider_resize.Value / 100;
-            stl.Scale.z = slider_resize.Value / 100;
-            stl.UpdateBoundingBoxAndMatrix();
-            stl.Land();
-            stl.UpdateOutside();
+            stl.UniformScale = slider_resize.Value / 100;
 
             MainWindow.main.threeDControl.UpdateChanges();
             gIsShow = true;

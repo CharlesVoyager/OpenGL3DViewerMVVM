@@ -221,8 +221,16 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
             UpdateTransMatrix(); // Must update trans Matrix before updating Bounding Box.
 
-            if (trans != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
-                updateBoundingBox();
+            /*
+               Because we have added UniformScale property, it won't proceed duplicate scale action. We do not need the check 'if (trans != previousModelMatrix)' any more.
+
+               However, there is an issue that may need to check later.
+               When the GLB file is loaded, the bounding box somehow won't be updated acccordingly.
+
+             */
+
+            //  if (trans != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
+            updateBoundingBox();
         }
 
         // This function is used when moving the object for saving bounding box compuation.

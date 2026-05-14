@@ -345,15 +345,7 @@ namespace OpenGL3DViewerMVVM.View
                 // Find the largest dimension of the model.
                 double maxDim = Math.Max(Math.Max(bbox.Size.x, bbox.Size.y), bbox.Size.z);
                 double scaleFactor = (SettingsService.Instance.Settings.PrintAreaWidth / 2) / maxDim;
-
-                model.Scale.x = (float)scaleFactor;
-                model.Scale.y = (float)scaleFactor;
-                model.Scale.z = (float)scaleFactor;
-
-                model.UpdateBoundingBoxAndMatrix();
-                model.Land();
-                model.UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
+                model.UniformScale = scaleFactor;
             }
             catch { }
         }
@@ -384,15 +376,7 @@ namespace OpenGL3DViewerMVVM.View
                 }
 
                 double scaleFactor = 25.4; // 1 inch = 25.4 mm
-
-                model.Scale.x *= (float)scaleFactor;
-                model.Scale.y *= (float)scaleFactor;
-                model.Scale.z *= (float)scaleFactor;
-
-                model.UpdateBoundingBoxAndMatrix();
-                model.Land();
-                model.UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
+                model.UniformScale = scaleFactor;
             }
             catch { }
         }
@@ -410,14 +394,7 @@ namespace OpenGL3DViewerMVVM.View
                 ui.button_inchtomm.IsEnabled = false;
 
                 double scaleFactor = 25.4; // 1 inch = 25.4 mm
-
-                model.Scale.x /= (float)scaleFactor;
-                model.Scale.y /= (float)scaleFactor;
-                model.Scale.z /= (float)scaleFactor;
-
-                model.UpdateBoundingBoxAndMatrix();
-                model.Land();
-                model.UpdateOutside();
+                model.UniformScale /= scaleFactor;
                 MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }

@@ -20,7 +20,6 @@ namespace OpenGL3DViewerMVVM.View
         const double MIN_DIMENSION = 0.001; // Minimum dimension to prevent exception when calculating scale.
 
         bool gIsShow = false;
-        Axis xyzbind = Axis.X;
 
         public UI_resize_advance()
         {
@@ -103,13 +102,15 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     stl.Scale.y = tScalex;
                     stl.Scale.z = tScalex;
+                    gIsShow = true;
+                    slider_resize.Value = tScalex * 100;
+                    gIsShow = false;
                 }
                 stl.UpdateBoundingBoxAndMatrix();
                 stl.Land();
                 stl.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
                 gIsShow = true;
-                updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
             }
@@ -133,13 +134,15 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     stl.Scale.x = tScaley;
                     stl.Scale.z = tScaley;
+                    gIsShow = true;
+                    slider_resize.Value = tScaley * 100;
+                    gIsShow = false;
                 }
                 stl.UpdateBoundingBoxAndMatrix();
                 stl.Land();
                 stl.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
                 gIsShow = true;
-                updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
             }
@@ -164,13 +167,15 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     stl.Scale.x = tScalez;
                     stl.Scale.y = tScalez;
+                    gIsShow = true;
+                    slider_resize.Value = tScalez * 100;
+                    gIsShow = false;
                 }
                 stl.UpdateBoundingBoxAndMatrix();
                 stl.Land();
                 stl.UpdateOutside();
                 MainWindow.main.threeDControl.UpdateChanges();
                 gIsShow = true;
-                updateSliderValue(xyzbind);
                 updateTxt();
                 gIsShow = false;
             }
@@ -186,7 +191,8 @@ namespace OpenGL3DViewerMVVM.View
             {
                 slider_resize.IsEnabled = true;
                 checkMin();
-                updateSliderValue(xyzbind);
+                double maxScale = Math.Max(stl.Scale.x, Math.Max(stl.Scale.y, stl.Scale.z));
+                slider_resize.Value = maxScale * 100;
             }
             catch { }
         }
@@ -253,13 +259,6 @@ namespace OpenGL3DViewerMVVM.View
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
             slider_resize.Maximum = tMaxScalableValue * 100;
             slider_resize.ValueChanged += slider_resize_ValueChanged;
-
-            if (txMaxScalableValue == tMaxScalableValue)
-                xyzbind = Axis.X;
-            else if (tyMaxScalableValue == tMaxScalableValue)
-                xyzbind = Axis.Y;
-            else if (tzMaxScalableValue == tMaxScalableValue)
-                xyzbind = Axis.Z;
         }
 
         public void button_Reset_Click(object sender, RoutedEventArgs e)
@@ -278,7 +277,7 @@ namespace OpenGL3DViewerMVVM.View
 
             gIsShow = true;
             updateTxt();
-            updateSliderValue(xyzbind);
+            slider_resize.Value = 100;
             gIsShow = false;
             checkMin();
 
@@ -288,7 +287,7 @@ namespace OpenGL3DViewerMVVM.View
 
             gIsShow = true;
             updateTxt();
-            updateSliderValue(xyzbind);
+            slider_resize.Value = stl.ScaleX * 100;
             gIsShow = false;
             checkMin();
         }
@@ -345,10 +344,9 @@ namespace OpenGL3DViewerMVVM.View
                 model.ScaleZ = scaleValue;
             
                 gIsShow = true;
+                slider_resize.Value = model.ScaleX * 100;
                 updateTxt();
                 gIsShow = false;
-
-                updateSliderValue(xyzbind);
             }
             catch { }
         }
@@ -372,25 +370,6 @@ namespace OpenGL3DViewerMVVM.View
             txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
             txtY.Text = stl.BoundingBox.Size.y.ToString("0.000");
             txtZ.Text = stl.BoundingBox.Size.z.ToString("0.000");
-        }
-
-        void updateSliderValue(Axis axis)
-        {
-            if (MainWindow.main.viewModel.SelectedModel == null) return;
-            switch (axis)
-            {
-                case Axis.X:
-                    slider_resize.Value = MainWindow.main.viewModel.SelectedModel.Scale.x * 100;
-                    break;
-
-                case Axis.Y:
-                    slider_resize.Value = MainWindow.main.viewModel.SelectedModel.Scale.y * 100;
-                    break;
-
-                case Axis.Z:
-                    slider_resize.Value = MainWindow.main.viewModel.SelectedModel.Scale.z * 100;
-                    break;
-            }
         }
     }
 }

@@ -96,23 +96,19 @@ namespace OpenGL3DViewerMVVM.View
                 if (dimX == 0) dimX = MIN_DIMENSION;
 
                 Double tScalex = dimX / Math.Max(stl.Model.boundingBox.Size.x, MIN_DIMENSION);
- 
-                stl.Scale.x = tScalex;
+
                 if (chk_Uniform.IsChecked == true)
                 {
-                    stl.Scale.y = tScalex;
-                    stl.Scale.z = tScalex;
+                    stl.UniformScale = tScalex;
+                  
                     gIsShow = true;
                     slider_resize.Value = tScalex * 100;
+                    txtY.Text = txtX.Text;
+                    txtZ.Text = txtX.Text;
                     gIsShow = false;
                 }
-                stl.UpdateBoundingBoxAndMatrix();
-                stl.Land();
-                stl.UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
-                gIsShow = true;
-                updateTxt();
-                gIsShow = false;
+                else
+                    stl.ScaleX = tScalex;
             }
             catch { }
         }
@@ -129,22 +125,18 @@ namespace OpenGL3DViewerMVVM.View
                 if (dimY == 0) dimY = MIN_DIMENSION;
 
                 Double tScaley = dimY / Math.Max(stl.Model.boundingBox.Size.y, MIN_DIMENSION);
-                stl.Scale.y = tScaley;
+              
                 if (chk_Uniform.IsChecked == true)
                 {
-                    stl.Scale.x = tScaley;
-                    stl.Scale.z = tScaley;
+                    stl.UniformScale = tScaley;
                     gIsShow = true;
                     slider_resize.Value = tScaley * 100;
+                    txtX.Text = txtY.Text;
+                    txtZ.Text = txtY.Text;
                     gIsShow = false;
                 }
-                stl.UpdateBoundingBoxAndMatrix();
-                stl.Land();
-                stl.UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
-                gIsShow = true;
-                updateTxt();
-                gIsShow = false;
+                else
+                    stl.ScaleY = tScaley;
             }
             catch { }
         }
@@ -163,21 +155,18 @@ namespace OpenGL3DViewerMVVM.View
 
                 Double tScalez = dimZ / Math.Max(stl.Model.boundingBox.Size.z, MIN_DIMENSION);
                 stl.Scale.z = tScalez;
+
                 if (chk_Uniform.IsChecked == true)
                 {
-                    stl.Scale.x = tScalez;
-                    stl.Scale.y = tScalez;
+                    stl.UniformScale = tScalez;
                     gIsShow = true;
                     slider_resize.Value = tScalez * 100;
+                    txtX.Text = txtZ.Text;
+                    txtY.Text = txtZ.Text;
                     gIsShow = false;
                 }
-                stl.UpdateBoundingBoxAndMatrix();
-                stl.Land();
-                stl.UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
-                gIsShow = true;
-                updateTxt();
-                gIsShow = false;
+                else
+                    stl.ScaleZ = tScalez;
             }
             catch { }
         }
@@ -229,7 +218,6 @@ namespace OpenGL3DViewerMVVM.View
 
             stl.UniformScale = slider_resize.Value / 100;
 
-            MainWindow.main.threeDControl.UpdateChanges();
             gIsShow = true;
             updateTxt();
             gIsShow = false;
@@ -262,9 +250,7 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
-            stl.ScaleX = 1;
-            stl.ScaleY = 1;
-            stl.ScaleZ = 1;
+            stl.UniformScale = 1;
 
             chk_Uniform.IsChecked = true;
             button_mmtoinch.IsEnabled = true;

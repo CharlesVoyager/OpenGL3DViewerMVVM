@@ -139,8 +139,12 @@
                              TextChanged="OnScalePropertiesChanged"
                              Text="{Binding SelectedModel.ScaleZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <Slider x:Name="sliderUniformScale" Grid.Row="2" Grid.Column="7" VerticalAlignment="Center" Value="{Binding SelectedModel.UniformScale}" ValueChanged="OnUniformScalePropertyChange"/>
-                </Grid>
+                    <TextBox x:Name="textScale" Grid.Row="2" Grid.Column="7" Margin="4,4" VerticalAlignment="Center"
+                             Style="{StaticResource ValidatedTextBox}"
+                             TextChanged="OnUniformScalePropertiesChanged"
+                             Text="{Binding SelectedModel.UniformScale, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="False"/>
+                    </Grid>
             </Border>
 
             <!-- ═══════════════════════════════════════════

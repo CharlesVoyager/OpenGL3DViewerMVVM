@@ -57,13 +57,21 @@ namespace OpenGL3DViewerMVVM.View
             MainWindow.main.viewModel.SelectedModel.UpdateOutside();
         }
 
-        private void OnUniformScalePropertyChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void OnUniformScalePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             if (MainWindow.main.viewModel.SelectedModel == null) return;
 
-            textScaleX.Text = sliderUniformScale.Value.ToString("0.000");
-            textScaleY.Text = sliderUniformScale.Value.ToString("0.000");
-            textScaleZ.Text = sliderUniformScale.Value.ToString("0.000");
+            textScaleX.TextChanged -= OnScalePropertiesChanged;
+            textScaleY.TextChanged -= OnScalePropertiesChanged;
+            textScaleZ.TextChanged -= OnScalePropertiesChanged;
+
+            textScaleX.Text = textScale.Text;
+            textScaleY.Text = textScale.Text;
+            textScaleZ.Text = textScale.Text;
+
+            textScaleX.TextChanged += OnScalePropertiesChanged;
+            textScaleY.TextChanged += OnScalePropertiesChanged;
+            textScaleZ.TextChanged += OnScalePropertiesChanged;
 
             MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
             MainWindow.main.viewModel.SelectedModel.Land();

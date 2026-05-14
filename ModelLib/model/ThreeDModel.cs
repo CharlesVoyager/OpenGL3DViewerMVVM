@@ -516,12 +516,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     uniformScaleValue = 0;
                 else
                 {
-                    uniformScaleValue = value;
                     scale.x = value;
                     scale.y = value;
                     scale.z = value;
+                    uniformScaleValue = value;
                 }
-
                 OnPropertyChanged(nameof(UniformScale));
             }
         }

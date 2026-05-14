@@ -185,9 +185,6 @@ namespace OpenGL3DViewerMVVM.View
             try
             {
                 slider_resize.IsEnabled = true;
-                slider_resizeTemp.IsEnabled = true;
-                txt_Scale.IsEnabled = true;
-                btn_Scale.IsEnabled = true;
                 checkMin();
                 updateSliderValue(xyzbind);
             }
@@ -199,11 +196,6 @@ namespace OpenGL3DViewerMVVM.View
             try
             {
                 slider_resize.IsEnabled = false;
-                slider_resizeTemp.IsEnabled = false;
-                txt_Scale.IsEnabled = false;
-                btn_Scale.IsEnabled = false;
-
-                txt_Scale.Text = "";
             }
             catch { }
         }
@@ -228,8 +220,6 @@ namespace OpenGL3DViewerMVVM.View
             if (gIsShow == true) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
-
-            txt_Scale.Text = slider_resize.Value.ToString("0");
 
             stl.Scale.x = slider_resize.Value / 100;
             stl.Scale.y = slider_resize.Value / 100;
@@ -282,7 +272,6 @@ namespace OpenGL3DViewerMVVM.View
             stl.ScaleY = 1;
             stl.ScaleZ = 1;
 
-            txt_Scale.Text = "100";
             chk_Uniform.IsChecked = true;
             button_mmtoinch.IsEnabled = true;
             button_inchtomm.IsEnabled = false;
@@ -313,10 +302,9 @@ namespace OpenGL3DViewerMVVM.View
             button_inchtomm.IsEnabled = true;
 
             MainWindow.main.viewModel.DoMmToInch(model);
-            txt_Scale.Text = (model.ScaleX * 100).ToString("0");
 
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
-            slider_resize.Value = Convert.ToDouble(txt_Scale.Text);
+            slider_resize.Value = model.ScaleX * 100;
             slider_resize.ValueChanged += slider_resize_ValueChanged;
 
             gIsShow = true;
@@ -333,10 +321,9 @@ namespace OpenGL3DViewerMVVM.View
             button_inchtomm.IsEnabled = false;
 
             MainWindow.main.viewModel.DoInchToMm(model);
-            txt_Scale.Text = (model.ScaleX * 100).ToString("0");
             
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
-            slider_resize.Value = Convert.ToDouble(txt_Scale.Text);
+            slider_resize.Value = model.ScaleX * 100;
             slider_resize.ValueChanged += slider_resize_ValueChanged;
 
             gIsShow = true;
@@ -351,7 +338,7 @@ namespace OpenGL3DViewerMVVM.View
 
             try
             {
-                Double scaleValue = Convert.ToDouble(txt_Scale.Text) / 100;
+                Double scaleValue = slider_resize.Value / 100;
 
                 model.ScaleX = scaleValue;
                 model.ScaleY = scaleValue;

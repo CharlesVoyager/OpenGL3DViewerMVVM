@@ -22,10 +22,7 @@ namespace OpenGL3DViewerMVVM.View
             try
             {
                 if (MainWindow.main != null)
-                {
                     MainWindow.main.languageChanged += translate;
-                    DataContext = MainWindow.main.viewModel;
-                }
             }
             catch { }
         }

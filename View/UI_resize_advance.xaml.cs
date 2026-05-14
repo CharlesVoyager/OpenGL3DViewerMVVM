@@ -103,8 +103,8 @@ namespace OpenGL3DViewerMVVM.View
                   
                     gIsShow = true;
                     slider_resize.Value = tScalex * 100;
-                    txtY.Text = txtX.Text;
-                    txtZ.Text = txtX.Text;
+                    txtY.Text = stl.BoundingBox.Size.y.ToString("0.000");
+                    txtZ.Text = stl.BoundingBox.Size.z.ToString("0.000");
                     gIsShow = false;
                 }
                 else
@@ -131,8 +131,8 @@ namespace OpenGL3DViewerMVVM.View
                     stl.UniformScale = tScaley;
                     gIsShow = true;
                     slider_resize.Value = tScaley * 100;
-                    txtX.Text = txtY.Text;
-                    txtZ.Text = txtY.Text;
+                    txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
+                    txtZ.Text = stl.BoundingBox.Size.z.ToString("0.000");
                     gIsShow = false;
                 }
                 else
@@ -161,8 +161,8 @@ namespace OpenGL3DViewerMVVM.View
                     stl.UniformScale = tScalez;
                     gIsShow = true;
                     slider_resize.Value = tScalez * 100;
-                    txtX.Text = txtZ.Text;
-                    txtY.Text = txtZ.Text;
+                    txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
+                    txtY.Text = stl.BoundingBox.Size.y.ToString("0.000");
                     gIsShow = false;
                 }
                 else

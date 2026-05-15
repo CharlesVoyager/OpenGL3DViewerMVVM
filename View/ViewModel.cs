@@ -154,11 +154,7 @@ namespace OpenGL3DViewerMVVM.View
                 double tYBound = newModel.BoundingBox.Size.y / SettingsService.Instance.Settings.PrintAreaDepth;
                 double tZBound = newModel.BoundingBox.Size.z / SettingsService.Instance.Settings.PrintAreaHeight;
                 double tMax = Math.Max(Math.Max(tXBound, tYBound), Math.Max(tYBound, tZBound));
-                double scaleValue = 0;
-
-                if (tMax == tXBound) scaleValue = SettingsService.Instance.Settings.PrintAreaWidth / newModel.BoundingBox.Size.x;
-                else if (tMax == tYBound) scaleValue = SettingsService.Instance.Settings.PrintAreaDepth / newModel.BoundingBox.Size.y;
-                else if (tMax == tZBound) scaleValue = SettingsService.Instance.Settings.PrintAreaHeight / newModel.BoundingBox.Size.z;
+                double scaleValue = Math.Floor( (1 / tMax) * 100) / 100;
 
                 var result = MessageBox.Show(
                     Trans.T("M_OBJ_SCALE_DOWN") + " " + (int)(scaleValue * 100) + "%",

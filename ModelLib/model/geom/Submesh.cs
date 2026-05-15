@@ -11,8 +11,6 @@ namespace OpenGL3DViewerMVVM.model.geom
             public int MaterialIndex = -1;
         }
 
-        public bool selected = false;
-
         public float[] glVertices = null; // [x y z]
         public float[] glNormals = null;  // [nx ny nz]
         public float[] glColors = null;

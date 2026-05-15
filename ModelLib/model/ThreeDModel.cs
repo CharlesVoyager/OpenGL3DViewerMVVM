@@ -295,9 +295,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 cnt++;
             }
             // <>
-
-            Mesh.selected = Selected;
-
             //Debug.WriteLine("[PrintModel.Paint]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
         }
 

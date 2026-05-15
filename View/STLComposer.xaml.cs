@@ -27,56 +27,5 @@ namespace OpenGL3DViewerMVVM.View
         {   // When the selection changes, the Position usually changes as well. But keep threeDControl UpdateChanges() just in case that the Position does not change.
             MainWindow.main.threeDControl.UpdateChanges();
         }
-
-        private void OnPositionPropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            if (MainWindow.main.viewModel.SelectedModel == null) return;
-
-            MainWindow.main.viewModel.SelectedModel.UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
-            MainWindow.main.threeDControl.UpdateChanges();
-            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
-        }
-
-        private void OnRotatePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            if (MainWindow.main.viewModel.SelectedModel == null) return;
-
-            MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
-            MainWindow.main.viewModel.SelectedModel.Land();
-            MainWindow.main.threeDControl.UpdateChanges();
-            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
-        }
-
-        private void OnScalePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            if (MainWindow.main.viewModel.SelectedModel == null) return;
-
-            MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
-            MainWindow.main.viewModel.SelectedModel.Land();
-            MainWindow.main.threeDControl.UpdateChanges();
-            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
-        }
-
-        private void OnUniformScalePropertiesChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            if (MainWindow.main.viewModel.SelectedModel == null) return;
-
-            textScaleX.TextChanged -= OnScalePropertiesChanged;
-            textScaleY.TextChanged -= OnScalePropertiesChanged;
-            textScaleZ.TextChanged -= OnScalePropertiesChanged;
-
-            textScaleX.Text = textScale.Text;
-            textScaleY.Text = textScale.Text;
-            textScaleZ.Text = textScale.Text;
-
-            textScaleX.TextChanged += OnScalePropertiesChanged;
-            textScaleY.TextChanged += OnScalePropertiesChanged;
-            textScaleZ.TextChanged += OnScalePropertiesChanged;
-
-            MainWindow.main.viewModel.SelectedModel.UpdateBoundingBoxAndMatrix();
-            MainWindow.main.viewModel.SelectedModel.Land();
-            MainWindow.main.threeDControl.UpdateChanges();
-            MainWindow.main.viewModel.SelectedModel.UpdateOutside();
-        }
     }
 }

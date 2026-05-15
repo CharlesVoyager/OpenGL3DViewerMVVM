@@ -217,16 +217,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
             UpdateTransMatrix(); // Must update trans Matrix before updating Bounding Box.
 
-            /*
-               Because we have added UniformScale property, it won't proceed duplicate scale action. We do not need the check 'if (trans != previousModelMatrix)' any more.
-
-               However, there is an issue that may need to check later.
-               When the GLB file is loaded, the bounding box somehow won't be updated acccordingly.
-
-             */
-
-            //  if (trans != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
-            updateBoundingBox();
+            if (trans != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
+                updateBoundingBox();
         }
 
         // This function is used when moving the object for saving bounding box compuation.
@@ -392,6 +384,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.X = value;
+
+                UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(PositionX));
             }
         }
@@ -402,6 +399,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.Y = value;
+
+                UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(PositionY));
             }
         }
@@ -412,6 +414,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             set 
             { 
                 position.Z = value;
+
+                UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(PositionZ));
             }
         }
@@ -427,6 +434,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     rotation.x = 0;
                 else 
                     rotation.x = value;
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(RotationX));
             }
         }
@@ -442,6 +455,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     rotation.y = 0;
                 else
                     rotation.y = value;
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(RotationY));
             }
         }
@@ -457,6 +476,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     rotation.z = 0;
                 else
                     rotation.z = value;
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(RotationZ));
             }
         }
@@ -470,6 +495,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     scale.x = 0;
                 else
                     scale.x = value;
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(ScaleX));
             }
         }
@@ -483,6 +514,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     scale.y = 0;
                 else
                     scale.y = value;
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(ScaleY));
             }
         }
@@ -496,6 +533,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     scale.z = 0;
                 else
                     scale.z = value;
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
                 OnPropertyChanged(nameof(ScaleZ));
             }
         }
@@ -515,6 +558,15 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     scale.z = value;
                     uniformScaleValue = value;
                 }
+
+                UpdateBoundingBoxAndMatrix();
+                Land();
+                UpdateOutside();
+                MainWindow.main.threeDControl.UpdateChanges();
+
+                OnPropertyChanged(nameof(ScaleX));
+                OnPropertyChanged(nameof(ScaleY));
+                OnPropertyChanged(nameof(ScaleZ));
                 OnPropertyChanged(nameof(UniformScale));
             }
         }

@@ -289,10 +289,6 @@ namespace OpenGL3DViewerMVVM
         {
             VisualStateManager.GoToState(UI_rotate, "StateVisible", true);
             
-            UI_rotate.textRotX.Text = stlComposer.textRotX.Text;
-            UI_rotate.textRotY.Text = stlComposer.textRotY.Text;
-            UI_rotate.textRotZ.Text = stlComposer.textRotZ.Text;
-
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
             resize_toggleButton.IsChecked = false;

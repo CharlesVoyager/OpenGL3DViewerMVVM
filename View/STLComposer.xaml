@@ -92,56 +92,46 @@
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Scale" VerticalAlignment="Center" Margin="4,0"/>
 
                     <!-- Trans -->
-                    <TextBox x:Name="textTransX" Grid.Row="0" Grid.Column="2"
+                    <TextBox Grid.Row="0" Grid.Column="2"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnPositionPropertiesChanged"
                              Text="{Binding SelectedModel.PositionX, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox x:Name="textTransY" Grid.Row="0" Grid.Column="4"
+                    <TextBox Grid.Row="0" Grid.Column="4"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnPositionPropertiesChanged"
                              Text="{Binding SelectedModel.PositionY, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox x:Name="textTransZ" Grid.Row="0" Grid.Column="6"
+                    <TextBox Grid.Row="0" Grid.Column="6"
                              Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnPositionPropertiesChanged"
                              Text="{Binding SelectedModel.PositionZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <!-- Rotate -->
-                    <TextBox x:Name="textRotX" Grid.Row="1" Grid.Column="2"
+                    <TextBox Grid.Row="1" Grid.Column="2"
                             Margin="4,4" VerticalAlignment="Center"
                             Style="{StaticResource ValidatedTextBox}"
-                            TextChanged="OnRotatePropertiesChanged"
                             Text="{Binding SelectedModel.RotationX, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox x:Name="textRotY" Grid.Row="1" Grid.Column="4"
+                    <TextBox Grid.Row="1" Grid.Column="4"
                             Margin="4,4" VerticalAlignment="Center"
                             Style="{StaticResource ValidatedTextBox}"
-                            TextChanged="OnRotatePropertiesChanged"
                             Text="{Binding SelectedModel.RotationY, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox x:Name="textRotZ" Grid.Row="1" Grid.Column="6"
+                    <TextBox Grid.Row="1" Grid.Column="6"
                             Margin="4,4" VerticalAlignment="Center"
                             Style="{StaticResource ValidatedTextBox}"
-                            TextChanged="OnRotatePropertiesChanged"
                             Text="{Binding SelectedModel.RotationZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <!-- Scale -->
-                    <TextBox x:Name="textScaleX" Grid.Row="2" Grid.Column="2" Margin="4,4" VerticalAlignment="Center"
+                    <TextBox Grid.Row="2" Grid.Column="2" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnScalePropertiesChanged"
                              Text="{Binding SelectedModel.ScaleX, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox x:Name="textScaleY" Grid.Row="2" Grid.Column="4" Margin="4,4" VerticalAlignment="Center"
+                    <TextBox Grid.Row="2" Grid.Column="4" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnScalePropertiesChanged"
                              Text="{Binding SelectedModel.ScaleY, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox x:Name="textScaleZ" Grid.Row="2" Grid.Column="6" Margin="4,4" VerticalAlignment="Center"
+                    <TextBox Grid.Row="2" Grid.Column="6" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnScalePropertiesChanged"
                              Text="{Binding SelectedModel.ScaleZ, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBox x:Name="textScale" Grid.Row="2" Grid.Column="7" Margin="4,4" VerticalAlignment="Center"
+                    <TextBox Grid.Row="2" Grid.Column="7" Margin="4,4" VerticalAlignment="Center"
                              Style="{StaticResource ValidatedTextBox}"
-                             TextChanged="OnUniformScalePropertiesChanged"
                              Text="{Binding SelectedModel.UniformScale, StringFormat={}{0:G3}, UpdateSourceTrigger=PropertyChanged}"
                              IsEnabled="False"/>
                     </Grid>

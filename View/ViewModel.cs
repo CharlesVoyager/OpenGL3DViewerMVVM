@@ -41,6 +41,7 @@ namespace OpenGL3DViewerMVVM.View
                     if (selectedModel != null)
                         selectedModel.Selected = true;
 
+                    MainWindow.main.threeDControl.UpdateChanges();  //This is needed when selecting a model from the list in STLComposer.
                     OnPropertyChanged();
                 }
             }

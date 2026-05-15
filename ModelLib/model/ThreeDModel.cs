@@ -175,10 +175,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         // Scale → Rotate → Translate (applied right-to-left in matrix multiplication):
         public void UpdateTransMatrix()
         {
-            Matrix4 scale = Matrix4.CreateScale(
-                     (float)(ScaleX != 0 ? ScaleX : 1),
-                     (float)(ScaleY != 0 ? ScaleY : 1),
-                     (float)(ScaleZ != 0 ? ScaleZ : 1)
+            Matrix4 scaleMatrix = Matrix4.CreateScale(
+                     (float)(scale.x != 0 ? scale.x : 1),
+                     (float)(scale.y != 0 ? scale.y : 1),
+                     (float)(scale.z != 0 ? scale.z : 1)
             );
 
             Matrix4 rotX = Matrix4.CreateRotationX((float)(rotation.x * Math.PI / 180.0));
@@ -188,7 +188,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             Matrix4 transl = Matrix4.CreateTranslation((float)position.X, (float)position.Y, (float)position.Z);
 
             // Combine: Scale → RotX → RotY → RotZ → Translate
-            trans = scale * rotX * rotY * rotZ * transl;
+            trans = scaleMatrix * rotX * rotY * rotZ * transl;
         }
 
         private unsafe void updateBoundingBox()

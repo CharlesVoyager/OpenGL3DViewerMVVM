@@ -80,9 +80,9 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
-            double xShift = stl.BoundingBox.Center.x - stl.Position.X;
-            double yShift = stl.BoundingBox.Center.y - stl.Position.Y;
-            double zShift = stl.BoundingBox.Center.z - stl.Position.Z;
+            double xShift = stl.BoundingBox.Center.x - stl.PositionX;
+            double yShift = stl.BoundingBox.Center.y - stl.PositionY;
+            double zShift = stl.BoundingBox.Center.z - stl.PositionZ;
 
             slider_moveX.Maximum = SettingsService.Instance.Settings.PrintAreaWidth - (stl.BoundingBox.Size.x / 2) - xShift;
             slider_moveX.Minimum = stl.BoundingBox.Size.x / 2 - xShift;
@@ -118,9 +118,9 @@ namespace OpenGL3DViewerMVVM.View
             stl.Land();
 
             // Land() will NOT trigger OnPropertyChanged(). Therefore, update slider values manually.
-            slider_moveX.Value = stl.Position.X;
-            slider_moveY.Value = stl.Position.Y;
-            slider_moveZ.Value = stl.Position.Z;
+            slider_moveX.Value = stl.PositionX;
+            slider_moveY.Value = stl.PositionY;
+            slider_moveZ.Value = stl.PositionZ;
         }
 
         private void slider_moveX_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

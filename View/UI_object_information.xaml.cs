@@ -42,7 +42,7 @@ namespace OpenGL3DViewerMVVM.View
             foreach (TopoTriangle t in pm.Model.drawTriangles)
                 volume += t.SignedVolume();
 
-            volume = volume * pm.Scale.x * pm.Scale.y * pm.Scale.z;
+            volume = volume * pm.ScaleX * pm.ScaleY * pm.ScaleZ;
 
             RHBoundingBox bbox = pm.BoundingBox;
 

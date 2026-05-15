@@ -115,12 +115,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             stl.position.X = position.X;
             stl.position.Y = position.Y;
             stl.position.Z = position.Z;
-            stl.Scale.x = Scale.x;
-            stl.Scale.y = Scale.y;
-            stl.Scale.z = Scale.z;
-            stl.Rotation.x = Rotation.x;
-            stl.Rotation.y = Rotation.y;
-            stl.Rotation.z = Rotation.z;
+            stl.scale.x = scale.x;
+            stl.scale.y = scale.y;
+            stl.scale.z = scale.z;
+            stl.rotation.x = rotation.x;
+            stl.rotation.y = rotation.y;
+            stl.rotation.z = rotation.z;
             stl.trans = trans;
             stl.Selected = false;
             BoundingBox.CopyTo(stl.BoundingBox);    // NOTE: This must be after copying position becuse setting position will update bounding box.
@@ -169,27 +169,23 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             if (Math.Abs(targetMinZ - zMin) < 0.001) return;
 
             double shiftZ = targetMinZ - zMin;
-            Position.Z += shiftZ;
-
-            OnPropertyChanged(nameof(PositionZ));    // Update PositionZ in UI.
-
-            UpdateTransMatrix();
+            PositionZ += shiftZ;
         }
 
         // Scale → Rotate → Translate (applied right-to-left in matrix multiplication):
         public void UpdateTransMatrix()
         {
             Matrix4 scale = Matrix4.CreateScale(
-                     (float)(Scale.x != 0 ? Scale.x : 1),
-                     (float)(Scale.y != 0 ? Scale.y : 1),
-                     (float)(Scale.z != 0 ? Scale.z : 1)
+                     (float)(ScaleX != 0 ? ScaleX : 1),
+                     (float)(ScaleY != 0 ? ScaleY : 1),
+                     (float)(ScaleZ != 0 ? ScaleZ : 1)
             );
 
-            Matrix4 rotX = Matrix4.CreateRotationX((float)(Rotation.x * Math.PI / 180.0));
-            Matrix4 rotY = Matrix4.CreateRotationY((float)(Rotation.y * Math.PI / 180.0));
-            Matrix4 rotZ = Matrix4.CreateRotationZ((float)(Rotation.z * Math.PI / 180.0));
+            Matrix4 rotX = Matrix4.CreateRotationX((float)(rotation.x * Math.PI / 180.0));
+            Matrix4 rotY = Matrix4.CreateRotationY((float)(rotation.y * Math.PI / 180.0));
+            Matrix4 rotZ = Matrix4.CreateRotationZ((float)(rotation.z * Math.PI / 180.0));
 
-            Matrix4 transl = Matrix4.CreateTranslation((float)Position.X, (float)Position.Y, (float)Position.Z);
+            Matrix4 transl = Matrix4.CreateTranslation((float)position.X, (float)position.Y, (float)position.Z);
 
             // Combine: Scale → RotX → RotY → RotZ → Translate
             trans = scale * rotX * rotY * rotZ * transl;
@@ -325,14 +321,14 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             float maxY = SettingsService.Instance.Settings.PrintAreaDepth * 1.2f;
             float minY = -SettingsService.Instance.Settings.PrintAreaDepth * 0.2f;
 
-            if (dx < 0 && Position.X + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
+            if (dx < 0 && PositionX + dx > minX)  // If the boject is out of bound, allow to move it back to the bound area.
                 PositionX += dx;
-            else if (Position.X + dx < maxX && Position.X + dx > minX)
+            else if (PositionX + dx < maxX && PositionX + dx > minX)
                 PositionX += dx;
 
-            if (dy < 0 && Position.Y + dy > minY)
+            if (dy < 0 && PositionY + dy > minY)
                 PositionY += dy;
-            else if (Position.Y + dy < maxY && Position.Y + dy > minY)
+            else if (PositionY + dy < maxY && PositionY + dy > minY)
                 PositionY += dy;
         }
 
@@ -389,16 +385,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             get { return selected; }
             set { selected = value; }
         }
-
-
-        // 1. Position is the translation shift of the model. It is also used for calculating the bounding box. When Position changes, the bounding box will be automatically updated by the shift value. So, there is no need to calculate the bounding box in regular way which needs to loop through all vertices and consume a lot of time.
-        // 2. Rotation and Scale will change the shape of the model, so when they change, the bounding box needs to be calculated in regular way.
-        public Coord3D Position { get { return position; } }
-
-        RHVector3 Rotation { get { return rotation; } }
-
-        public RHVector3 Scale { get { return scale; } }
-        // <>
 
         public double PositionX
         {

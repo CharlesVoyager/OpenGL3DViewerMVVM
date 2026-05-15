@@ -170,9 +170,7 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     try
                     {
-                        newModel.Scale.x = newModel.Scale.y = newModel.Scale.z = scaleValue;
-                        newModel.UpdateBoundingBoxAndMatrix();
-                        newModel.Land();
+                        newModel.UniformScale = scaleValue;
                     }
                     catch { }
                 }
@@ -182,33 +180,27 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.UpdateBoundingBoxAndMatrix();
             }
 
-            newModel.Position.Z = newModel.BoundingBox.Size.z / 2;
+            newModel.PositionZ = newModel.BoundingBox.Size.z / 2;
             if (isAutoPosition)
             {
                 Autoposition(newModel);
             }
             else
             {
-                newModel.Position.X = (float)newModel.BoundingBox.Center.x;
-                newModel.Position.Y = (float)newModel.BoundingBox.Center.y;
-                newModel.UpdateTransMatrix();
+                newModel.PositionX = (float)newModel.BoundingBox.Center.x;
+                newModel.PositionY = (float)newModel.BoundingBox.Center.y;
             }
-            newModel.UpdateOutside();
+
+            Models.Add(newModel);
+            SelectedModel = newModel;
 
             // Remember initial positions for all ViewModel.Models after Autoposition.
             foreach (var m in Models)
             {
-                m.InitialPosition.x = m.Position.X;
-                m.InitialPosition.y = m.Position.Y;
-                m.InitialPosition.z = m.Position.Z;
+                m.InitialPosition.x = m.PositionX;
+                m.InitialPosition.y = m.PositionY;
+                m.InitialPosition.z = m.PositionZ;
             }
-
-            newModel.InitialPosition.x = newModel.Position.X;
-            newModel.InitialPosition.y = newModel.Position.Y;
-            newModel.InitialPosition.z = newModel.Position.Z;
-
-            Models.Add(newModel);
-            SelectedModel = newModel;
 
             MainWindow.main.threeDControl.InvokeGL(() =>
             {
@@ -250,9 +242,8 @@ namespace OpenGL3DViewerMVVM.View
             if (allModels.Count == 1)
             {
                 var model = allModels[0];
-                model.Position.X = maxW / 2;
-                model.Position.Y = maxH / 2;
-                model.UpdateTransMatrix();
+                model.PositionX = maxW / 2;
+                model.PositionY = maxH / 2;
                 return true;
             }
 
@@ -283,9 +274,8 @@ namespace OpenGL3DViewerMVVM.View
                 for (int i = 1; i < outPacker.vRects.Count; i++)
                 {
                     var s = (ThreeDModel)outPacker.vRects[i].obj;
-                    s.Position.X += xOff + xCenter + outPacker.vRects[i].x + border - 1000 - xOrigPos - s.xMin;
-                    s.Position.Y += yOff + yCenter + outPacker.vRects[i].y + border - 1000 - yOrigPos - s.yMin;
-                    s.UpdateTransMatrix();
+                    s.PositionX += xOff + xCenter + outPacker.vRects[i].x + border - 1000 - xOrigPos - s.xMin;
+                    s.PositionY += yOff + yCenter + outPacker.vRects[i].y + border - 1000 - yOrigPos - s.yMin;
                 }
                 MessageBox.Show(Trans.T("M_PRINTER_BED_FULL_TEXT"),
                                 Trans.T("W_PRINTER_BED_FULL"),
@@ -299,9 +289,8 @@ namespace OpenGL3DViewerMVVM.View
             foreach (PackerRect rect in packer.vRects)
             {
                 var s = (ThreeDModel)rect.obj;
-                s.Position.X += xOff + xAdd + rect.x + border - s.xMin;
-                s.Position.Y += yOff + yAdd + rect.y + border - s.yMin;
-                s.UpdateTransMatrix();
+                s.PositionX += xOff + xAdd + rect.x + border - s.xMin;
+                s.PositionY += yOff + yAdd + rect.y + border - s.yMin;
             }
             return true;
         }

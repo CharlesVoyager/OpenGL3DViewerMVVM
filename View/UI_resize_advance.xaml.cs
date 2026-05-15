@@ -59,7 +59,7 @@ namespace OpenGL3DViewerMVVM.View
 
             gIsShow = true;
             updateTxt();
-            if (model.Scale.x == model.Scale.y && model.Scale.y == model.Scale.z)
+            if (model.ScaleX == model.ScaleY && model.ScaleY == model.ScaleZ)
             {
                 chk_Uniform.IsChecked = true;
                 chk_Uniform_Checked(null, null);
@@ -154,8 +154,7 @@ namespace OpenGL3DViewerMVVM.View
                 if (dimZ == 0) dimZ = MIN_DIMENSION;
 
                 Double tScalez = dimZ / Math.Max(stl.Model.boundingBox.Size.z, MIN_DIMENSION);
-                stl.Scale.z = tScalez;
-
+    
                 if (chk_Uniform.IsChecked == true)
                 {
                     stl.UniformScale = tScalez;
@@ -180,7 +179,7 @@ namespace OpenGL3DViewerMVVM.View
             {
                 slider_resize.IsEnabled = true;
                 checkMin();
-                double maxScale = Math.Max(stl.Scale.x, Math.Max(stl.Scale.y, stl.Scale.z));
+                double maxScale = Math.Max(stl.ScaleX, Math.Max(stl.ScaleY, stl.ScaleZ));
                 slider_resize.Value = maxScale * 100;
             }
             catch { }

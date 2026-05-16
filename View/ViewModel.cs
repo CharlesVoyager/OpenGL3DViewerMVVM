@@ -1,6 +1,7 @@
 ﻿using OpenGL3DViewerMVVM.MeshIOLib;
 using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
+using OpenGL3DViewerMVVM.model.geom;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -8,7 +9,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using OpenGL3DViewerMVVM.model.geom;
 
 namespace OpenGL3DViewerMVVM.View
 {
@@ -71,7 +71,6 @@ namespace OpenGL3DViewerMVVM.View
 
         bool isTooSmall(RHBoundingBox boundingBox)
         {
-            // Don't use z size here because some STL files may have very small z size but large x/y size, and they should not be considered as "too small".
             return (boundingBox.Size.x < 10 && boundingBox.Size.y < 10 && boundingBox.Size.z < 10);
         }
 

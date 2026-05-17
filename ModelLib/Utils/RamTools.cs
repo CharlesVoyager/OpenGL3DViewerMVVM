@@ -5,8 +5,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
 {
     public static class RamTools
     {
-        const uint UsedLimit_64bit = 5120;     // 5GB
-        const uint UsedLimit_32bit = 1536;     // 1.5GB
+        const uint UsedLimit_64bit = 5120;     // 5120MB => 5GB
+        const uint UsedLimit_32bit = 1536;     // 1536MB => 1.5GB
         const uint RemainMin = 100;            // 100MB
         const ulong LimitPercent = 30;
 
@@ -33,8 +33,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
         public static uint getCurMemoryUsed()
         {
             Process currentProcess = System.Diagnostics.Process.GetCurrentProcess();
-            uint totalBytesOfMemoryUsed = Convert.ToUInt16(currentProcess.WorkingSet64 / 1024 / 1024);
-            return totalBytesOfMemoryUsed;
+            uint totalMBOfMemoryUsed = Convert.ToUInt16(currentProcess.WorkingSet64 / 1024 / 1024);
+            return totalMBOfMemoryUsed;
         }
     }
 }

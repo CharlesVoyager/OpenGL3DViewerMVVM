@@ -149,7 +149,7 @@
         <local:UI_rotate x:Name="UI_rotate" Margin="102,200,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <local:UI_resize_advance x:Name="UI_resize_advance" Margin="102,211,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <local:UI_object_information x:Name="UI_object_information" Margin="102,211,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-             
+
         <!--Left Panel-->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,60,0,0">
             <StackPanel Orientation="Horizontal">
@@ -170,7 +170,7 @@
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_view1.png" />
                 </ToggleButton.Background> View
             </ToggleButton>
-           
+
             <Image Name="image3" Source="/OpenGL3DViewerMVVM;component/Resources/bar2.png" Stretch="None" Height="8" />
 
             <StackPanel Orientation="Vertical" Style="{StaticResource leftPanelStackPanelStyle}" IsVisibleChanged="OnVisibilityChanged">
@@ -220,7 +220,7 @@
                 </ToggleButton.Background>
             </ToggleButton>
         </StackPanel>
-        
+
         <!--About-->
         <Grid x:Name="gridAbout" Height="200" Width="340" Margin="000,150,40,0" HorizontalAlignment="Right" VerticalAlignment="Top">
             <Grid.RowDefinitions>
@@ -242,5 +242,12 @@
 
         <local:BusyWindow x:Name="BusyWindow" Visibility="{Binding IsLoadingModel, Converter={StaticResource BoolToVis}}"/>
 
+        <!--Memory Monitor-->
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Memory Usage:" Foreground="White" FontFamily="Arial" FontSize="12"/>
+                <Label x:Name="memoryUsageLabel" Content="0 MB" Foreground="White" FontFamily="Arial" FontSize="12"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

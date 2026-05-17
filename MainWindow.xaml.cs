@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 #nullable disable
 
@@ -123,6 +124,7 @@ namespace OpenGL3DViewerMVVM
         }
 
         //── UI (WPF) ────────────────────────────────────────────────
+        DispatcherTimer? timer;
         private ContextMenu _contextMenu;
         private void initializeUi()
         {
@@ -160,6 +162,12 @@ namespace OpenGL3DViewerMVVM
 
             // About
             gridAbout.Visibility = Visibility.Hidden;
+
+            // Memory Monitor
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timerTickMemoryMonitor;
+            timer.Start();
         }
 
         /// <summary>
@@ -381,6 +389,11 @@ namespace OpenGL3DViewerMVVM
 
         void DebugLog()
         {
+        }
+
+        private void timerTickMemoryMonitor(object? sender, EventArgs e)
+        {
+            memoryUsageLabel.Content = RamTools.getCurMemoryUsed().ToString() + " MB";
         }
     }
 }

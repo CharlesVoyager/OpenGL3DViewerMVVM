@@ -33,6 +33,32 @@ namespace OpenGL3DViewerMVVM.View
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
     }
+    public class UIntToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is uint argb)
+            {
+                byte a = (byte)((argb >> 24) & 0xFF);
+                byte r = (byte)((argb >> 16) & 0xFF);
+                byte g = (byte)((argb >>  8) & 0xFF);
+                byte b = (byte)( argb        & 0xFF);
+                return new SolidColorBrush(System.Windows.Media.Color.FromArgb(a, r, g, b));
+            }
+            return Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is SolidColorBrush brush)
+            {
+                var c = brush.Color;
+                return (uint)((c.A << 24) | (c.R << 16) | (c.G << 8) | c.B);
+            }
+            return 0u;
+        }
+    }
+
     public class AppSettings
     {
         // Printer area diemnsions in millimeters.  These are used to draw the printer bed and frame,

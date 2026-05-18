@@ -204,6 +204,8 @@ namespace OpenGL3DViewerMVVM.View
 
             InitializeComponent();
 
+            DataContext = SettingsService.Instance.Settings;
+
             MainWindow.main.languageChanged += translate;
 
             loadSettings();
@@ -261,10 +263,6 @@ namespace OpenGL3DViewerMVVM.View
                 printerBase.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.PrinterBaseColor));
                 printerFrame.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.PrinterFrameColor));
                 outsidePrintbed.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.OutsidePrintbedColor));
-
-                showEdges.IsChecked = SettingsService.Instance.Settings.ShowEdges;
-                showFaces.IsChecked = SettingsService.Instance.Settings.ShowFaces;
-                showPrintbed.IsChecked  = SettingsService.Instance.Settings.ShowPrintbed;
 
                 selectionBox.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.SelectionBoxColor));
                 errorModel.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.ErrorModelColor));
@@ -550,14 +548,6 @@ namespace OpenGL3DViewerMVVM.View
         // ── Event handlers ───────────────────────────────────────────────────────
         private void CheckedChanged(object sender, RoutedEventArgs e)
         {
-            if (_isInitializing) return;
-            if (sender == showEdges)
-                SettingsService.Instance.Settings.ShowEdges = showEdges.IsChecked == true;
-            else if (sender == showFaces)
-                SettingsService.Instance.Settings.ShowFaces = showFaces.IsChecked == true;
-            else if (sender == showPrintbed)
-                SettingsService.Instance.Settings.ShowPrintbed = showPrintbed.IsChecked == true;
-
             if (MainWindow.main.threeDControl != null)
                 MainWindow.main.threeDControl.UpdateChanges();
         }
@@ -778,6 +768,13 @@ namespace OpenGL3DViewerMVVM.View
             catch { }
         }
 
-
+        private void OpenSettingsFileFolder_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo()
+            {
+                FileName = Path.GetDirectoryName(SettingsService.Instance.GetSettingsPath()),
+                UseShellExecute = true
+            });
+        }
     }
 }

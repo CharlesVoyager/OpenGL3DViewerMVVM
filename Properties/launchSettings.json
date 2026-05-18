@@ -2,7 +2,7 @@
   "profiles": {
     "OpenGL3DViewerMVVM": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\Testfiles\\DamagedHelmet.gl"
+      "commandLineArgs": "..\\..\\..\\Testfiles\\DamagedHelmet.glb"
     }
   }
 }

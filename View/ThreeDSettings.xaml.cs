@@ -48,6 +48,7 @@ namespace OpenGL3DViewerMVVM.View
             return Brushes.Transparent;
         }
 
+        // Border to unit.
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is SolidColorBrush brush)
@@ -67,7 +68,7 @@ namespace OpenGL3DViewerMVVM.View
         uint _printAreaHeight = 200;
         public uint PrintAreaWidth { get { return _printAreaWidth; } set { _printAreaWidth = value; OnPropertyChanged(); } }     // x-axis direction
         public uint PrintAreaDepth { get { return _printAreaDepth; } set { _printAreaDepth = value; OnPropertyChanged(); } }     // y-axis direction
-        public uint PrintAreaHeight { get { return _printAreaHeight; } set { _printAreaHeight = value; OnPropertyChanged(); } }    // z-axis direction
+        public uint PrintAreaHeight { get { return _printAreaHeight; } set { _printAreaHeight = value; OnPropertyChanged(); } }  // z-axis direction
         // <>
 
         // Initial OpenGL Client Size
@@ -281,148 +282,18 @@ namespace OpenGL3DViewerMVVM.View
             PropertyChanged?.Invoke(this, e);
         }
 
-        private bool _isInitializing = true;
-
         // ── Constructor ──────────────────────────────────────────────────────────
         public ThreeDSettings()
         {
-            _isInitializing = true;
-
             InitializeComponent();
 
             DataContext = SettingsService.Instance.Settings;
-
             MainWindow.main.languageChanged += translate;
-
-            loadSettings();
-
-            _isInitializing = false;
         }
 
         public void translate()
         {
             // Localisation hook — populate as needed.
-        }
-
-        void loadSettings()
-        {
-            try
-            {
-                txtPrintAreaWidth.TextChanged -= PrintAreaWidth_TextChanged; // Temporarily detach event handlers to prevent triggering on load
-                txtPrintAreaDepth.TextChanged -= PrintAreaDepth_TextChanged;
-                txtPrintAreaHeight.TextChanged -= PrintAreaHeight_TextChanged;
-
-                txtClientSizeWidth.TextChanged -= ClientSizeWidth_TextChanged;
-                txtClientSizeHeight.TextChanged -= ClientSizeHeight_TextChanged;
-
-                keyDirX.TextChanged -= LightSetting_ValueChanged;
-                keyDirY.TextChanged -= LightSetting_ValueChanged;
-                keyDirY.TextChanged -= LightSetting_ValueChanged;
-                keyStr.ValueChanged -= LightSetting_ValueChanged;
-                
-                fillDirX.TextChanged -= LightSetting_ValueChanged;
-                fillDirY.TextChanged -= LightSetting_ValueChanged;
-                fillDirZ.TextChanged -= LightSetting_ValueChanged;
-                fillStr.ValueChanged -= LightSetting_ValueChanged;
-                
-                backDirX.TextChanged -= LightSetting_ValueChanged;
-                backDirY.TextChanged -= LightSetting_ValueChanged;
-                backDirZ.TextChanged -= LightSetting_ValueChanged;
-                backStr.ValueChanged -= LightSetting_ValueChanged;
-
-                ambientStr.ValueChanged -= LightSetting_ValueChanged;
-
-                //=================================================================================================
-
-                txtPrintAreaWidth.Text = SettingsService.Instance.Settings.PrintAreaWidth.ToString();
-                txtPrintAreaDepth.Text = SettingsService.Instance.Settings.PrintAreaDepth.ToString();
-                txtPrintAreaHeight.Text = SettingsService.Instance.Settings.PrintAreaHeight.ToString();
-
-                txtClientSizeWidth.Text = SettingsService.Instance.Settings.InitialClientSizeWidth.ToString();
-                txtClientSizeHeight.Text = SettingsService.Instance.Settings.InitialClientSizeHeight.ToString();
-
-                faces.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.FacesColor));
-                edges.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.EdgesColor));
-                selectedFaces.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.SelectedFacesColor));
-                outsidePrintbed.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.OutsidePrintbedColor));
-
-                selectionBox.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.SelectionBoxColor));
-                errorModel.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.ErrorModelColor));
-                insideFaces.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.InsideFacesColor));
-
-                modelColor.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.ModelColor));
-
-                keyDirX.Text = SettingsService.Instance.Settings.KeyDirX.ToString();
-                keyDirY.Text = SettingsService.Instance.Settings.KeyDirY.ToString();
-                keyDirZ.Text = SettingsService.Instance.Settings.KeyDirZ.ToString();
-                keyColor.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.KeyColor));
-                keyStr.Value = SettingsService.Instance.Settings.KeyStr;
-
-                fillDirX.Text = SettingsService.Instance.Settings.FillDirX.ToString();
-                fillDirY.Text = SettingsService.Instance.Settings.FillDirY.ToString();
-                fillDirZ.Text = SettingsService.Instance.Settings.FillDirZ.ToString();
-                fillColor.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.FillColor));
-                fillStr.Value = SettingsService.Instance.Settings.FillStr;
-
-                backDirX.Text = SettingsService.Instance.Settings.BackDirX.ToString();
-                backDirY.Text = SettingsService.Instance.Settings.BackDirY.ToString();
-                backDirZ.Text = SettingsService.Instance.Settings.BackDirZ.ToString();
-                backColor.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.BackColor));
-                backStr.Value = SettingsService.Instance.Settings.BackStr;
-
-                skyColor.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.SkyColor));
-                groundColor.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.GroundColor));
-                ambientStr.Value = SettingsService.Instance.Settings.AmbientStr;
-
-                //=================================================================================================
-
-                txtPrintAreaWidth.TextChanged += PrintAreaWidth_TextChanged; // Temporarily detach event handlers to prevent triggering on load
-                txtPrintAreaDepth.TextChanged += PrintAreaDepth_TextChanged;
-                txtPrintAreaHeight.TextChanged += PrintAreaHeight_TextChanged;
-
-                txtClientSizeWidth.TextChanged += ClientSizeWidth_TextChanged;
-                txtClientSizeHeight.TextChanged += ClientSizeHeight_TextChanged;
-
-                keyDirX.TextChanged += LightSetting_ValueChanged;
-                keyDirY.TextChanged += LightSetting_ValueChanged;
-                keyDirY.TextChanged += LightSetting_ValueChanged;
-                keyStr.ValueChanged += LightSetting_ValueChanged;
-
-                fillDirX.TextChanged += LightSetting_ValueChanged;
-                fillDirY.TextChanged += LightSetting_ValueChanged;
-                fillDirZ.TextChanged += LightSetting_ValueChanged;
-                fillStr.ValueChanged += LightSetting_ValueChanged;
-
-                backDirX.TextChanged += LightSetting_ValueChanged;
-                backDirY.TextChanged += LightSetting_ValueChanged;
-                backDirZ.TextChanged += LightSetting_ValueChanged;
-                backStr.ValueChanged += LightSetting_ValueChanged;
-
-                ambientStr.ValueChanged += LightSetting_ValueChanged;
-            }
-            catch { }
-        }
-
-        // ── Color-swatch helpers ─────────────────────────────────────────────────
-
-        /// <summary>Return the ARGB int of a swatch Border's SolidColorBrush background.</summary>
-        private static uint ToArgb(Border b)
-        {
-            if (b.Background is SolidColorBrush scb)
-            {
-                var c = scb.Color;
-                return (uint)((c.A << 24) | (c.R << 16) | (c.G << 8) | c.B);
-            }
-            return 0;
-        }
-   
-        private static Color ArgbToColor(uint argb)
-        {
-            byte a = (byte)((argb >> 24) & 0xFF);
-            byte r = (byte)((argb >> 16) & 0xFF);
-            byte g = (byte)((argb >>  8) & 0xFF);
-            byte b = (byte)( argb        & 0xFF);
-            return System.Windows.Media.Color.FromArgb(a, r, g, b);
         }
 
         // ── Color picker (replaces WinForms ColorDialog) ─────────────────────────
@@ -672,40 +543,10 @@ namespace OpenGL3DViewerMVVM.View
             this.Hide();
         }
 
-        /// <summary>
-        /// Converts a WPF SolidColorBrush to a WinForms System.Drawing.Color.
-        /// Returns Color.Empty or throws if the brush is not a SolidColorBrush.
-        /// </summary>
-        public System.Drawing.Color ToDrawingColor(Brush wpfBrush)
-        {
-            if (wpfBrush is SolidColorBrush solidBrush)
-            {
-                Color c = solidBrush.Color;
-                return System.Drawing.Color.FromArgb(c.A, c.R, c.G, c.B);
-            }
-
-            // Alternative: Handle Gradients by taking the first stop, 
-            // or throw an exception based on your architectural requirements.
-            throw new InvalidOperationException("Only SolidColorBrush can be converted to a single Color.");
-        }
-
+   
         // Slider values changed.
         private void LightSetting_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (_isInitializing) return;
-
-            if (sender is Slider slider)
-            {
-                if (slider == keyStr)
-                    SettingsService.Instance.Settings.KeyStr = (float)slider.Value;
-                else if (slider == fillStr)
-                    SettingsService.Instance.Settings.FillStr = (float)slider.Value;
-                else if (slider == backStr)
-                    SettingsService.Instance.Settings.BackStr = (float)slider.Value;
-                else if (slider == ambientStr)
-                    SettingsService.Instance.Settings.AmbientStr = (float)slider.Value; 
-            }
-
             if (MainWindow.main.threeDControl != null)
                 MainWindow.main.threeDControl.UpdateChanges();
         }
@@ -713,25 +554,8 @@ namespace OpenGL3DViewerMVVM.View
         // TextBox values changed.
         private void LightSetting_ValueChanged(object sender, TextChangedEventArgs e)
         {
-            if (_isInitializing) return;
-
-            if (sender is TextBox tb) 
-            {
-                float value = 0;
-
-                if (tb == keyDirX && float.TryParse(keyDirX.Text, out value)) SettingsService.Instance.Settings.KeyDirX = value;
-                else if (tb == keyDirY && float.TryParse(keyDirY.Text, out value)) SettingsService.Instance.Settings.KeyDirY = value;
-                else if (tb == keyDirZ && float.TryParse(keyDirZ.Text, out value)) SettingsService.Instance.Settings.KeyDirZ = value;
-                else if (tb == fillDirX && float.TryParse(fillDirX.Text, out value)) SettingsService.Instance.Settings.FillDirX = value;
-                else if (tb == fillDirY && float.TryParse(fillDirY.Text, out value)) SettingsService.Instance.Settings.FillDirY = value;
-                else if (tb == fillDirZ && float.TryParse(fillDirZ.Text, out value)) SettingsService.Instance.Settings.FillDirZ = value;
-                else if (tb == backDirX && float.TryParse(backDirX.Text, out value)) SettingsService.Instance.Settings.BackDirX = value;
-                else if (tb == backDirY && float.TryParse(backDirY.Text, out value)) SettingsService.Instance.Settings.BackDirY = value;
-                else if (tb == backDirZ && float.TryParse(backDirZ.Text, out value)) SettingsService.Instance.Settings.BackDirZ = value;
-        
-                if (MainWindow.main.threeDControl != null)
-                    MainWindow.main.threeDControl.UpdateChanges();
-            }
+            if (MainWindow.main.threeDControl != null)
+                MainWindow.main.threeDControl.UpdateChanges();
         }
 
         /*  Light default settings
@@ -758,27 +582,27 @@ namespace OpenGL3DViewerMVVM.View
         {
             AppSettings defaultSettings = new AppSettings();
 
-            keyDirX.Text = defaultSettings.KeyDirX.ToString();
-            keyDirY.Text = defaultSettings.KeyDirY.ToString();
-            keyDirZ.Text = defaultSettings.KeyDirZ.ToString();
-            keyColor.Background = new SolidColorBrush(ArgbToColor(defaultSettings.KeyColor));
-            keyStr.Value = defaultSettings.KeyStr;
+            SettingsService.Instance.Settings.KeyDirX = defaultSettings.KeyDirX;
+            SettingsService.Instance.Settings.KeyDirY = defaultSettings.KeyDirY;
+            SettingsService.Instance.Settings.KeyDirZ = defaultSettings.KeyDirZ;
+            SettingsService.Instance.Settings.KeyColor = defaultSettings.KeyColor;
+            SettingsService.Instance.Settings.KeyStr = defaultSettings.KeyStr;
 
-            fillDirX.Text = defaultSettings.FillDirX.ToString();
-            fillDirY.Text = defaultSettings.FillDirY.ToString();
-            fillDirZ.Text = defaultSettings.FillDirZ.ToString();
-            fillColor.Background = new SolidColorBrush(ArgbToColor(defaultSettings.FillColor));
-            fillStr.Value = defaultSettings.FillStr;
+            SettingsService.Instance.Settings.FillDirX = defaultSettings.FillDirX;
+            SettingsService.Instance.Settings.FillDirY = defaultSettings.FillDirY;
+            SettingsService.Instance.Settings.FillDirZ = defaultSettings.FillDirZ;
+            SettingsService.Instance.Settings.FillColor = defaultSettings.FillColor;
+            SettingsService.Instance.Settings.FillStr = defaultSettings.FillStr;
          
-            backDirX.Text = defaultSettings.BackDirX.ToString();
-            backDirY.Text = defaultSettings.BackDirY.ToString();
-            backDirZ.Text = defaultSettings.BackDirZ.ToString();
-            backColor.Background = new SolidColorBrush(ArgbToColor(defaultSettings.BackColor));
-            backStr.Value = defaultSettings.BackStr;
+            SettingsService.Instance.Settings.BackDirX = defaultSettings.BackDirX;
+            SettingsService.Instance.Settings.BackDirY = defaultSettings.BackDirY;
+            SettingsService.Instance.Settings.BackDirZ = defaultSettings.BackDirZ                   ;
+            SettingsService.Instance.Settings.BackColor = defaultSettings.BackColor;
+            SettingsService.Instance.Settings.BackStr = defaultSettings.BackStr;
 
-            skyColor.Background = new SolidColorBrush(ArgbToColor(defaultSettings.SkyColor));
-            groundColor.Background = new SolidColorBrush(ArgbToColor(defaultSettings.GroundColor));
-            ambientStr.Value = defaultSettings.AmbientStr;
+            SettingsService.Instance.Settings.SkyColor = defaultSettings.SkyColor;
+            SettingsService.Instance.Settings.GroundColor = defaultSettings.GroundColor;
+            SettingsService.Instance.Settings.AmbientStr = defaultSettings.AmbientStr;
         }
 
         private void ThreeDSettings_Closed(object sender, EventArgs e)
@@ -789,65 +613,7 @@ namespace OpenGL3DViewerMVVM.View
         private void ResetSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsService.Instance.Reset();
-            loadSettings();
             MainWindow.main.threeDControl.UpdateChanges();
-        }
-
-        private void PrintAreaWidth_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (uint.TryParse(txtPrintAreaWidth.Text, out uint value))
-                SettingsService.Instance.Settings.PrintAreaWidth = value;
-        }
-
-        private void PrintAreaDepth_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (uint.TryParse(txtPrintAreaDepth.Text, out uint value))
-                SettingsService.Instance.Settings.PrintAreaDepth = value;
-        }
-
-        private void PrintAreaHeight_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (uint.TryParse(txtPrintAreaHeight.Text, out uint value))
-                SettingsService.Instance.Settings.PrintAreaHeight = value;
-        }
-
-        private void ClientSizeWidth_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (int.TryParse(txtClientSizeWidth.Text, out int value))
-                SettingsService.Instance.Settings.InitialClientSizeWidth = value;
-        }
-
-        private void ClientSizeHeight_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (int.TryParse(txtClientSizeHeight.Text, out int value))
-                SettingsService.Instance.Settings.InitialClientSizeHeight = value;
-        }
-
-        // Updates the SettingsService with current 'Border' control values. Called after color pickers and light setting changes.
-        // Other controls update SettingsService directly in their event handlers, so they don't need to call this method.
-        void controlsToSettings()
-        {
-            try
-            {
-                SettingsService.Instance.Settings.FacesColor = ToArgb(faces);
-                SettingsService.Instance.Settings.EdgesColor = ToArgb(edges);
-                SettingsService.Instance.Settings.SelectedFacesColor = ToArgb(selectedFaces);
-                SettingsService.Instance.Settings.OutsidePrintbedColor = ToArgb(outsidePrintbed);
-
-                SettingsService.Instance.Settings.SelectionBoxColor = ToArgb(selectionBox);
-                SettingsService.Instance.Settings.ErrorModelColor = ToArgb(errorModel);
-                SettingsService.Instance.Settings.InsideFacesColor = ToArgb(insideFaces);
-
-                SettingsService.Instance.Settings.ModelColor = ToArgb(modelColor);
-
-                SettingsService.Instance.Settings.KeyColor = ToArgb(keyColor);
-                SettingsService.Instance.Settings.FillColor = ToArgb(fillColor);
-                SettingsService.Instance.Settings.BackColor = ToArgb(backColor);
-
-                SettingsService.Instance.Settings.SkyColor = ToArgb(skyColor);
-                SettingsService.Instance.Settings.GroundColor = ToArgb(groundColor);
-            }
-            catch { }
         }
 
         private void OpenSettingsFileFolder_Click(object sender, RoutedEventArgs e)

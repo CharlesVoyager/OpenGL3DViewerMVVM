@@ -24,7 +24,7 @@
     </Window.Resources>
 
     <Grid Margin="10">
-        <TabControl x:Name="tabControl1">
+        <TabControl>
 
             <!-- ═══════════════════════════════════════════
                  TAB 1 — General
@@ -66,28 +66,28 @@
                                       Unchecked="CheckedChanged"/>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Background Top:" VerticalAlignment="Center"/>
-                            <Border x:Name="backgroundTop" Grid.Row="1" Grid.Column="1"
+                            <Border Grid.Row="1" Grid.Column="1"
                                     Style="{StaticResource SwatchStyle}"
                                     MouseLeftButtonUp="ColorSwatch_Click"
                                     Background="{Binding BackgroundTopColor, Converter={StaticResource UIntToBrushConverter}}"
                                     Tag="BackgroundTopColor"/>
 
                             <TextBlock Grid.Row="2" Grid.Column="0" Text="Background Bottom:" VerticalAlignment="Center"/>
-                            <Border x:Name="backgroundBottom" Grid.Row="2" Grid.Column="1"
+                            <Border Grid.Row="2" Grid.Column="1"
                                     Style="{StaticResource SwatchStyle}"
                                     MouseLeftButtonUp="ColorSwatch_Click"
                                     Background="{Binding BackgroundBottomColor, Converter={StaticResource UIntToBrushConverter}}"      
                                     Tag="BackgroundBottomColor"/>
                             
                             <TextBlock Grid.Row="3" Grid.Column="0" Text="Printer Base:" VerticalAlignment="Center"/>
-                            <Border x:Name="printerBase" Grid.Row="3" Grid.Column="1"
+                            <Border Grid.Row="3" Grid.Column="1"
                                     Style="{StaticResource SwatchStyle}"
                                     MouseLeftButtonUp="ColorSwatch_Click"
                                     Background="{Binding PrinterBaseColor, Converter={StaticResource UIntToBrushConverter}}"
                                     Tag="PrinterBaseColor"/>
                             
                             <TextBlock Grid.Row="4" Grid.Column="0" Text="Printer Frame:" VerticalAlignment="Center"/>
-                            <Border x:Name="printerFrame" Grid.Row="4" Grid.Column="1"
+                            <Border Grid.Row="4" Grid.Column="1"
                                     Style="{StaticResource SwatchStyle}"
                                     MouseLeftButtonUp="ColorSwatch_Click"
                                     Background="{Binding PrinterFrameColor, Converter={StaticResource UIntToBrushConverter}}"             
@@ -97,17 +97,17 @@
                             <Label Grid.Row="1" Grid.Column="3" Content="Width:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Label Grid.Row="2" Grid.Column="3" Content="Depth:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Label Grid.Row="3" Grid.Column="3" Content="Height:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBox x:Name="txtPrintAreaWidth" Grid.Row="1" Grid.Column="4" Text="" Margin="0,6" TextChanged="PrintAreaWidth_TextChanged" LostFocus="uint_LostFocus"/>
-                            <TextBox x:Name="txtPrintAreaDepth" Grid.Row="2" Grid.Column="4" Text="" Margin="0,6" TextChanged="PrintAreaDepth_TextChanged" LostFocus="uint_LostFocus"/>
-                            <TextBox x:Name="txtPrintAreaHeight" Grid.Row="3" Grid.Column="4" Text="" Margin="0,6" TextChanged="PrintAreaHeight_TextChanged" LostFocus="uint_LostFocus"/>
+                            <TextBox x:Name="txtPrintAreaWidth" Grid.Row="1" Grid.Column="4" Text="{Binding PrintAreaWidth}" Margin="0,6" LostFocus="uint_LostFocus"/>
+                            <TextBox x:Name="txtPrintAreaDepth" Grid.Row="2" Grid.Column="4" Text="{Binding PrintAreaDepth}" Margin="0,6" LostFocus="uint_LostFocus"/>
+                            <TextBox x:Name="txtPrintAreaHeight" Grid.Row="3" Grid.Column="4" Text="{Binding PrintAreaHeight}" Margin="0,6" LostFocus="uint_LostFocus"/>
 
                             <Label Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" Content="Initial OpenGL Client Size" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Label Grid.Row="1" Grid.Column="6" Content="Width:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Label Grid.Row="2" Grid.Column="6" Content="Height:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBox x:Name="txtClientSizeWidth" Grid.Row="1" Grid.Column="7" Text="" Margin="0,6" TextChanged="ClientSizeWidth_TextChanged" LostFocus="uint_LostFocus"/>
-                            <TextBox x:Name="txtClientSizeHeight" Grid.Row="2" Grid.Column="7" Text="" Margin="0,6" TextChanged="ClientSizeHeight_TextChanged" LostFocus="uint_LostFocus"/>
+                            <TextBox x:Name="txtClientSizeWidth" Grid.Row="1" Grid.Column="7" Text="{Binding InitialClientSizeWidth}" Margin="0,6" LostFocus="uint_LostFocus"/>
+                            <TextBox x:Name="txtClientSizeHeight" Grid.Row="2" Grid.Column="7" Text="{Binding InitialClientSizeHeight}" Margin="0,6" LostFocus="uint_LostFocus"/>
 
-                            <Label Content="(Change print area dimension needs restart to apply.)" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="#888"/>
+                            <Label Content="(Settings in right side needs restart to apply.)" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="#888"/>
                         </Grid>
                     </GroupBox>
                     <Button Grid.Row="2" Content="Reset All Settings to Default" Width="200" Height="28" Margin="0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ResetSettings_Click"/>
@@ -145,37 +145,63 @@
                             </Grid.RowDefinitions>
 
                             <!-- Left column -->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Faces:"                      VerticalAlignment="Center"/>
-                            <Border x:Name="faces"          Grid.Row="0" Grid.Column="1" Background="RoyalBlue"      Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Faces:" VerticalAlignment="Center"/>
+                            <Border Grid.Row="0" Grid.Column="1" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding FacesColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="FacesColor"/>
 
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Selected faces:"             VerticalAlignment="Center"/>
-                            <Border x:Name="selectedFaces"  Grid.Row="1" Grid.Column="1" Background="CornflowerBlue" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Selected faces:" VerticalAlignment="Center"/>
+                            <Border Grid.Row="1" Grid.Column="1" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding SelectedFacesColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="SelectedFacesColor"/>              
 
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Edges:"                      VerticalAlignment="Center"/>
-                            <Border x:Name="edges"          Grid.Row="2" Grid.Column="1" Background="DarkGray"       Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Edges:" VerticalAlignment="Center"/>
+                            <Border Grid.Row="2" Grid.Column="1" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding EdgesColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="EdgesColor"/>     
 
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Objects outside printbed:"   VerticalAlignment="Center"/>
-                            <Border x:Name="outsidePrintbed" Grid.Row="3" Grid.Column="1" Background="Red"           Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Objects outside printbed:" VerticalAlignment="Center"/>
+                            <Border Grid.Row="3" Grid.Column="1" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding OutsidePrintbedColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="OutsidePrintbedColor"/>   
 
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Selection Box:"              VerticalAlignment="Center"/>
-                            <Border x:Name="selectionBox"   Grid.Row="4" Grid.Column="1" Background="White"          Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Selection Box:" VerticalAlignment="Center"/>
+                            <Border Grid.Row="4" Grid.Column="1" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding SelectionBoxColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="SelectionBoxColor"/>    
 
-                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Model errors (face):"        VerticalAlignment="Center"/>
-                            <Border x:Name="errorModel"     Grid.Row="5" Grid.Column="1" Background="Red"            Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
-
-                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Model errors (edge):"        VerticalAlignment="Center"/>
-                            <Border x:Name="errorModelEdge" Grid.Row="6" Grid.Column="1" Background="Cyan"           Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
-
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Model errors (face):" VerticalAlignment="Center"/>
+                            <Border Grid.Row="5" Grid.Column="1" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding ErrorModelColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="ErrorModelColor"/> 
+                                        
                             <!-- Right column -->
-                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Inner faces:"  VerticalAlignment="Center"/>
-                            <Border x:Name="insideFaces"  Grid.Row="0" Grid.Column="4" Background="Black"     Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
-
-                            <TextBlock Grid.Row="1" Grid.Column="3" Text="Cut faces:"   VerticalAlignment="Center"/>
-                            <Border x:Name="cutFaces"     Grid.Row="1" Grid.Column="4" Background="RoyalBlue" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Inner faces:" VerticalAlignment="Center"/>
+                            <Border Grid.Row="0" Grid.Column="4" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding InsideFacesColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="InsideFacesColor"/>
 
                             <!-- Model Color, EX: 0.6f, 0.7f, 0.8f / 154, 179, 205  -->
                             <TextBlock Grid.Row="4" Grid.Column="3" Text="Model Color:" VerticalAlignment="Center"/>
-                            <Border x:Name="modelColor" Grid.Row="4" Grid.Column="4" Background="#6BA3C6" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click"/>
+                            <Border Grid.Row="4" Grid.Column="4" 
+                                    Style="{StaticResource SwatchStyle}" 
+                                    MouseLeftButtonUp="ColorSwatch_Click"
+                                    Background="{Binding ModelColor, Converter={StaticResource UIntToBrushConverter}}"
+                                    Tag="ModelColor"/>          
 
                         </Grid>
                     </GroupBox>
@@ -223,61 +249,76 @@
                     <Label Grid.Row="0" Grid.Column="1" Content="Key" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="X Direction:" VerticalAlignment="Center"/>
-                    <TextBox x:Name="keyDirX" Grid.Row="1" Grid.Column="1" Text="-0.6" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding KeyDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Y Direction:" VerticalAlignment="Center"/>
-                    <TextBox x:Name="keyDirY" Grid.Row="2" Grid.Column="1" Text="1.0" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding KeyDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Z Direction:" VerticalAlignment="Center"/>
-                    <TextBox x:Name="keyDirZ" Grid.Row="3" Grid.Column="1" Text="0.8" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding KeyDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Light Color:" VerticalAlignment="Center"/>
-                    <Border x:Name="keyColor" Grid.Row="5" Grid.Column="1" Background="#FFFAF2" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
+                    <Border Grid.Row="5" Grid.Column="1" 
+                            Background="{Binding KeyColor, Converter={StaticResource UIntToBrushConverter}}"
+                            Tag="KeyColor"
+                            Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Strength:" VerticalAlignment="Center"/>
-                    <Slider Name="keyStr" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="1.8"/>
-                    <TextBox Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" Text="{Binding ElementName=keyStr, Path=Value, StringFormat={}{0:0.0}}" IsReadOnly="True"/>
+                    <Slider x:Name="sliderKeyStr" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding KeyStr}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderKeyStr, Path=Value, StringFormat={}{0:0.0}}"/>
 
                     <!-- Light (fill) / Default Dir: 0.8, 0.3, 0.5, Default Color: 0.80, 0.88, 1.00 (#CCE0FF), Default Strength: 1.2-->
                     <Label Grid.Row="0" Grid.Column="2" Content="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
 
-                    <TextBox x:Name="fillDirX" Grid.Row="1" Grid.Column="2" Text="0.8" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
-                    <TextBox x:Name="fillDirY" Grid.Row="2" Grid.Column="2" Text="0.3" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
-                    <TextBox x:Name="fillDirZ" Grid.Row="3" Grid.Column="2" Text="0.5" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding FillDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding FillDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding FillDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
 
-                    <Border x:Name="fillColor" Grid.Row="5" Grid.Column="2" Background="#CCE0FF" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
+                    <Border Grid.Row="5" Grid.Column="2"
+                            Background="{Binding FillColor, Converter={StaticResource UIntToBrushConverter}}"
+                            Tag="FillColor"
+                            Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
 
-                    <Slider Name="fillStr" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="1.2"/>
-                    <TextBox Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right" Text="{Binding ElementName=fillStr, Path=Value, StringFormat={}{0:0.0}}" IsReadOnly="True"/>
+                    <Slider x:Name="sliderFillStr" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding FillStr}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderFillStr, Path=Value, StringFormat={}{0:0.0}}"/>
 
                     <!-- Light (back) / Default Dir: 0.1, -0.5, -1.0, Default Color: 0.90, 0.92, 1.00 (#E6EBFF), Default Strength: 0.9-->
                     <Label Grid.Row="0" Grid.Column="3" Content="Back" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
 
-                    <TextBox x:Name="backDirX" Grid.Row="1" Grid.Column="3" Text="0.1" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
-                    <TextBox x:Name="backDirY" Grid.Row="2" Grid.Column="3" Text="-0.5" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
-                    <TextBox x:Name="backDirZ" Grid.Row="3" Grid.Column="3" Text="-1.0" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding BackDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding BackDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox  Grid.Row="3" Grid.Column="3" Text="{Binding BackDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
 
-                    <Border x:Name="backColor" Grid.Row="5" Grid.Column="3" Background="#E6EBFF" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
+                    <Border Grid.Row="5" Grid.Column="3" 
+                            Background="{Binding BackColor, Converter={StaticResource UIntToBrushConverter}}"
+                            Tag="BackColor"
+                            Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
 
-                    <Slider Name="backStr" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="0.9"/>
-                    <TextBox Grid.Row="7" Grid.Column="3" HorizontalAlignment="Right" Text="{Binding ElementName=backStr, Path=Value, StringFormat={}{0:0.0}}" IsReadOnly="True"/>
+                    <Slider x:Name="sliderBackStr" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding BackStr}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderBackStr, Path=Value, StringFormat={}{0:0.0}}"/>
 
                     <!-- Ambient / Default Sky Color: 0.60, 0.70, 0.90 (#99B2E6), Default Ground Color: 0.25, 0.20, 0.18 (#40332E), Default Strength: 1.2 -->
                     <Label Grid.Row="0" Grid.Column="4" Content="Ambient" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="3" Text="Sky Color:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                    <Border x:Name="skyColor" Grid.Row="4" Grid.Column="4" Background="#99B2E6" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
+                    <Border Grid.Row="4" Grid.Column="4" 
+                            Background="{Binding SkyColor, Converter={StaticResource UIntToBrushConverter}}"
+                            Tag="SkyColor"
+                            Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3"
                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
                
                     <TextBlock Grid.Row="6" Grid.Column="3" Text="Ground Color:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                    <Border x:Name="groundColor" Grid.Row="6" Grid.Column="4" Background="#40332E" Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
+                    <Border Grid.Row="6" Grid.Column="4" 
+                            Background="{Binding GroundColor, Converter={StaticResource UIntToBrushConverter}}"
+                            Tag="GroundColor"
+                            Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
 
-                    <Slider Name="ambientStr" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="1.2"/>
-                    <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right" Text="{Binding ElementName=ambientStr, Path=Value, StringFormat={}{0:0.0}}" IsReadOnly="True"/>
+                    <Slider x:Name="sliderAmbientStr" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding AmbientStr}"/>
+                    <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderAmbientStr, Path=Value, StringFormat={}{0:0.0}}"/>
 
                     <!-- Reset to default -->
                     <Button Grid.Row="10" Grid.Column="0" Margin="6" Content="Reset to default" Click="ResetLightSettingsToDefault_Click"/>

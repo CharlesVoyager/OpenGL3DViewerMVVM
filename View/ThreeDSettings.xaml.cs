@@ -539,13 +539,6 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
-        private void ThreeDSettings_Closing(object sender, CancelEventArgs e)
-        {
-            e.Cancel = true; // Prevent the window from actually closing
-            this.Hide();
-        }
-
-   
         // Slider values changed.
         private void LightSetting_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -606,12 +599,6 @@ namespace OpenGL3DViewerMVVM.View
             SettingsService.Instance.Settings.GroundColor = defaultSettings.GroundColor;
             SettingsService.Instance.Settings.AmbientStr = defaultSettings.AmbientStr;
         }
-
-        private void ThreeDSettings_Closed(object sender, EventArgs e)
-        {
-            SettingsService.Instance.Save();
-        }
-
         private void ResetSettings_Click(object sender, RoutedEventArgs e)
         {
             SettingsService.Instance.Reset();
@@ -625,6 +612,17 @@ namespace OpenGL3DViewerMVVM.View
                 FileName = Path.GetDirectoryName(SettingsService.Instance.GetSettingsPath()),
                 UseShellExecute = true
             });
+        }
+
+        private void ThreeDSettings_Closing(object sender, CancelEventArgs e)
+        {
+            e.Cancel = true; // Prevent the window from actually closing
+            this.Hide();
+        }
+
+        private void ThreeDSettings_Closed(object sender, EventArgs e)
+        {
+            SettingsService.Instance.Save();
         }
     }
 }

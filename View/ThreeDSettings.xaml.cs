@@ -59,7 +59,7 @@ namespace OpenGL3DViewerMVVM.View
         }
     }
 
-    public class AppSettings
+    public class AppSettings : ViewModelBase
     {
         // Printer area diemnsions in millimeters.  These are used to draw the printer bed and frame,
         public uint PrintAreaWidth { get; set; } = 256;     // x-axis direction
@@ -91,10 +91,17 @@ namespace OpenGL3DViewerMVVM.View
         public uint PrinterFrameColor { get; set; } = 0xFF000000;
         public uint OutsidePrintbedColor { get; set; } = 0xFFFF0000;
 
-        public bool ShowEdges { get; set; } = false;
-        public bool ShowFaces { get; set; } = true;
-        public bool ShowPrintbed { get; set; } = true;
 
+        bool _showEdges = false;
+        public bool ShowEdges { get { return _showEdges; } set { _showEdges = value; OnPropertyChanged(); } }
+
+        bool _showFaces = true;
+        public bool ShowFaces { get { return _showFaces; } set { _showFaces = value; OnPropertyChanged(); } }
+
+        bool _showPrintbed = true;
+        public bool ShowPrintbed { get { return _showPrintbed;  } set { _showPrintbed = value; OnPropertyChanged(); } }
+
+        
         public uint SelectionBoxColor { get; set; } = 0xFFFFFFFF;
         public uint ErrorModelColor { get; set; } = 0xFFFF0000;
         public uint InsideFacesColor { get; set; } = 0xFF000000;
@@ -204,7 +211,15 @@ namespace OpenGL3DViewerMVVM.View
         /// </summary>
         public void Reset()
         {
-            Settings = new AppSettings();
+            var settingsDefault = new AppSettings();
+            var properties = settingsDefault.GetType().GetProperties();
+
+            foreach (var prop in properties)
+            {
+                var value = prop.GetValue(settingsDefault);
+                prop.SetValue(Settings, value);
+            }
+
             Save();
             Console.WriteLine("Settings reset to defaults.");
         }

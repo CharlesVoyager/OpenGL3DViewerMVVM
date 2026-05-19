@@ -281,13 +281,9 @@ namespace OpenGL3DViewerMVVM.View
                 txtClientSizeWidth.Text = SettingsService.Instance.Settings.InitialClientSizeWidth.ToString();
                 txtClientSizeHeight.Text = SettingsService.Instance.Settings.InitialClientSizeHeight.ToString();
 
-                backgroundTop.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.BackgroundTopColor));
-                backgroundBottom.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.BackgroundBottomColor));
                 faces.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.FacesColor));
                 edges.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.EdgesColor));
                 selectedFaces.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.SelectedFacesColor));
-                printerBase.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.PrinterBaseColor));
-                printerFrame.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.PrinterFrameColor));
                 outsidePrintbed.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.OutsidePrintbedColor));
 
                 selectionBox.Background = new SolidColorBrush(ArgbToColor(SettingsService.Instance.Settings.SelectionBoxColor));
@@ -469,10 +465,14 @@ namespace OpenGL3DViewerMVVM.View
                 updating = false;
 
                 // Allow live preview of changes without needing to click OK.
-                border.Background = new SolidColorBrush(selectedColor);
-                controlsToSettings();
-                MainWindow.main.threeDControl.UpdateChanges();
-                // <END>
+                var property = typeof(AppSettings).GetProperty(border.Tag.ToString());
+                if (property != null)
+                {
+                    uint value = (uint)(((byte)sliderA.Value << 24) + ((byte)sliderR.Value << 16) + ((byte)sliderG.Value << 8) + (byte)sliderB.Value);
+                    property.SetValue(SettingsService.Instance.Settings, value);
+                    MainWindow.main.threeDControl.UpdateChanges();
+                }
+                // <>
             };
 
             void BindSliderBox(Slider slider, TextBox box)
@@ -769,13 +769,9 @@ namespace OpenGL3DViewerMVVM.View
         {
             try
             {
-                SettingsService.Instance.Settings.BackgroundTopColor = ToArgb(backgroundTop);
-                SettingsService.Instance.Settings.BackgroundBottomColor = ToArgb(backgroundBottom);
                 SettingsService.Instance.Settings.FacesColor = ToArgb(faces);
                 SettingsService.Instance.Settings.EdgesColor = ToArgb(edges);
                 SettingsService.Instance.Settings.SelectedFacesColor = ToArgb(selectedFaces);
-                SettingsService.Instance.Settings.PrinterBaseColor = ToArgb(printerBase);
-                SettingsService.Instance.Settings.PrinterFrameColor = ToArgb(printerFrame);
                 SettingsService.Instance.Settings.OutsidePrintbedColor = ToArgb(outsidePrintbed);
 
                 SettingsService.Instance.Settings.SelectionBoxColor = ToArgb(selectionBox);

@@ -3,9 +3,7 @@ using OpenGL3DViewerMVVM.model.geom;
 using OpenGL3DViewerMVVM.ModelObjectTool;
 using OpenGL3DViewerMVVM.View;
 using OpenTK.Mathematics;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 #nullable disable
 
@@ -60,11 +58,8 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         }
     }
 
-    public class ThreeDModel : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); // Notify UI that property has changed.
-
+    public class ThreeDModel : ViewModelBase
+    {   
         private bool selected = false;
 
         private Coord3D position = null;   

@@ -318,7 +318,7 @@
                             ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
 
                     <Slider x:Name="sliderAmbientStr" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding AmbientStr}"/>
-                    <TextBox Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderAmbientStr, Path=Value, StringFormat={}{0:0.0}}"/>
+                    <TextBlock Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderAmbientStr, Path=Value, StringFormat={}{0:0.0}}"/>
 
                     <!-- Reset to default -->
                     <Button Grid.Row="10" Grid.Column="0" Margin="6" Content="Reset to default" Click="ResetLightSettingsToDefault_Click"/>

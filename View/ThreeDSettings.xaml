@@ -18,7 +18,7 @@
             <Setter Property="Margin" Value="0,3"/>
         </Style>
 
-        <local:BrushToFloatConverter x:Key="FloatConverter"/>
+        <local:BrushToFloatConverter x:Key="BrushToFloatConverter"/>
         <local:UIntToBrushConverter x:Key="UIntToBrushConverter"/>
         
     </Window.Resources>
@@ -249,20 +249,20 @@
                     <Label Grid.Row="0" Grid.Column="1" Content="Key" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="X Direction:" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding KeyDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding KeyDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Y Direction:" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding KeyDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding KeyDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Z Direction:" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding KeyDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding KeyDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Light Color:" VerticalAlignment="Center"/>
                     <Border Grid.Row="5" Grid.Column="1" 
                             Background="{Binding KeyColor, Converter={StaticResource UIntToBrushConverter}}"
                             Tag="KeyColor"
                             Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
-                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
+                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource BrushToFloatConverter}}"/>
 
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="Strength:" VerticalAlignment="Center"/>
                     <Slider x:Name="sliderKeyStr" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding KeyStr}"/>
@@ -271,15 +271,15 @@
                     <!-- Light (fill) / Default Dir: 0.8, 0.3, 0.5, Default Color: 0.80, 0.88, 1.00 (#CCE0FF), Default Strength: 1.2-->
                     <Label Grid.Row="0" Grid.Column="2" Content="Fill" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
 
-                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding FillDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding FillDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
-                    <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding FillDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding FillDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding FillDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding FillDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
 
                     <Border Grid.Row="5" Grid.Column="2"
                             Background="{Binding FillColor, Converter={StaticResource UIntToBrushConverter}}"
                             Tag="FillColor"
                             Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
-                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
+                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource BrushToFloatConverter}}"/>
 
                     <Slider x:Name="sliderFillStr" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding FillStr}"/>
                     <TextBlock Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderFillStr, Path=Value, StringFormat={}{0:0.0}}"/>
@@ -289,13 +289,13 @@
 
                     <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding BackDirX}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
                     <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding BackDirY}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
-                    <TextBox  Grid.Row="3" Grid.Column="3" Text="{Binding BackDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
+                    <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding BackDirZ}" Margin="4,3" TextChanged="LightSetting_ValueChanged" LostFocus="float_LostFocus"/>
 
                     <Border Grid.Row="5" Grid.Column="3" 
                             Background="{Binding BackColor, Converter={StaticResource UIntToBrushConverter}}"
                             Tag="BackColor"
                             Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
-                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
+                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource BrushToFloatConverter}}"/>
 
                     <Slider x:Name="sliderBackStr" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding BackStr}"/>
                     <TextBlock Grid.Row="7" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderBackStr, Path=Value, StringFormat={}{0:0.0}}"/>
@@ -308,14 +308,14 @@
                             Background="{Binding SkyColor, Converter={StaticResource UIntToBrushConverter}}"
                             Tag="SkyColor"
                             Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3"
-                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
+                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource BrushToFloatConverter}}"/>
                
                     <TextBlock Grid.Row="6" Grid.Column="3" Text="Ground Color:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                     <Border Grid.Row="6" Grid.Column="4" 
                             Background="{Binding GroundColor, Converter={StaticResource UIntToBrushConverter}}"
                             Tag="GroundColor"
                             Style="{StaticResource SwatchStyle}" MouseLeftButtonUp="ColorSwatch_Click" Margin="4,3" 
-                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource FloatConverter}}"/>
+                            ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Background, Converter={StaticResource BrushToFloatConverter}}"/>
 
                     <Slider x:Name="sliderAmbientStr" Grid.Row="7" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" ValueChanged="LightSetting_ValueChanged" Minimum="0" Maximum="10" Value="{Binding AmbientStr}"/>
                     <TextBlock Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding ElementName=sliderAmbientStr, Path=Value, StringFormat={}{0:0.0}}"/>

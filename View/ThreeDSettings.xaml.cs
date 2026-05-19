@@ -16,6 +16,7 @@ namespace OpenGL3DViewerMVVM.View
 {
     public class BrushToFloatConverter : IValueConverter
     {
+        // Background Brush to "R, G, B" float string for display in ToolTip.
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is SolidColorBrush brush)
@@ -35,6 +36,7 @@ namespace OpenGL3DViewerMVVM.View
     }
     public class UIntToBrushConverter : IValueConverter
     {
+        // uint to Background Brush.
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is uint argb)
@@ -48,7 +50,7 @@ namespace OpenGL3DViewerMVVM.View
             return Brushes.Transparent;
         }
 
-        // Border to unit.
+        // Background Brush to unit.
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is SolidColorBrush brush)

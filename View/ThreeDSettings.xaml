@@ -62,8 +62,7 @@
                                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                                       Content="Show Printbed" IsChecked="{Binding ShowPrintbed}"
                                       VerticalAlignment="Center"
-                                      Checked="CheckedChanged"
-                                      Unchecked="CheckedChanged"/>
+                                      Checked="CheckedChanged" Unchecked="CheckedChanged"/>
 
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Background Top:" VerticalAlignment="Center"/>
                             <Border Grid.Row="1" Grid.Column="1"
@@ -92,7 +91,12 @@
                                     MouseLeftButtonUp="ColorSwatch_Click"
                                     Background="{Binding PrinterFrameColor, Converter={StaticResource UIntToBrushConverter}}"             
                                     Tag="PrinterFrameColor"/>
-              
+
+                            <!--Separation line-->
+                            <Border Grid.Row="0" Grid.RowSpan="6" Grid.Column="2" Height="260" Width="2" HorizontalAlignment="Right"
+                                    Style="{StaticResource SwatchStyle}" 
+                                    Background="Black" />
+
                             <Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Content="Print Area Diemension" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Label Grid.Row="1" Grid.Column="3" Content="Width:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             <Label Grid.Row="2" Grid.Column="3" Content="Depth:" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -185,8 +189,8 @@
                                     Style="{StaticResource SwatchStyle}" 
                                     MouseLeftButtonUp="ColorSwatch_Click"
                                     Background="{Binding ErrorModelColor, Converter={StaticResource UIntToBrushConverter}}"
-                                    Tag="ErrorModelColor"/> 
-                                        
+                                    Tag="ErrorModelColor"/>
+
                             <!-- Right column -->
                             <TextBlock Grid.Row="0" Grid.Column="3" Text="Inner faces:" VerticalAlignment="Center"/>
                             <Border Grid.Row="0" Grid.Column="4" 

@@ -117,7 +117,7 @@ namespace OpenGL3DViewerMVVM.View
         bool _showEdges = false;
         bool _showFaces = true;
         bool _showPrintbed = true;
-        bool _showMemoryMonitor = true;
+        bool _showMemoryMonitor = false;
 
         public bool ShowEdges { get { return _showEdges; } set { _showEdges = value; OnPropertyChanged(); } }
         public bool ShowFaces { get { return _showFaces; } set { _showFaces = value; OnPropertyChanged(); } }

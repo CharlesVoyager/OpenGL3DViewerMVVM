@@ -61,75 +61,120 @@ namespace OpenGL3DViewerMVVM.View
 
     public class AppSettings : ViewModelBase
     {
-        // Printer area diemnsions in millimeters.  These are used to draw the printer bed and frame,
-        public uint PrintAreaWidth { get; set; } = 256;     // x-axis direction
-        public uint PrintAreaDepth { get; set; } = 256;     // y-axis direction
-        public uint PrintAreaHeight { get; set; } = 200;    // z-axis direction
+        // Printer area diemnsions in millimeters.  These are used to draw the printer bed and frame.
+        uint _printAreaWidth = 256;
+        uint _printAreaDepth = 256;
+        uint _printAreaHeight = 200;
+        public uint PrintAreaWidth { get { return _printAreaWidth; } set { _printAreaWidth = value; OnPropertyChanged(); } }     // x-axis direction
+        public uint PrintAreaDepth { get { return _printAreaDepth; } set { _printAreaDepth = value; OnPropertyChanged(); } }     // y-axis direction
+        public uint PrintAreaHeight { get { return _printAreaHeight; } set { _printAreaHeight = value; OnPropertyChanged(); } }    // z-axis direction
         // <>
 
         // Initial OpenGL Client Size
-        public int InitialClientSizeWidth { get; set; } = 1024;
-        public int InitialClientSizeHeight { get; set; } = 768;
+        int _initialClientSizeWidth = 1024;
+        int _initialClientSizeHeight = 768;
+        public int InitialClientSizeWidth { get { return _initialClientSizeWidth; } set { _initialClientSizeWidth = value; OnPropertyChanged(); } }
+        public int InitialClientSizeHeight { get { return _initialClientSizeHeight; } set { _initialClientSizeHeight = value; OnPropertyChanged(); } }
         // <>
 
         // Minimum OpenGL Client Size to prevent extremely small windows that can cause rendering issues
-        public int MinClientSizeWidth { get; set; } = 830;
-        public int MinClientSizeHeight { get; set; } = 700;
+        int _minClientSizeWidth = 830;
+        int _minClientSizeHeight = 700;
+        public int MinClientSizeWidth { get { return _minClientSizeWidth; } set { _minClientSizeWidth = value; OnPropertyChanged(); } }
+        public int MinClientSizeHeight { get { return _minClientSizeHeight; } set { _minClientSizeHeight = value; OnPropertyChanged(); } }
         // <>
 
         // UseVBOs and OpenGLVersion will be updated in OnLoad of ThreeDControl.
-        public bool UseVBOs { get; set; } = false;
-        public float OpenGLVersion { get; set; } = 1.0f; // Version for feature detection
+        bool _useVBOs = false;
+        float _openGLVersion = 1.0f;
+
+        public bool UseVBOs { get { return _useVBOs; } set { _useVBOs = value; OnPropertyChanged(); } }
+        public float OpenGLVersion { get { return _openGLVersion; } set { _openGLVersion = value; OnPropertyChanged(); } } // Version for feature detection
         // <>
 
-        public uint BackgroundTopColor { get; set; } = 0xFFF5F5F5;
-        public uint BackgroundBottomColor { get; set; } = 0xFF000000;
-        public uint FacesColor { get; set; } = 0xFF4169E1;
-        public uint EdgesColor { get; set; } = 0xFFA9A9A9;
-        public uint SelectedFacesColor { get; set; } = 0xFF6495ED;
-        public uint PrinterBaseColor { get; set; } = 0xFFDCDCDC;
-        public uint PrinterFrameColor { get; set; } = 0xFF000000;
-        public uint OutsidePrintbedColor { get; set; } = 0xFFFF0000;
+        uint _backgroundTopColor = 0xFFF5F5F5;
+        uint _backgroundBottomColor = 0xFF000000;
+        uint _facesColor = 0xFF4169E1;
+        uint _edgesColor = 0xFFA9A9A9;
+        uint _selectedFacesColor = 0xFF6495ED;
+        uint _printerBaseColor = 0xFFDCDCDC;
+        uint _printerFrameColor = 0xFF000000;
+        uint _outsidePrintbedColor = 0xFF000000;
+
+        public uint BackgroundTopColor { get { return _backgroundTopColor; } set { _backgroundTopColor = value; OnPropertyChanged(); } }
+        public uint BackgroundBottomColor { get { return _backgroundBottomColor; } set { _backgroundBottomColor = value; OnPropertyChanged(); } }
+        public uint FacesColor { get { return _facesColor; } set { _facesColor = value; OnPropertyChanged(); } }
+        public uint EdgesColor { get { return _edgesColor; } set { _edgesColor = value; OnPropertyChanged(); } }
+        public uint SelectedFacesColor { get { return _selectedFacesColor; } set { _selectedFacesColor = value; OnPropertyChanged(); } }
+        public uint PrinterBaseColor { get { return _printerBaseColor; } set { _printerBaseColor = value; OnPropertyChanged(); } }
+        public uint PrinterFrameColor { get { return _printerFrameColor; } set { _printerFrameColor = value; OnPropertyChanged(); } }
+        public uint OutsidePrintbedColor { get { return _outsidePrintbedColor; } set { _outsidePrintbedColor = value; OnPropertyChanged(); } }
 
 
         bool _showEdges = false;
-        public bool ShowEdges { get { return _showEdges; } set { _showEdges = value; OnPropertyChanged(); } }
-
         bool _showFaces = true;
-        public bool ShowFaces { get { return _showFaces; } set { _showFaces = value; OnPropertyChanged(); } }
-
         bool _showPrintbed = true;
+
+        public bool ShowEdges { get { return _showEdges; } set { _showEdges = value; OnPropertyChanged(); } }
+        public bool ShowFaces { get { return _showFaces; } set { _showFaces = value; OnPropertyChanged(); } }
         public bool ShowPrintbed { get { return _showPrintbed;  } set { _showPrintbed = value; OnPropertyChanged(); } }
 
+        uint _selectionBoxColor = 0xFFFFFFFF;
+        uint _errorModelColor = 0xFFFF0000;
+        uint _insideFacesColor = 0xFF000000;
+        uint _modelColor = 0xFF1EB41E;  // Updated on 2026/5/11. Previous: 0xFF6BA3C6;
+
+        public uint SelectionBoxColor { get { return _selectionBoxColor; } set { _selectionBoxColor = value; OnPropertyChanged(); } }
+        public uint ErrorModelColor { get { return _errorModelColor; } set { _errorModelColor = value; OnPropertyChanged(); } }
+        public uint InsideFacesColor { get { return _insideFacesColor; } set { _insideFacesColor = value; OnPropertyChanged(); } }
+        public uint ModelColor { get { return _modelColor; } set { _modelColor = value; OnPropertyChanged(); } }
+
+        //
+        // Light Settings
+        // 
+        float _keyDirX = -0.6f;
+        float _keyDirY = 1.0f;
+        float _keyDirZ = 0.0f;
+        uint _keyColor = 0xFFFFFAF2;
+        float _keyStr = 1.8f;
+
+        public float KeyDirX { get { return _keyDirX; } set { _keyDirX = value; OnPropertyChanged(); } }
+        public float KeyDirY { get { return _keyDirY; } set { _keyDirY = value; OnPropertyChanged(); } }
+        public float KeyDirZ { get { return _keyDirZ; } set { _keyDirZ = value; OnPropertyChanged(); } }
+        public uint KeyColor { get { return _keyColor; } set { _keyColor = value; OnPropertyChanged(); } }
+        public float KeyStr { get { return _keyStr; } set { _keyStr = value; OnPropertyChanged(); } }
         
-        public uint SelectionBoxColor { get; set; } = 0xFFFFFFFF;
-        public uint ErrorModelColor { get; set; } = 0xFFFF0000;
-        public uint InsideFacesColor { get; set; } = 0xFF000000;
+        float _fillDirX = 0.8f;
+        float _fillDirY = 0.3f;
+        float _fillDirZ = 0.5f;
+        uint _fillColor = 0xFFCCE0FF;
+        float _fillStr = 1.2f;
 
-        public uint ModelColor { get; set; } = 0xFF1EB41E;  // Updated on 2026/5/11. Previous: 0xFF6BA3C6;
+        public float FillDirX { get { return _fillDirX; } set { _fillDirX = value; OnPropertyChanged(); } }
+        public float FillDirY { get { return _fillDirY; } set { _fillDirY = value; OnPropertyChanged(); } }
+        public float FillDirZ { get { return _fillDirZ; } set { _fillDirZ = value; OnPropertyChanged(); } }
+        public uint FillColor { get { return _fillColor; } set { _fillColor = value; OnPropertyChanged(); } }
+        public float FillStr { get { return _fillStr; } set { _fillStr = value; OnPropertyChanged(); } }
 
-        public float KeyDirX { get; set; } = -0.6f;
-        public float KeyDirY { get; set; } = 1.0f;
-        public float KeyDirZ { get; set; } = 0.0f;
-        public uint KeyColor { get; set; } = 0xFFFFFAF2;
-        public float KeyStr { get; set; } = 1.8f;
+        float _backDirX = 0.1f;
+        float _backDirY = -0.5f;
+        float _backDirZ = -1.0f;
+        uint _backColor = 0xFFE6EBFF;
+        float _backStr = 0.9f;
 
-        public float FillDirX { get; set; } = 0.8f;
-        public float FillDirY { get; set; } = 0.3f;
-        public float FillDirZ { get; set; } = 0.5f;
+        public float BackDirX { get { return _backDirX; } set { _backDirX = value; OnPropertyChanged(); } }
+        public float BackDirY { get { return _backDirY; } set { _backDirY = value; OnPropertyChanged(); } }
+        public float BackDirZ { get { return _backDirZ; } set { _backDirZ = value; OnPropertyChanged(); } }
+        public uint BackColor { get { return _backColor; } set { _backColor = value; OnPropertyChanged(); } }
+        public float BackStr { get { return _backStr; } set { _backStr = value; OnPropertyChanged(); } }
 
-        public uint FillColor { get; set; } = 0xFFCCE0FF;
-        public float FillStr { get; set; } = 1.2f;
+        uint _skyColor = 0xFF99B2E6;
+        uint _groundColor = 0xFF40332E;
+        float _ambientStr = 1.2f;
 
-        public float BackDirX { get; set; } = 0.1f;
-        public float BackDirY { get; set; } = -0.5f;
-        public float BackDirZ { get; set; } = -1.0f;
-        public uint BackColor { get; set; } = 0xFFE6EBFF;
-        public float BackStr { get; set; } = 0.9f;
-
-        public uint SkyColor { get; set; } = 0xFF99B2E6;
-        public uint GroundColor { get; set; } = 0xFF40332E;
-        public float AmbientStr { get; set; } = 1.2f;
+        public uint SkyColor { get { return _skyColor; } set { _skyColor = value; OnPropertyChanged(); } }
+        public uint GroundColor { get { return _groundColor; } set { _groundColor = value; OnPropertyChanged(); } }
+        public float AmbientStr { get { return _ambientStr; } set { _ambientStr = value; OnPropertyChanged(); } }
     }
 
     public class SettingsService

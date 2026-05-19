@@ -117,10 +117,12 @@ namespace OpenGL3DViewerMVVM.View
         bool _showEdges = false;
         bool _showFaces = true;
         bool _showPrintbed = true;
+        bool _showMemoryMonitor = true;
 
         public bool ShowEdges { get { return _showEdges; } set { _showEdges = value; OnPropertyChanged(); } }
         public bool ShowFaces { get { return _showFaces; } set { _showFaces = value; OnPropertyChanged(); } }
         public bool ShowPrintbed { get { return _showPrintbed;  } set { _showPrintbed = value; OnPropertyChanged(); } }
+        public bool ShowMemoryMonitor { get { return _showMemoryMonitor; } set { _showMemoryMonitor = value; OnPropertyChanged(); } }
 
         uint _selectionBoxColor = 0xFFFFFFFF;
         uint _errorModelColor = 0xFFFF0000;
@@ -507,6 +509,11 @@ namespace OpenGL3DViewerMVVM.View
         // ── Event handlers ───────────────────────────────────────────────────────
         private void CheckedChanged(object sender, RoutedEventArgs e)
         {
+            if (sender == showMemoryMonitor)
+            {
+                MainWindow.main.ShowMemoryMonitor(showMemoryMonitor.IsChecked == true);
+                return;
+            }
             if (MainWindow.main.threeDControl != null)
                 MainWindow.main.threeDControl.UpdateChanges();
         }

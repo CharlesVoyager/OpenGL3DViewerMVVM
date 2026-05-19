@@ -167,7 +167,7 @@ namespace OpenGL3DViewerMVVM
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timerTickMemoryMonitor;
-            timer.Start();
+            ShowMemoryMonitor(SettingsService.Instance.Settings.ShowMemoryMonitor);
         }
 
         /// <summary>
@@ -394,6 +394,20 @@ namespace OpenGL3DViewerMVVM
         private void timerTickMemoryMonitor(object? sender, EventArgs e)
         {
             memoryUsageLabel.Content = RamTools.getCurMemoryUsed().ToString() + " MB";
+        }
+
+        public void ShowMemoryMonitor(bool show)
+        {
+            if (show)
+            {
+                grdMemoryMonitor.Visibility = Visibility.Visible;
+                timer.Start();
+            }
+            else
+            {
+                grdMemoryMonitor.Visibility = Visibility.Hidden;
+                timer.Stop();
+            }
         }
     }
 }

@@ -243,7 +243,7 @@
         <local:BusyWindow x:Name="BusyWindow" Visibility="{Binding IsLoadingModel, Converter={StaticResource BoolToVis}}"/>
 
         <!--Memory Monitor-->
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40">
+        <Grid x:Name="grdMemoryMonitor" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,0,0,40">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Memory Usage:" Foreground="White" FontFamily="Arial" FontSize="12"/>
                 <Label x:Name="memoryUsageLabel" Content="0 MB" Foreground="White" FontFamily="Arial" FontSize="12"/>

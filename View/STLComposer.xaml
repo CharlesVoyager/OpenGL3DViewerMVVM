@@ -61,6 +61,7 @@
             <Button Content="Add" Margin="4,2" Padding="6,2" Command="{Binding AddCommand}"/>
             <Button Content="Delete" Margin="4,2" Padding="6,2" Command="{Binding DeleteCommand}"/>
             <Button Content="Clone" Margin="4,2" Padding="6,2" Command="{Binding CloneCommand}"/>
+            <Button Content="Reset" Margin="4,2" Padding="6,2" Command="{Binding ResetCommand}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Vertical">

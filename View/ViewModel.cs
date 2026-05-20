@@ -16,6 +16,7 @@ namespace OpenGL3DViewerMVVM.View
         public RelayCommand AddCommand => new RelayCommand(execute => AddModel());
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => SelectedModel != null);
         public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => SelectedModel != null);
+        public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => SelectedModel != null);
         public ViewModel()
         {
             Models = new ObservableCollection<ThreeDModel>();
@@ -221,6 +222,12 @@ namespace OpenGL3DViewerMVVM.View
             {
                 newModel.Drawer.Init();
             });
+        }
+
+        public void ResetModel()
+        {
+            if (SelectedModel == null) return;
+            SelectedModel.Reset();
         }
  
         bool Autoposition(ThreeDModel newModel)

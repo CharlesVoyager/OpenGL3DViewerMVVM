@@ -149,7 +149,7 @@ namespace OpenGL3DViewerMVVM
 
             // Wire up click handlers
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[0]).Click += (s, e) => viewModel.SelectedModel?.Land();
-            ((System.Windows.Controls.MenuItem)_contextMenu.Items[1]).Click += (s, e) => viewModel.SelectedModel?.Reset();
+            ((System.Windows.Controls.MenuItem)_contextMenu.Items[1]).Click += (s, e) => viewModel.ResetModel();
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[2]).Click += (s, e) => viewModel.DeleteModel();
             // index 3 is Separator
             ((System.Windows.Controls.MenuItem)_contextMenu.Items[4]).Click += (s, e) => viewModel.DoMmToInch();

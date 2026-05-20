@@ -121,7 +121,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             BoundingBox.CopyTo(stl.BoundingBox);    // NOTE: This must be after copying position becuse setting position will update bounding box.
         }
 
-        public void Clear()
+        public void Dispose()
         {
             Model.Clear();
             Mesh.Clear();

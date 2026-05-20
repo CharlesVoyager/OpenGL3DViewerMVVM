@@ -205,8 +205,9 @@ namespace OpenGL3DViewerMVVM.View
 
         public void DeleteModel()
         {
-            if (SelectedModel != null)
-                Models.Remove(SelectedModel);
+            if (SelectedModel == null) return;
+            SelectedModel.Dispose();
+            Models.Remove(SelectedModel);
         }
 
         public void CloneModel()

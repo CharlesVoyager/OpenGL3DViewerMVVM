@@ -105,7 +105,7 @@
                     </CheckBox>
                     <Label x:Name="lbl_Uniform" Content="Uniform" Height="28" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" Grid.Column="1" Grid.Row="3" Width="120" Margin="0,4,0,0" />
                     <Label x:Name="lbl_Size" Content="Size" Height="28" HorizontalAlignment="Center" Foreground="White" FontFamily="Arial" Grid.Column="0" Grid.Row="4" Margin="10,3.6,91.385,28.8" Grid.RowSpan="2" Width="51" Grid.ColumnSpan="2" />
-                    <Slider x:Name="slider_resize" Height="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Opacity="1" Foreground="{x:Null}" Maximum="200" Value="{Binding SelectedModel.UniformScale, Converter={StaticResource UniformScaleToPercent}}" Minimum="1" TickFrequency="0.01" LargeChange="0.01" SmallChange="0.01" Margin="75,7,0,0" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" PreviewMouseWheel="slider_resize_PreviewMouseWheel" IsEnabled="{Binding SelectedModel.IsUniformScale}">
+                    <Slider x:Name="slider_resize" Height="12" HorizontalAlignment="Left" VerticalAlignment="Top" Width="140" Opacity="1" Foreground="{x:Null}" Value="{Binding SelectedModel.UniformScale, Converter={StaticResource UniformScaleToPercent}}" Minimum="1" Maximum="200" TickFrequency="0.01" LargeChange="0.01" SmallChange="0.01" Margin="75,7,0,0" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" PreviewMouseWheel="slider_resize_PreviewMouseWheel" IsEnabled="{Binding SelectedModel.IsUniformScale}">
                         <Slider.Resources>
                             <Style TargetType="{x:Type Slider}">
                                 <Setter Property="Background" Value="white"/>

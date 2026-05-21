@@ -134,14 +134,6 @@ namespace OpenGL3DViewerMVVM
             VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
             VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
 
-            UI_resize_advance.btn_Scale.FontSize = 12;
-            UI_resize_advance.button_mmtoinch.FontSize = 12;
-            UI_resize_advance.button_inchtomm.FontSize = 12;
-            UI_resize_advance.lbl_Size.FontSize = 12;
-
-            move_toggleButton.FontSize = 12;
-            import_button.FontSize = 12;
-
             languageChanged += translate;
 
             // Retrieve the context menu from resources

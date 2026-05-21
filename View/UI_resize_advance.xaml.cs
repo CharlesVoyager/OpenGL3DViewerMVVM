@@ -39,8 +39,6 @@ namespace OpenGL3DViewerMVVM.View
             InitializeComponent();
             try
             {
-                button_mmtoinch.IsEnabled = true;
-                button_inchtomm.IsEnabled = false;
                 if (MainWindow.main != null)
                     MainWindow.main.languageChanged += translate;
             }
@@ -107,10 +105,8 @@ namespace OpenGL3DViewerMVVM.View
             if (stl == null) return;
 
             stl.UniformScale = 1;
-
+         
             stl.IsUniformScale = true;
-            button_mmtoinch.IsEnabled = true;
-            button_inchtomm.IsEnabled = false;
 
             updateSliderMaximum();
 
@@ -126,9 +122,6 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
 
-            button_mmtoinch.IsEnabled = false;
-            button_inchtomm.IsEnabled = true;
-
             MainWindow.main.viewModel.DoMmToInch(model);
         }
 
@@ -136,9 +129,6 @@ namespace OpenGL3DViewerMVVM.View
         {
             ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
-
-            button_mmtoinch.IsEnabled = true;
-            button_inchtomm.IsEnabled = false;
 
             MainWindow.main.viewModel.DoInchToMm(model);
         }

@@ -349,8 +349,6 @@ namespace OpenGL3DViewerMVVM.View
             try
             {
                 var ui = MainWindow.main.UI_resize_advance;
-                ui.button_mmtoinch.IsEnabled = false;
-                ui.button_inchtomm.IsEnabled = true;
 
                 double tempX = model.BoundingBox.Size.x * 25.4, tempY = model.BoundingBox.Size.y * 25.4, tempZ = model.BoundingBox.Size.z * 25.4;
                 if (tempX > SettingsService.Instance.Settings.PrintAreaWidth ||
@@ -358,11 +356,7 @@ namespace OpenGL3DViewerMVVM.View
                     tempZ > SettingsService.Instance.Settings.PrintAreaHeight)
                 {
                     if (!AskUserToChangeUnit())
-                    {
-                        ui.button_mmtoinch.IsEnabled = true;
-                        ui.button_inchtomm.IsEnabled = false;
                         return;
-                    }
                 }
 
                 double scaleFactor = 25.4; // 1 inch = 25.4 mm
@@ -380,8 +374,6 @@ namespace OpenGL3DViewerMVVM.View
             try
             {
                 var ui = MainWindow.main.UI_resize_advance;
-                ui.button_mmtoinch.IsEnabled = true;
-                ui.button_inchtomm.IsEnabled = false;
 
                 double scaleFactor = 25.4; // 1 inch = 25.4 mm
                 model.UniformScale /= scaleFactor;

@@ -355,12 +355,12 @@ namespace OpenGL3DViewerMVVM.View
                     tempY > SettingsService.Instance.Settings.PrintAreaDepth ||
                     tempZ > SettingsService.Instance.Settings.PrintAreaHeight)
                 {
-                    if (!AskUserToChangeUnit())
+                    if (AskUserToChangeUnit() == false)
                         return;
                 }
 
                 double scaleFactor = 25.4; // 1 inch = 25.4 mm
-                model.UniformScale = scaleFactor;
+                model.UniformScale *= scaleFactor;
             }
             catch { }
         }
@@ -377,7 +377,6 @@ namespace OpenGL3DViewerMVVM.View
 
                 double scaleFactor = 25.4; // 1 inch = 25.4 mm
                 model.UniformScale /= scaleFactor;
-                MainWindow.main.threeDControl.UpdateChanges();
             }
             catch { }
         }

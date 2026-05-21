@@ -361,9 +361,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / BoundingBox.Size.x;
+                    UniformScale = value / Model.boundingBox.Size.x;
                 else
-                    ScaleX = value / BoundingBox.Size.x;
+                    ScaleX = value / Model.boundingBox.Size.x;
                 OnPropertyChanged();
             }
         }
@@ -374,9 +374,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / BoundingBox.Size.y;
+                    UniformScale = value / Model.boundingBox.Size.y;
                 else
-                    ScaleY = value / BoundingBox.Size.y;
+                    ScaleY = value / Model.boundingBox.Size.y;
                 OnPropertyChanged();
             }
         }
@@ -387,9 +387,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / BoundingBox.Size.z;
+                    UniformScale = value / Model.boundingBox.Size.z;
                 else
-                    ScaleZ = value / BoundingBox.Size.z;
+                    ScaleZ = value / Model.boundingBox.Size.z;
                 OnPropertyChanged();
             }
         }

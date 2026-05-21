@@ -344,7 +344,16 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
         public float yMax { get { return (float)BoundingBox.MaxPoint.y; } }
         public float zMax { get { return (float)BoundingBox.MaxPoint.z; } }
 
-        public bool IsUniformScale { get; set; } = true;
+        bool isUniformScale = true;
+        public bool IsUniformScale
+        {
+            get { return isUniformScale; }
+            set
+            {
+                isUniformScale = value;
+                OnPropertyChanged();
+            }
+        }
         public float SizeScaleX 
         { 
             get { return (float)BoundingBox.Size.x; }
@@ -355,6 +364,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     UniformScale = value / BoundingBox.Size.x;
                 else
                     ScaleX = value / BoundingBox.Size.x;
+                OnPropertyChanged();
             }
         }
         public float SizeScaleY
@@ -367,6 +377,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     UniformScale = value / BoundingBox.Size.y;
                 else
                     ScaleY = value / BoundingBox.Size.y;
+                OnPropertyChanged();
             }
         }
         public float SizeScaleZ
@@ -379,6 +390,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                     UniformScale = value / BoundingBox.Size.z;
                 else
                     ScaleZ = value / BoundingBox.Size.z;
+                OnPropertyChanged();
             }
         }
 
@@ -578,6 +590,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 OnPropertyChanged(nameof(ScaleY));
                 OnPropertyChanged(nameof(ScaleZ));
                 OnPropertyChanged(nameof(UniformScale));
+
+                OnPropertyChanged(nameof(SizeScaleX));
+                OnPropertyChanged(nameof(SizeScaleY));
+                OnPropertyChanged(nameof(SizeScaleZ));
             }
         }
 

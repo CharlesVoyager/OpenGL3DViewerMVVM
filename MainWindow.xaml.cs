@@ -77,7 +77,7 @@ namespace OpenGL3DViewerMVVM
 
         // NOTE: MainWindow is not fully overlay on the ThreeDControl.
         // If the user drops a file on the ThreeDControl (GameWindow), the drop event in ThreeDControl will be triggered.
-        private void MainWindow_Drop(object sender, DragEventArgs e)
+        private async void MainWindow_Drop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -86,7 +86,7 @@ namespace OpenGL3DViewerMVVM
                 foreach (string file in files)
                 {
                     if (modelIO.IsFileSupported(file))
-                        viewModel.AddModel(file);
+                        await viewModel.ExecuteAddAsync(file);
                 }
             }
         }
@@ -259,7 +259,7 @@ namespace OpenGL3DViewerMVVM
             Focus();
         }
 
-        private void import_button_Click(object sender, RoutedEventArgs e)
+        private async void import_button_Click(object sender, RoutedEventArgs e)
         {
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
@@ -269,7 +269,7 @@ namespace OpenGL3DViewerMVVM
 
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
-            viewModel.AddModel();
+            await viewModel.ExecuteAddAsync();
         }
 
         private void about_button_Click(object sender, RoutedEventArgs e)

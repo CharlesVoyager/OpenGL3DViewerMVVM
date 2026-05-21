@@ -63,14 +63,14 @@ namespace OpenGL3DViewerMVVM
         }
 
         // Command line argument example: @"..\..\..\Stl\10_10_10.stl"
-        private static void ProcessCommandLine(MainWindow main)
+        private static async void ProcessCommandLine(MainWindow main)
         {
             string[] args = Environment.GetCommandLineArgs();
             for (int i = 1; i < args.Length; i++)
             {
                 string file = args[i];
                 if (File.Exists(file))
-                    main.viewModel.AddModel(file);
+                    await main.viewModel.ExecuteAddAsync(file);
             }
         }
     }

@@ -423,11 +423,11 @@ namespace OpenGL3DViewerMVVM.View
 
             foreach (var file in e.FileNames)
             {
-                MainWindow.main.Dispatcher.InvokeAsync(() =>
-                {
+                MainWindow.main.Dispatcher.InvokeAsync(async () =>
+                {   
                     var modelIO = new MeshIOWrapper();
                     if (modelIO.IsFileSupported(file))
-                        MainWindow.main.viewModel.AddModel(file);
+                        await MainWindow.main.viewModel.ExecuteAddAsync(file);
                 });
             }
         }

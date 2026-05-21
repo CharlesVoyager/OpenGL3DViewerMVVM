@@ -13,7 +13,7 @@ namespace OpenGL3DViewerMVVM.View
     {
         public ObservableCollection<ThreeDModel> Models { get; set; }
 
-        public RelayCommand AddCommand => new RelayCommand(execute => AddModel());
+        public AsyncRelayCommand<string> AddCommand => new AsyncRelayCommand<string>(ExecuteAddAsync);
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => SelectedModel != null);
         public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => SelectedModel != null);
         public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => SelectedModel != null);
@@ -80,7 +80,19 @@ namespace OpenGL3DViewerMVVM.View
         }
 
         public static readonly ManualResetEventSlim _meshDataReady = new ManualResetEventSlim(true);
-        public async void AddModel(string? file = null, bool isAutoPosition = true)
+        public async Task ExecuteAddAsync(string? file = null)
+        {
+            // Button is automatically disabled here
+            _meshDataReady.Reset();
+            await Task.Run(() =>
+            {
+                AddModel(file);
+            });
+            // Button is automatically re-enabled here
+            _meshDataReady.Set();
+        }
+
+        private void AddModel(string? file = null, bool isAutoPosition = true)
         {
             if (file == null)
             {
@@ -101,40 +113,33 @@ namespace OpenGL3DViewerMVVM.View
             ThreeDModel newModel = new ThreeDModel();
             var modelIO = new MeshIOWrapper();
 
-            IsLoadingModel = true;
-            _meshDataReady.Reset();
-            // Offload heavy work to background thread — UI thread is free immediately
-            await Task.Run(() =>
+            IsLoadingModel = true;  // Show BusyWindow.
+              
+            //
+            // Load model data to Model (TopoModel).
+            //
+            try
+            {           
+                modelIO.LoadWOCatch(file, newModel.Model);
+            }
+            catch (Exception)
             {
-                try
-                {           
-                    modelIO.LoadWOCatch(file, newModel.Model);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
-                    return;
-                }
-
-                // NOTES:
-                // 1. Model (TopoModel): Original STL file triangles data.
-                // 2. Mesh (Submesh): Centerized triangles data. 
-                newModel.ModelToMesh();
-
-                // NOTES:
-                // 1. Auto position and checking model size need bounding box information.
-                // 2. Current bounding box is for orignal STL data. 
-                newModel.CopyTopoModelBoundingBoxToPrintModel();
-
-                _meshDataReady.Set();
-                Console.WriteLine("LoadWOCatch Done.");
-            });
-            IsLoadingModel = false;
-            if (_meshDataReady.Wait(0) == false)// It means some expection happens when loading a STL file.
-            {
-                _meshDataReady.Set();
+                MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
                 return;
             }
+
+            // NOTES:
+            // 1. Model (TopoModel): Original STL file triangles data.
+            // 2. Mesh (Submesh): Centerized triangles data. 
+            newModel.ModelToMesh();
+
+            // NOTES:
+            // 1. Auto position and checking model size need bounding box information.
+            // 2. Current bounding box is for orignal STL data. 
+            newModel.CopyTopoModelBoundingBoxToPrintModel();
+            // <>
+
+            IsLoadingModel = false;  // Hide BusyWindow.
             if (newModel.Model.drawTriangles.Count == 0)
             {
                 newModel.Model.Clear();
@@ -185,7 +190,11 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.PositionY = (float)newModel.BoundingBox.Center.y;
             }
 
-            Models.Add(newModel);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Models.Add(newModel);
+            });
+
             SelectedModel = newModel;
 
             // Remember initial positions for all ViewModel.Models after Autoposition.

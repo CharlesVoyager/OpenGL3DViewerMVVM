@@ -68,7 +68,7 @@ namespace OpenGL3DViewerMVVM.View
             updateSliderMaximum();
         }
 
-        private void slider_resize_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void sliderResizeTemp_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (MainWindow.main == null) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;

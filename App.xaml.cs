@@ -35,25 +35,22 @@ namespace OpenGL3DViewerMVVM
             mainWindow.threeDControl.SetComp(mainWindow.stlComposer);
             mainWindow.threeDControl.SetCamera(mainWindow.threeDCamera);
 
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
-            {
-                ProcessCommandLine(mainWindow);
-            });
-
             // Set camera to isometric view.
             mainWindow.threeDCamera.OnIsometricView();
 
-            // Wait until STL model data is ready if import STL file through command line before starting rendering loop
-            ViewModel._meshDataReady.Wait();
-
             // Force the WPF MainWindow to the foreground after OpenTK's GLFW window
             // has been created — GLFW steals focus when its native Win32 window appears.
-            System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
                 mainWindow.Topmost = true;   // momentarily force to top
                 mainWindow.Activate();
                 mainWindow.Focus();
                 mainWindow.Topmost = false;  // restore normal z-order
+            });
+
+            System.Windows.Application.Current.Dispatcher.Invoke(async () =>
+            {
+                await ProcessCommandLine(mainWindow);
             });
 
             // Blocks main thread for lifetime of GL window — correct!
@@ -63,7 +60,7 @@ namespace OpenGL3DViewerMVVM
         }
 
         // Command line argument example: @"..\..\..\Stl\10_10_10.stl"
-        private static async void ProcessCommandLine(MainWindow main)
+        private static async Task ProcessCommandLine(MainWindow main)
         {
             string[] args = Environment.GetCommandLineArgs();
             for (int i = 1; i < args.Length; i++)

@@ -82,17 +82,21 @@ namespace OpenGL3DViewerMVVM.View
         public static readonly ManualResetEventSlim _meshDataReady = new ManualResetEventSlim(true);
         public async Task ExecuteAddAsync(string? file = null)
         {
+            bool result = false;
             // Button is automatically disabled here
             _meshDataReady.Reset();
             await Task.Run(() =>
             {
-                AddModel(file);
+                result = AddModel(file);
             });
             // Button is automatically re-enabled here
             _meshDataReady.Set();
+
+            if (!result)
+                MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
         }
 
-        private void AddModel(string? file = null, bool isAutoPosition = true)
+        private bool AddModel(string? file = null, bool isAutoPosition = true)
         {
             if (file == null)
             {
@@ -107,7 +111,7 @@ namespace OpenGL3DViewerMVVM.View
                 if (resultDlg == true)
                     file = openFileDialog.FileName;
                 else
-                    return;
+                    return true;
             }
 
             ThreeDModel newModel = new ThreeDModel();
@@ -121,29 +125,30 @@ namespace OpenGL3DViewerMVVM.View
             try
             {           
                 modelIO.LoadWOCatch(file, newModel.Model);
+
+                // NOTES:
+                // 1. Model (TopoModel): Original STL file triangles data.
+                // 2. Mesh (Submesh): Centerized triangles data. 
+                newModel.ModelToMesh();
+
+                // NOTES:
+                // 1. Auto position and checking model size need bounding box information.
+                // 2. Current bounding box is for orignal STL data. 
+                newModel.CopyTopoModelBoundingBoxToPrintModel();
+                // <>
+
             }
             catch (Exception)
             {
-                MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
-                return;
+                IsLoadingModel = false;  // Hide BusyWindow.
+                return false;
             }
-
-            // NOTES:
-            // 1. Model (TopoModel): Original STL file triangles data.
-            // 2. Mesh (Submesh): Centerized triangles data. 
-            newModel.ModelToMesh();
-
-            // NOTES:
-            // 1. Auto position and checking model size need bounding box information.
-            // 2. Current bounding box is for orignal STL data. 
-            newModel.CopyTopoModelBoundingBoxToPrintModel();
-            // <>
-
             IsLoadingModel = false;  // Hide BusyWindow.
+
             if (newModel.Model.drawTriangles.Count == 0)
             {
                 newModel.Model.Clear();
-                return;
+                return true;
             }
             newModel.Name = Path.GetFileName(file);
 
@@ -210,6 +215,7 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.Drawer.Init();
                 MainWindow.main.threeDControl.UpdateChanges();
             });
+            return true;
         }
 
         public void DeleteModel()

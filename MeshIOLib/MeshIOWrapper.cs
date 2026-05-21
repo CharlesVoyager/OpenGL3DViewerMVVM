@@ -1,5 +1,4 @@
 using OpenGL3DViewerMVVM.model.geom;
-using OpenGL3DViewerMVVM;
 
 #nullable disable
 
@@ -28,11 +27,14 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                 fileMesh = new MeshIOBase();
 
             updateRateFunc = OnProcessUpdate;
-            MainWindow.main.BusyWindow.AbortTask += fileMesh.TaskAbort;
+
+            if (MainWindow.main != null)    // In case this is called from a non-UI thread, MainWindow.main might be null, for example, Unit test.
+                MainWindow.main.BusyWindow.AbortTask += fileMesh.TaskAbort;
 
             fileMesh.LoadWOCatch(file, model, updateRateFunc);
-
-            MainWindow.main.BusyWindow.AbortTask -= fileMesh.TaskAbort;
+            
+            if (MainWindow.main != null)
+                MainWindow.main.BusyWindow.AbortTask -= fileMesh.TaskAbort;
         }
 
         void OnProcessUpdate(int rate)

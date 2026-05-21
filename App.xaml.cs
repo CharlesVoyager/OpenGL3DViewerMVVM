@@ -53,6 +53,10 @@ namespace OpenGL3DViewerMVVM
                 await ProcessCommandLine(mainWindow);
             });
 
+            // Wait until STL model data is ready if import STL file through command line before starting rendering loop
+            // NOTE: ProcessCommandline is invoked asynchronously (await). It will hit here before the command line processing is done.
+            ViewModel._meshDataReady.Wait();
+
             // Blocks main thread for lifetime of GL window — correct!
             mainWindow.threeDControl.Run();
 

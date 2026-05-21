@@ -150,6 +150,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
             UpdateBoundingBoxAndMatrix();
             Land();
+            OnPropertyChanged("SizeScaleX");
+            OnPropertyChanged("SizeScaleY"); 
+            OnPropertyChanged("SizeScaleZ");
         }
 
 
@@ -334,34 +337,49 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             }
         }
 
-        public float xMin
-        {
-            get { return (float)BoundingBox.MinPoint.x; }
-        }
+        public float xMin { get { return (float)BoundingBox.MinPoint.x; } }
+        public float yMin { get { return (float)BoundingBox.MinPoint.y; } }
+        public float zMin { get { return (float)BoundingBox.MinPoint.z; } }
+        public float xMax { get { return (float)BoundingBox.MaxPoint.x; } }
+        public float yMax { get { return (float)BoundingBox.MaxPoint.y; } }
+        public float zMax { get { return (float)BoundingBox.MaxPoint.z; } }
 
-        public float yMin
-        {
-            get { return (float)BoundingBox.MinPoint.y; }
+        public bool IsUniformScale { get; set; } = true;
+        public float SizeScaleX 
+        { 
+            get { return (float)BoundingBox.Size.x; }
+            set 
+            {
+                if (value <= 0) return;
+                if (IsUniformScale)
+                    UniformScale = value / BoundingBox.Size.x;
+                else
+                    ScaleX = value / BoundingBox.Size.x;
+            }
         }
-
-        public float zMin
+        public float SizeScaleY
         {
-            get { return (float)BoundingBox.MinPoint.z; }
+            get { return (float)BoundingBox.Size.y; }
+            set
+            {
+                if (value <= 0) return;
+                if (IsUniformScale)
+                    UniformScale = value / BoundingBox.Size.y;
+                else
+                    ScaleY = value / BoundingBox.Size.y;
+            }
         }
-
-        public float xMax
+        public float SizeScaleZ
         {
-            get { return (float)BoundingBox.MaxPoint.x; }
-        }
-
-        public float yMax
-        {
-            get { return (float)BoundingBox.MaxPoint.y; }
-        }
-
-        public float zMax
-        {
-            get { return (float)BoundingBox.MaxPoint.z; }
+            get { return (float)BoundingBox.Size.z; }
+            set
+            {
+                if (value <= 0) return;
+                if (IsUniformScale)
+                    UniformScale = value / BoundingBox.Size.z;
+                else
+                    ScaleZ = value / BoundingBox.Size.z;
+            }
         }
 
         public bool Selected

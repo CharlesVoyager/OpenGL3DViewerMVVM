@@ -53,145 +53,7 @@ namespace OpenGL3DViewerMVVM.View
         // Since text boxes are not binding to properties, update text boxes after SelectionModel is changed.
         private void OnSelectionChange(object sender, SelectionChangedEventArgs e)
         {
-            if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
-            if (model == null) return;
-
-            gIsShow = true;
-            updateTxt();
-            if (model.ScaleX == model.ScaleY && model.ScaleY == model.ScaleZ)
-            {
-                chk_Uniform.IsChecked = true;
-                chk_Uniform_Checked(null, null);
-            }
-            else
-            {
-                chk_Uniform.IsChecked = false;
-                chk_Uniform_UnChecked(null, null);
-            }
-            gIsShow = false;
-            button_mmtoinch.IsEnabled = true;
-            button_inchtomm.IsEnabled = true;
-
-            // If the model is too big, do not allow model to scale up.
-            if (model.BoundingBox.Size.x > (SettingsService.Instance.Settings.PrintAreaWidth / 2) && 
-                model.BoundingBox.Size.y > (SettingsService.Instance.Settings.PrintAreaDepth / 2) &&
-                model.BoundingBox.Size.y > (SettingsService.Instance.Settings.PrintAreaHeight / 2))
-                button_mmtoinch.IsEnabled = false;
-
-            // If the model is too small, do not allow model to scale down.
-            if (model.BoundingBox.Size.x < 10 && model.BoundingBox.Size.y < 10 && model.BoundingBox.Size.z < 10)
-                button_inchtomm.IsEnabled = false;
-        }
-
-        private void txtX_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            if (gIsShow == true) return;
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-            try
-            {
-                double dimX = Convert.ToDouble(txtX.Text);
-                if (dimX == 0) dimX = MIN_DIMENSION;
-
-                Double tScalex = dimX / Math.Max(stl.Model.boundingBox.Size.x, MIN_DIMENSION);
-
-                if (chk_Uniform.IsChecked == true)
-                {
-                    stl.UniformScale = tScalex;
-                  
-                    gIsShow = true;
-                    slider_resize.Value = tScalex * 100;
-                    txtY.Text = stl.BoundingBox.Size.y.ToString("0.000");
-                    txtZ.Text = stl.BoundingBox.Size.z.ToString("0.000");
-                    gIsShow = false;
-                }
-                else
-                    stl.ScaleX = tScalex;
-            }
-            catch { }
-        }
-
-        private void txtY_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            if (gIsShow == true) return;
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-            try
-            {
-                double dimY = Convert.ToDouble(txtY.Text);
-                if (dimY == 0) dimY = MIN_DIMENSION;
-
-                Double tScaley = dimY / Math.Max(stl.Model.boundingBox.Size.y, MIN_DIMENSION);
-              
-                if (chk_Uniform.IsChecked == true)
-                {
-                    stl.UniformScale = tScaley;
-                    gIsShow = true;
-                    slider_resize.Value = tScaley * 100;
-                    txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
-                    txtZ.Text = stl.BoundingBox.Size.z.ToString("0.000");
-                    gIsShow = false;
-                }
-                else
-                    stl.ScaleY = tScaley;
-            }
-            catch { }
-        }
-
-        private void txtZ_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            if (gIsShow == true) return;
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-
-            try
-            { 
-                double dimZ = Convert.ToDouble(txtZ.Text);
-                if (dimZ == 0) dimZ = MIN_DIMENSION;
-
-                Double tScalez = dimZ / Math.Max(stl.Model.boundingBox.Size.z, MIN_DIMENSION);
-    
-                if (chk_Uniform.IsChecked == true)
-                {
-                    stl.UniformScale = tScalez;
-                    gIsShow = true;
-                    slider_resize.Value = tScalez * 100;
-                    txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
-                    txtY.Text = stl.BoundingBox.Size.y.ToString("0.000");
-                    gIsShow = false;
-                }
-                else
-                    stl.ScaleZ = tScalez;
-            }
-            catch { }
-        }
-
-        public void chk_Uniform_Checked(object sender, RoutedEventArgs e)
-        {
-            if (MainWindow.main == null) return; // At design time MainWindow.main is null. Add null guards to prevent NullReferenceException.
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-            try
-            {
-                slider_resize.IsEnabled = true;
-                checkMin();
-                double maxScale = Math.Max(stl.ScaleX, Math.Max(stl.ScaleY, stl.ScaleZ));
-                slider_resize.Value = maxScale * 100;
-            }
-            catch { }
-        }
-
-        private void chk_Uniform_UnChecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                slider_resize.IsEnabled = false;
-            }
-            catch { }
+            updateSliderMinMaxValue();
         }
 
         private void slider_resize_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -216,13 +78,9 @@ namespace OpenGL3DViewerMVVM.View
             if (stl == null) return;
 
             stl.UniformScale = slider_resize.Value / 100;
-
-            gIsShow = true;
-            updateTxt();
-            gIsShow = false;
         }
 
-        void checkMin()
+        void updateSliderMinMaxValue()
         {
             if (MainWindow.main == null) return;
             ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
@@ -240,6 +98,7 @@ namespace OpenGL3DViewerMVVM.View
 
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
             slider_resize.Maximum = tMaxScalableValue * 100;
+            slider_resize.Value = stl.UniformScale * 100;
             slider_resize.ValueChanged += slider_resize_ValueChanged;
         }
 
@@ -251,25 +110,23 @@ namespace OpenGL3DViewerMVVM.View
 
             stl.UniformScale = 1;
 
-            chk_Uniform.IsChecked = true;
+            stl.IsUniformScale = true;
             button_mmtoinch.IsEnabled = true;
             button_inchtomm.IsEnabled = false;
 
             gIsShow = true;
-            updateTxt();
             slider_resize.Value = 100;
             gIsShow = false;
-            checkMin();
+            updateSliderMinMaxValue();
 
             MainWindow.main.viewModel.check_stl_size_too_small(stl);
             stl.Land();
             MainWindow.main.threeDControl.UpdateChanges();
 
             gIsShow = true;
-            updateTxt();
             slider_resize.Value = stl.ScaleX * 100;
             gIsShow = false;
-            checkMin();
+            updateSliderMinMaxValue();
         }
 
         private void button_mmtoinch_Click(object sender, RoutedEventArgs e)
@@ -285,10 +142,6 @@ namespace OpenGL3DViewerMVVM.View
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
             slider_resize.Value = model.ScaleX * 100;
             slider_resize.ValueChanged += slider_resize_ValueChanged;
-
-            gIsShow = true;
-            updateTxt();
-            gIsShow = false;
         }
 
         private void button_inchtomm_Click(object sender, RoutedEventArgs e)
@@ -304,10 +157,6 @@ namespace OpenGL3DViewerMVVM.View
             slider_resize.ValueChanged -= slider_resize_ValueChanged;
             slider_resize.Value = model.ScaleX * 100;
             slider_resize.ValueChanged += slider_resize_ValueChanged;
-
-            gIsShow = true;
-            updateTxt();
-            gIsShow = false;
         }
 
         private void btn_Scale_Click(object sender, RoutedEventArgs e)
@@ -318,38 +167,9 @@ namespace OpenGL3DViewerMVVM.View
             try
             {
                 Double scaleValue = slider_resize.Value / 100;
-
-                model.ScaleX = scaleValue;
-                model.ScaleY = scaleValue;
-                model.ScaleZ = scaleValue;
-            
-                gIsShow = true;
-                slider_resize.Value = model.ScaleX * 100;
-                updateTxt();
-                gIsShow = false;
+                model.UniformScale = scaleValue;
             }
             catch { }
-        }
-
-        // Check if values of TextBox is valid.
-        private void scaleLostFocus(object sender, RoutedEventArgs e)
-        {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-
-            gIsShow = true;
-            updateTxt();
-            gIsShow = false;
-        }
-
-        public void updateTxt()
-        {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-
-            txtX.Text = stl.BoundingBox.Size.x.ToString("0.000");
-            txtY.Text = stl.BoundingBox.Size.y.ToString("0.000");
-            txtZ.Text = stl.BoundingBox.Size.z.ToString("0.000");
         }
     }
 }

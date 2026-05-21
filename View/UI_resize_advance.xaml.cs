@@ -34,8 +34,6 @@ namespace OpenGL3DViewerMVVM.View
     {
         const double MIN_DIMENSION = 0.001; // Minimum dimension to prevent exception when calculating scale.
 
-        bool gIsShow = false;
-
         public UI_resize_advance()
         {
             InitializeComponent();

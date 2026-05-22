@@ -186,7 +186,7 @@
                     <Button x:Name="button_inchtomm" Height="28" Margin="1" Padding="3" Width="155" Content="Scale Down (inch→mm)" FontFamily="Arial" Click="button_inchtomm_Click" FontSize="12"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >
-                    <ToggleButton Height="70" Margin="2.5,3,2.5,2.2" x:Name="button_Reset" Padding="3" Width="50" Content="Reset" FontFamily="Arial" Click="button_Reset_Click" >
+                    <ToggleButton Height="70" Margin="2.5,3,2.5,2.2" x:Name="button_Reset" Padding="3" Width="50" Content="Reset" FontFamily="Arial" Command="{Binding ResetCommand}" >
                         <ToggleButton.Background>
                             <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/submenu_reset1.png" />
                         </ToggleButton.Background>

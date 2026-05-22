@@ -98,22 +98,6 @@ namespace OpenGL3DViewerMVVM.View
             slider_resize.Maximum = tMaxScalableValue * 100;
         }
 
-        public void button_Reset_Click(object sender, RoutedEventArgs e)
-        {
-            if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
-            if (stl == null) return;
-
-            stl.UniformScale = 1;
-         
-            stl.IsUniformScale = true;
-
-            updateSliderMaximum();
-
-            MainWindow.main.viewModel.check_stl_size_too_small(stl);
-            stl.Land();
-        }
-
         private void button_mmtoinch_Click(object sender, RoutedEventArgs e)
         {
             ThreeDModel model = MainWindow.main.viewModel.SelectedModel;

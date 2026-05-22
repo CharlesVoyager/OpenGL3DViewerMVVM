@@ -261,6 +261,7 @@ namespace OpenGL3DViewerMVVM.View
         {
             if (SelectedModel == null) return;
             SelectedModel.Reset();
+            check_stl_size_too_small(SelectedModel);
         }
  
         bool Autoposition(ThreeDModel newModel)

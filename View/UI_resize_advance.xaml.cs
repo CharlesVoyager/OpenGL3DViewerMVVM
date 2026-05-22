@@ -112,9 +112,6 @@ namespace OpenGL3DViewerMVVM.View
 
             MainWindow.main.viewModel.check_stl_size_too_small(stl);
             stl.Land();
-            MainWindow.main.threeDControl.UpdateChanges();
-
-            updateSliderMaximum();
         }
 
         private void button_mmtoinch_Click(object sender, RoutedEventArgs e)

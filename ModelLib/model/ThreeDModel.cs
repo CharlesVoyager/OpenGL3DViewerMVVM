@@ -94,9 +94,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             RotationX = 0;
             RotationY = 0;
             RotationZ = 0;
-            ScaleX = 1;
-            ScaleY = 1;
-            ScaleZ = 1;
+
+            IsUniformScale = true;
+            UniformScale = 1; // => ScaleX = 1, ScaleY = 1, ScaleZ = 1.
 
             UpdateBoundingBoxAndMatrix();
             Land();

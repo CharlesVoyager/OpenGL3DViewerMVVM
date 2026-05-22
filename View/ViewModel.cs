@@ -9,16 +9,36 @@ using System.Windows;
 
 namespace OpenGL3DViewerMVVM.View
 {
+    public interface IDispatcherService
+    {
+        void Invoke(Action action);
+    }
+
+    // Real implementation (used by WPF app):
+    public class WpfDispatcherService : IDispatcherService
+    {
+        public void Invoke(Action action) => Application.Current.Dispatcher.Invoke(action);
+    }
+
+    // Test implementation (used by unit tests):
+    public class SynchronousDispatcherService : IDispatcherService
+    {
+        public void Invoke(Action action) => action(); // runs inline
+    }
+
     public class ViewModel : ViewModelBase
     {
+        private readonly IDispatcherService _dispatcher;
         public ObservableCollection<ThreeDModel> Models { get; set; }
 
         public AsyncRelayCommand<string> AddCommand => new AsyncRelayCommand<string>(ExecuteAddAsync);
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => SelectedModel != null);
         public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => SelectedModel != null);
         public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => SelectedModel != null);
-        public ViewModel()
+       
+        public ViewModel(IDispatcherService? dispatcher = null)
         {
+            _dispatcher = dispatcher ?? new WpfDispatcherService();
             Models = new ObservableCollection<ThreeDModel>();
         }
 
@@ -194,10 +214,7 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.PositionY = (float)newModel.BoundingBox.Center.y;
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Models.Add(newModel);
-            });
+            _dispatcher.Invoke(() => { Models.Add(newModel); });
 
             SelectedModel = newModel;
 
@@ -209,11 +226,12 @@ namespace OpenGL3DViewerMVVM.View
                 m.InitialPosition.z = m.PositionZ;
             }
 
-            MainWindow.main.threeDControl.InvokeGL(() =>
+            if (MainWindow.main != null && MainWindow.main.threeDControl != null)   // Added for Unit test.
             {
-                newModel.Drawer.Init();
+                MainWindow.main.threeDControl.InvokeGL(() => { newModel.Drawer.Init(); });
                 MainWindow.main.threeDControl.UpdateChanges();
-            });
+            }
+
             return true;
         }
 

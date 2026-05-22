@@ -107,7 +107,7 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     _subscribedSelectedModel = newModel;
                     _subscribedSelectedModel.PropertyChanged += OnSelectedModelPropertyChanged;
-                    Invalidate();
+                    UpdateChanges();
                 }
             }
         }
@@ -117,18 +117,16 @@ namespace OpenGL3DViewerMVVM.View
             //Debug.WriteLine($"[OnSelectedModelPropertyChanged] Property changed: {e.PropertyName}");
 
             if (e.PropertyName.Contains("Position") || e.PropertyName.Contains("Rotation") || e.PropertyName.Contains("Scale"))
-                Invalidate();
+                UpdateChanges();
         }
 
         // ── Public wiring ─────────────────────────────────────────────────────
         public void SetComp(STLComposer comp) => stlComp = comp;
         public void SetCamera(ThreeDCamera cam) => threeDCam = cam;
-
+       
         private volatile bool _isDirty = true;
-        private void Invalidate() => _isDirty = true;
+        public void UpdateChanges() => _isDirty = true;
 
-        public void UpdateChanges() => Invalidate();
- 
         // ── Translations ──────────────────────────────────────────────────────
         private void translate()
         {
@@ -282,7 +280,7 @@ namespace OpenGL3DViewerMVVM.View
             });
 
             GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
-            Invalidate();
+            UpdateChanges();
         }
 
         protected override void OnUnload()
@@ -361,7 +359,7 @@ namespace OpenGL3DViewerMVVM.View
             moveStart = moveLast = new Geom3DVector(0, 0, 0);
             UpdatePickLine((int)pos.X, (int)pos.Y);
             movePlane.intersectLine(pickLine, moveStart);
-            Invalidate();
+            UpdateChanges();
         }
 
         protected override void OnMouseMove(MouseMoveEventArgs e)
@@ -377,7 +375,7 @@ namespace OpenGL3DViewerMVVM.View
             if (!anyButton)
             {
                 speedX = speedY = 0;
-                Invalidate();
+                UpdateChanges();
                 return;
             }
 
@@ -443,7 +441,7 @@ namespace OpenGL3DViewerMVVM.View
                 }
             }
             speedX = speedY = 0;
-            Invalidate();
+            UpdateChanges();
         }
 
         protected override void OnMouseWheel(MouseWheelEventArgs e)
@@ -456,7 +454,7 @@ namespace OpenGL3DViewerMVVM.View
                 zoom *= 1f - e.OffsetY / 20f;
                 if (zoom < 0.002f) zoom = 0.002f;
                 if (zoom > 5.9f) zoom = 5.9f;
-                Invalidate();
+                UpdateChanges();
             }
         }
 
@@ -485,7 +483,7 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     MainWindow.main.viewModel.DeleteModel();
                 });
-                Invalidate();
+                UpdateChanges();
             }
         }
 
@@ -503,14 +501,14 @@ namespace OpenGL3DViewerMVVM.View
         {
             threeDCam.PreparePanZoomRot(); threeDCam.Zoom(1.1f);
             zoom = Math.Max(0.002f, Math.Min(5.9f, zoom));
-            Invalidate();
+            UpdateChanges();
         }
 
         public void ZoomInKeyHandling(object sender, EventArgs e)
         {
             threeDCam.PreparePanZoomRot(); threeDCam.Zoom(0.9f);
             zoom = Math.Max(0.002f, Math.Min(5.9f, zoom));
-            Invalidate();
+            UpdateChanges();
         }
 
         // ── Rendering ─────────────────────────────────────────────────────────
@@ -648,7 +646,7 @@ namespace OpenGL3DViewerMVVM.View
                     speedX = (xPos - xDown) / d;
                     speedY = (yPos - yDown) / d;
                     threeDCam.Rotate(-speedX * 0.9, speedY * 0.9);
-                    Invalidate();
+                    UpdateChanges();
                     break;
 
                 case 2: // Pan
@@ -661,13 +659,13 @@ namespace OpenGL3DViewerMVVM.View
                     float scale = emode == 1 ? 200f : 1f;
                     threeDCam.Pan(  speedX * scale * (emode == 2 ? -1 : 1),
                                     speedY * scale * (emode == 2 ? -1 : 1), len);
-                    Invalidate();
+                    UpdateChanges();
                     break;
                 }
 
                 case 3: // Zoom
                     threeDCam.Zoom(1 - speedY / 3f);
-                    Invalidate();
+                    UpdateChanges();
                     break;
 
                 case 4: // Move objects
@@ -682,7 +680,7 @@ namespace OpenGL3DViewerMVVM.View
                
                     lastX = xPos; 
                     lastY = yPos;
-                    Invalidate();
+                    UpdateChanges();
                     break;
                 }
             }

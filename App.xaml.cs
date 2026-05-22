@@ -32,7 +32,6 @@ namespace OpenGL3DViewerMVVM
 
             // OpenTK GameWindow runs on the main thread (required by GLFW)
             mainWindow.threeDControl = new ThreeDControl(SettingsService.Instance.Settings.InitialClientSizeWidth, SettingsService.Instance.Settings.InitialClientSizeHeight);
-            mainWindow.threeDControl.SetComp(mainWindow.stlComposer);
             mainWindow.threeDControl.SetCamera(mainWindow.threeDCamera);
 
             // Set camera to isometric view.

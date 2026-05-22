@@ -42,7 +42,6 @@ namespace OpenGL3DViewerMVVM.View
         int keyX = -1;
         int keyY = -1;
 
-        STLComposer stlComp = null;
         ThreeDCamera threeDCam = null;
 
         // Geometry helpers (pick ray)
@@ -121,7 +120,6 @@ namespace OpenGL3DViewerMVVM.View
         }
 
         // ── Public wiring ─────────────────────────────────────────────────────
-        public void SetComp(STLComposer comp) => stlComp = comp;
         public void SetCamera(ThreeDCamera cam) => threeDCam = cam;
        
         private volatile bool _isDirty = true;
@@ -428,7 +426,6 @@ namespace OpenGL3DViewerMVVM.View
            
                     MainWindow.main.Dispatcher.InvokeAsync(() =>
                     {
-                        //stlComp.ObjectSelected(sel);
                         MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null);
                     });
                 }

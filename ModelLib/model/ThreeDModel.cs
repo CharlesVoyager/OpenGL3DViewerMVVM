@@ -409,7 +409,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
                 UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(PositionX));
             }
@@ -424,7 +423,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
                 UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(PositionY));
             }
@@ -439,7 +437,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
                 UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(PositionZ));
             }
@@ -460,7 +457,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(RotationX));
             }
@@ -481,7 +477,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(RotationY));
             }
@@ -502,7 +497,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(RotationZ));
             }
@@ -521,7 +515,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(ScaleX));
             }
@@ -540,7 +533,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(ScaleY));
             }
@@ -559,7 +551,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
 
                 OnPropertyChanged(nameof(ScaleZ));
             }

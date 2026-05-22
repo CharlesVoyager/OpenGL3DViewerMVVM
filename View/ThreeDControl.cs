@@ -1,18 +1,19 @@
 using OpenGL3DViewerMVVM.Draw;
 using OpenGL3DViewerMVVM.MeshIOLib;
 using OpenGL3DViewerMVVM.ModelLib.model;
+using OpenGL3DViewerMVVM.ModelObjectTool;
+using OpenGL3DViewerMVVM.Primitive;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
-using OpenGL3DViewerMVVM.ModelObjectTool;
-using OpenGL3DViewerMVVM.Primitive;
 
 #nullable disable
 
@@ -82,8 +83,27 @@ namespace OpenGL3DViewerMVVM.View
         {
             VSync = VSyncMode.Off;  // CHANGED: VSync is now a property on the window, not an enum field
 
-            // Language hook
             MainWindow.main.languageChanged += translate;
+
+            MainWindow.main.viewModel.PropertyChanged += OnViewModelPropertyChanged;
+        }
+
+        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if ( e.PropertyName == "SelectedModel")
+            {
+                if (MainWindow.main.viewModel.SelectedModel != null)
+                {
+                    MainWindow.main.viewModel.SelectedModel.PropertyChanged += OnSelectedModelPropertyChanged;
+                    Invalidate();   
+                }
+            }
+        }
+
+        private void OnSelectedModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Contains("Position") || e.PropertyName.Contains("Rotation") || e.PropertyName.Contains("Scale"))
+                Invalidate();
         }
 
         // ── Public wiring ─────────────────────────────────────────────────────

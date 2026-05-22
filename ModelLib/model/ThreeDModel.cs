@@ -575,12 +575,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateBoundingBoxAndMatrix();
                 Land();
                 UpdateOutside();
-                MainWindow.main.threeDControl.UpdateChanges();
+
+                OnPropertyChanged(nameof(UniformScale));
 
                 OnPropertyChanged(nameof(ScaleX));
                 OnPropertyChanged(nameof(ScaleY));
                 OnPropertyChanged(nameof(ScaleZ));
-                OnPropertyChanged(nameof(UniformScale));
 
                 OnPropertyChanged(nameof(SizeScaleX));
                 OnPropertyChanged(nameof(SizeScaleY));

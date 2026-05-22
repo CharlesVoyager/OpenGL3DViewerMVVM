@@ -28,18 +28,19 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
 
             updateRateFunc = OnProcessUpdate;
 
-            if (MainWindow.main != null)    // In case this is called from a non-UI thread, MainWindow.main might be null, for example, Unit test.
+            if (MainWindow.main != null)    // Added for unit test.
                 MainWindow.main.BusyWindow.AbortTask += fileMesh.TaskAbort;
 
             fileMesh.LoadWOCatch(file, model, updateRateFunc);
             
-            if (MainWindow.main != null)
+            if (MainWindow.main != null)    // Added for unit test.
                 MainWindow.main.BusyWindow.AbortTask -= fileMesh.TaskAbort;
         }
 
         void OnProcessUpdate(int rate)
         {
-            MainWindow.main.viewModel.LoadModelProgress = rate;
+            if (MainWindow.main != null)    // Added for unit test.
+                MainWindow.main.viewModel.LoadModelProgress = rate;
         }
     }
 }

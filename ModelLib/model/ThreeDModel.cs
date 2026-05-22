@@ -9,60 +9,11 @@ using System.Diagnostics;
 
 namespace OpenGL3DViewerMVVM.ModelLib.model
 {
-    public class Coord3D
-    {
-        double x = 0, y = 0, z = 0;
-       
-        private readonly Action<double, double, double> updateBoundingBoxByShift;
-        public Coord3D(Action<double, double, double> operation)
-        {
-            updateBoundingBoxByShift = operation;
-        }
-
-        public double X
-        {
-            get { return x; }
-            set 
-            {
-                double old = x;
-                x = value;
-                updateBoundingBoxByShift(x - old, 0, 0);
-            }
-        }
-
-        public double Y
-        {
-            get { return y; }
-            set
-            {
-                double old = y;
-                y = value;
-                updateBoundingBoxByShift(0, y - old, 0);
-            }
-        }
-
-        public double Z
-        {
-            get { return z; }
-            set
-            {
-                double old = z;
-                z = value;
-                updateBoundingBoxByShift(0, 0, z - old);
-            }
-        }
-
-        public override string ToString()
-        {
-            return "(" + x.ToString("0.000") + ", " + y.ToString("0.000") + ", " + z.ToString("0.000") + ")";
-        }
-    }
-
     public class ThreeDModel : ViewModelBase
     {   
         private bool selected = false;
 
-        private Coord3D position = null;   
+        private RHVector3 position = new RHVector3(0, 0, 0);   
         private RHVector3 rotation = new RHVector3(0, 0, 0);    
         private RHVector3 scale = new RHVector3(1, 1, 1);
 
@@ -80,7 +31,6 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public ThreeDModel()
         {
-            position = new Coord3D(updateBoundingBoxByShift);
             Model = new TopoModel();
             Mesh = new Submesh();
             Drawer = new ModelGLDraw(this);
@@ -107,9 +57,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             Model.CopyTo(stl.Model);   // NOTE: Just clone Model is enough. Drawer/BoundingBox do not need to clone.
             Mesh.CopyTo(stl.Mesh);
             stl.Name = Name;
-            stl.position.X = position.X;
-            stl.position.Y = position.Y;
-            stl.position.Z = position.Z;
+            stl.position.x = position.x;
+            stl.position.y = position.y;
+            stl.position.z = position.z;
             stl.scale.x = scale.x;
             stl.scale.y = scale.y;
             stl.scale.z = scale.z;
@@ -183,7 +133,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             Matrix4 rotY = Matrix4.CreateRotationY((float)(rotation.y * Math.PI / 180.0));
             Matrix4 rotZ = Matrix4.CreateRotationZ((float)(rotation.z * Math.PI / 180.0));
 
-            Matrix4 transl = Matrix4.CreateTranslation((float)position.X, (float)position.Y, (float)position.Z);
+            Matrix4 transl = Matrix4.CreateTranslation((float)position.x, (float)position.y, (float)position.z);
 
             // Combine: Scale → RotX → RotY → RotZ → Translate
             trans = scaleMatrix * rotX * rotY * rotZ * transl;
@@ -402,12 +352,14 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public double PositionX
         {
-            get { return position.X; }
+            get { return position.x; }
             set 
             { 
-                position.X = value;
-
-                UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
+                double old = position.x;
+                position.x = value;
+                updateBoundingBoxByShift(position.x - old, 0, 0);
+          
+                UpdateTransMatrix();  
                 UpdateOutside();
 
                 OnPropertyChanged(nameof(PositionX));
@@ -416,10 +368,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public double PositionY
         {
-            get { return position.Y; }
+            get { return position.y; }
             set 
-            { 
-                position.Y = value;
+            {
+                double old = position.y;
+                position.y = value;
+                updateBoundingBoxByShift(0, position.y - old, 0);
 
                 UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
                 UpdateOutside();
@@ -430,10 +384,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public double PositionZ
         {
-            get { return position.Z; }
+            get { return position.z; }
             set 
-            { 
-                position.Z = value;
+            {
+                double old = position.z;
+                position.z = value;
+                updateBoundingBoxByShift(0, 0, position.z - old);
 
                 UpdateTransMatrix();   // Bounding box will be automatically updated by position change.
                 UpdateOutside();

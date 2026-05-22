@@ -88,20 +88,34 @@ namespace OpenGL3DViewerMVVM.View
             MainWindow.main.viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
+        private ThreeDModel _subscribedSelectedModel = null;
+
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if ( e.PropertyName == "SelectedModel")
             {
-                if (MainWindow.main.viewModel.SelectedModel != null)
+                // Unsubscribe from old model
+                if (_subscribedSelectedModel != null)
                 {
-                    MainWindow.main.viewModel.SelectedModel.PropertyChanged += OnSelectedModelPropertyChanged;
-                    Invalidate();   
+                    _subscribedSelectedModel.PropertyChanged -= OnSelectedModelPropertyChanged;
+                    _subscribedSelectedModel = null;
+                }
+
+                // Subscribe to new model
+                var newModel = MainWindow.main.viewModel.SelectedModel;
+                if (newModel != null)
+                {
+                    _subscribedSelectedModel = newModel;
+                    _subscribedSelectedModel.PropertyChanged += OnSelectedModelPropertyChanged;
+                    Invalidate();
                 }
             }
         }
 
         private void OnSelectedModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            //Debug.WriteLine($"[OnSelectedModelPropertyChanged] Property changed: {e.PropertyName}");
+
             if (e.PropertyName.Contains("Position") || e.PropertyName.Contains("Rotation") || e.PropertyName.Contains("Scale"))
                 Invalidate();
         }

@@ -289,6 +289,15 @@ namespace OpenGL3DViewerMVVM.View
         {
             base.OnUnload();
 
+            MainWindow.main.languageChanged -= translate;
+            MainWindow.main.viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+            if (_subscribedSelectedModel != null)
+            {
+                _subscribedSelectedModel.PropertyChanged -= OnSelectedModelPropertyChanged;
+                _subscribedSelectedModel = null;
+            }
+
             backgroundDraw.Dispose();
             printerbedDraw.Dispose();
             printerAreaFrameDraw.Dispose();

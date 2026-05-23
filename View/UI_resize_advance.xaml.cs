@@ -30,6 +30,16 @@ namespace OpenGL3DViewerMVVM.View
         }
     }
 
+    // If the model is rotated, disable uniform scale check box. In other words, not allow non-unform scale when the model is rotated.
+    public class RotationToEnable : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+            => values.All(v => v is double d && d == 0.0);
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
+    }
+
     public partial class UI_resize_advance : UserControl
     {
         const double MIN_DIMENSION = 0.001; // Minimum dimension to prevent exception when calculating scale.

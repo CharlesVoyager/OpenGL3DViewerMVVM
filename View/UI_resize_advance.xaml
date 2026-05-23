@@ -9,6 +9,19 @@
 
     <UserControl.Resources>
         <local:UniformScaleToPercent x:Key="UniformScaleToPercent"/>
+        <local:RotationToEnable x:Key="RotationToEnable"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <Style TargetType="CheckBox">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="ToolTipService.IsEnabled" Value="False" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="ToolTipService.IsEnabled" Value="True" />
+                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -102,6 +115,20 @@
                         <CheckBox.LayoutTransform>
                             <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                         </CheckBox.LayoutTransform>
+                        <CheckBox.IsEnabled>
+                            <MultiBinding Converter="{StaticResource RotationToEnable}">
+                                <Binding Path="SelectedModel.RotationX" />
+                                <Binding Path="SelectedModel.RotationY" />
+                                <Binding Path="SelectedModel.RotationZ" />
+                            </MultiBinding>
+                        </CheckBox.IsEnabled>
+                        <CheckBox.ToolTip>
+                            <ToolTip Visibility="{Binding IsEnabled, 
+                              RelativeSource={RelativeSource Self}, 
+                              Converter={StaticResource BoolToVis}}">
+                                Not allow non-uniform scale if the model is rotated.
+                            </ToolTip>
+                        </CheckBox.ToolTip>
                     </CheckBox>
                     <Label x:Name="lbl_Uniform" Content="Uniform" Height="28" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" Grid.Column="1" Grid.Row="3" Width="120" Margin="0,4,0,0" />
                     <Label x:Name="lbl_Size" Content="Size" Height="28" HorizontalAlignment="Center" Foreground="White" FontFamily="Arial" Grid.Column="0" Grid.Row="4" Margin="10,3.6,91.385,28.8" Grid.RowSpan="2" Width="51" Grid.ColumnSpan="2" />

@@ -311,7 +311,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / Model.boundingBox.Size.x;
+                    UniformScale = value / (BoundingBox.Size.x / UniformScale); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
                 else
                     ScaleX = value / Model.boundingBox.Size.x;
                 OnPropertyChanged();
@@ -324,7 +324,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / Model.boundingBox.Size.y;
+                    UniformScale = value / (BoundingBox.Size.y / UniformScale); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
                 else
                     ScaleY = value / Model.boundingBox.Size.y;
                 OnPropertyChanged();
@@ -337,7 +337,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / Model.boundingBox.Size.z;
+                    UniformScale = value / (BoundingBox.Size.z / UniformScale); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
                 else
                     ScaleZ = value / Model.boundingBox.Size.z;
                 OnPropertyChanged();
@@ -415,6 +415,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateOutside();
 
                 OnPropertyChanged(nameof(RotationX));
+
+                OnPropertyChanged(nameof(SizeScaleX));
+                OnPropertyChanged(nameof(SizeScaleY));
+                OnPropertyChanged(nameof(SizeScaleZ));
             }
         }
 
@@ -435,6 +439,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateOutside();
 
                 OnPropertyChanged(nameof(RotationY));
+
+                OnPropertyChanged(nameof(SizeScaleX));
+                OnPropertyChanged(nameof(SizeScaleY));
+                OnPropertyChanged(nameof(SizeScaleZ));
             }
         }
 
@@ -455,6 +463,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 UpdateOutside();
 
                 OnPropertyChanged(nameof(RotationZ));
+
+                OnPropertyChanged(nameof(SizeScaleX));
+                OnPropertyChanged(nameof(SizeScaleY));
+                OnPropertyChanged(nameof(SizeScaleZ));
             }
         }
 

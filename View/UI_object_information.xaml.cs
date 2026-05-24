@@ -1,5 +1,6 @@
-﻿using OpenGL3DViewerMVVM.ModelLib.model;
-using OpenGL3DViewerMVVM.model.geom;
+﻿using OpenGL3DViewerMVVM.model.geom;
+using OpenGL3DViewerMVVM.ModelLib.model;
+using OpenGL3DViewerMVVM.ModelLib.Utils;
 
 namespace OpenGL3DViewerMVVM.View
 {
@@ -11,13 +12,7 @@ namespace OpenGL3DViewerMVVM.View
         public UI_object_information()
         {
             InitializeComponent();
-
-            try
-            {
-                if (MainWindow.main != null)
-                    MainWindow.main.languageChanged += translate;
-            }
-            catch { }
+            Trans.trans.languageChanged += translate;
         }
 
         void translate()

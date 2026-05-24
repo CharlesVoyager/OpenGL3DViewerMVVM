@@ -19,7 +19,7 @@ namespace OpenGL3DViewerMVVM.View
         {
             InitializeComponent();
 
-            MainWindow.main.languageChanged += translate;
+            Trans.trans.languageChanged += translate;
 
             double targetLargestSize = SettingsService.Instance.Settings.PrintAreaWidth / 2;
 

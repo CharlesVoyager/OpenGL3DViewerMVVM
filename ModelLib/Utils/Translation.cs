@@ -56,9 +56,12 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
         }
     }
 
+    public delegate void languageChangedEvent();
     public class Trans
     {
-        private static Trans trans = null;
+        public event languageChangedEvent languageChanged = null;
+
+        public static Trans trans = null;
 
         private Translation english = null;
         private Translation active = null;
@@ -93,6 +96,14 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
             Trans.trans = this;
         }
 
+        public void SetLanguage(string language)
+        {
+            if (translations.ContainsKey(language))
+            {
+                active = translations[language];
+                languageChanged?.Invoke();
+            }
+        }
 
         public static string T(string id, bool forcedToEnglish = false)
         {

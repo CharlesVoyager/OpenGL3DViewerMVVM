@@ -44,12 +44,7 @@ namespace OpenGL3DViewerMVVM.View
         public UI_resize_advance()
         {
             InitializeComponent();
-            try
-            {
-                if (MainWindow.main != null)
-                    MainWindow.main.languageChanged += translate;
-            }
-            catch { }
+            Trans.trans.languageChanged += translate;
         }
 
         private void translate()

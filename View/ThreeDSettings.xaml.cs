@@ -1,3 +1,4 @@
+using OpenGL3DViewerMVVM.ModelLib.Utils;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -292,7 +293,7 @@ namespace OpenGL3DViewerMVVM.View
             InitializeComponent();
 
             DataContext = SettingsService.Instance.Settings;
-            MainWindow.main.languageChanged += translate;
+            Trans.trans.languageChanged += translate;
         }
 
         public void translate()

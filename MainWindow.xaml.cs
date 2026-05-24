@@ -1,7 +1,6 @@
 ﻿using OpenGL3DViewerMVVM.MeshIOLib;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
 using OpenGL3DViewerMVVM.View;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,14 +10,10 @@ using System.Windows.Threading;
 
 namespace OpenGL3DViewerMVVM
 {
-    public delegate void languageChangedEvent();
-
     public partial class MainWindow : Window
     {
         public static MainWindow main = null;
         public static readonly ManualResetEventSlim _mainWindowReady = new ManualResetEventSlim(false);
-
-        public event languageChangedEvent languageChanged = null;
 
         public ThreeDControl threeDControl = null;
         public ViewModel viewModel = null;
@@ -65,10 +60,6 @@ namespace OpenGL3DViewerMVVM
             DataContext = viewModel;
        
             initializeUi();
-
-            if (languageChanged != null)
-                languageChanged();
-
             _mainWindowReady.Set();
         }
 
@@ -131,7 +122,7 @@ namespace OpenGL3DViewerMVVM
             VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
             VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
 
-            languageChanged += translate;
+            Trans.trans.languageChanged += translate;
 
             // Retrieve the context menu from resources
             _contextMenu = (System.Windows.Controls.ContextMenu)this.Resources["ViewerContextMenu"];

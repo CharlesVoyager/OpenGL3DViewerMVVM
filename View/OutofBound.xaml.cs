@@ -13,7 +13,7 @@ namespace OpenGL3DViewerMVVM.View
 
             if (MainWindow.main != null)  // This check is necessary for XAML designer to avoid null reference exceptions.
             {
-                MainWindow.main.languageChanged += translate;
+                Trans.trans.languageChanged += translate;
                 DataContext = MainWindow.main.viewModel;
             }
             Visibility = System.Windows.Visibility.Collapsed;  // Initially hide the warning message.

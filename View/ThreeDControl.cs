@@ -82,8 +82,6 @@ namespace OpenGL3DViewerMVVM.View
         {
             VSync = VSyncMode.Off;  // CHANGED: VSync is now a property on the window, not an enum field
 
-            MainWindow.main.languageChanged += translate;
-
             MainWindow.main.viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -124,13 +122,6 @@ namespace OpenGL3DViewerMVVM.View
        
         private volatile bool _isDirty = true;
         public void UpdateChanges() => _isDirty = true;
-
-        // ── Translations ──────────────────────────────────────────────────────
-        private void translate()
-        {
-            // These string keys mirror the original WinForms menu items.
-            // Apply them to the WPF ContextMenu items exposed by ui if needed.
-        }
 
         #region Set minimum window size via Win32 subclassing (WM_GETMINMAXINFO)
         private const int WM_GETMINMAXINFO = 0x0024;
@@ -285,7 +276,6 @@ namespace OpenGL3DViewerMVVM.View
         {
             base.OnUnload();
 
-            MainWindow.main.languageChanged -= translate;
             MainWindow.main.viewModel.PropertyChanged -= OnViewModelPropertyChanged;
 
             if (_subscribedSelectedModel != null)

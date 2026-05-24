@@ -81,9 +81,9 @@ namespace OpenGL3DViewerMVVM.View
                 })
         {
             VSync = VSyncMode.Off;  // CHANGED: VSync is now a property on the window, not an enum field
-
-            MainWindow.main.viewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
+
+        public void SubscribeToViewModel(ViewModel viewModel) => viewModel.PropertyChanged += OnViewModelPropertyChanged;
 
         private ThreeDModel _subscribedSelectedModel = null;
 

@@ -13,13 +13,18 @@ namespace OpenGL3DViewerMVVM
         [STAThread]
         public static void Main(string[] args)
         {
+            // OpenTK GameWindow runs on the main thread (required by GLFW)
+            ThreeDControl threeDCtrl = new ThreeDControl(
+                SettingsService.Instance.Settings.InitialClientSizeWidth, 
+                SettingsService.Instance.Settings.InitialClientSizeHeight);
+
             MainWindow mainWindow = null;
             // Launch WPF on a dedicated STA background thread
             var wpfThread = new Thread(() =>
             {
                 var app = new App();
                 app.InitializeComponent();  // Loads App.xaml resources (global styles, etc.)
-                mainWindow = new MainWindow();
+                mainWindow = new MainWindow(threeDCtrl);
                 app.Run(mainWindow);  // WPF message pump runs here
             });
             wpfThread.SetApartmentState(ApartmentState.STA);
@@ -30,8 +35,10 @@ namespace OpenGL3DViewerMVVM
             // Wait until MainWindow is ready before starting OpenTK
             OpenGL3DViewerMVVM.MainWindow._mainWindowReady.Wait();
 
-            // OpenTK GameWindow runs on the main thread (required by GLFW)
-            mainWindow.threeDControl = new ThreeDControl(SettingsService.Instance.Settings.InitialClientSizeWidth, SettingsService.Instance.Settings.InitialClientSizeHeight);
+            // viewModel is created in MainWindow's constructor, so it is ready to use at this point.
+            mainWindow.threeDControl.SubscribeToViewModel(mainWindow.viewModel);
+
+            // threeDCamera object is created in MainWindow's constructor, so it is ready to use at this point.
             mainWindow.threeDControl.SetCamera(mainWindow.threeDCamera);
 
             // Set camera to isometric view.

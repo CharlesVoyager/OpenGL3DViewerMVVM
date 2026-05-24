@@ -19,9 +19,9 @@ namespace OpenGL3DViewerMVVM
 
         public static MainWindow main = null;
 
+        public ThreeDControl threeDControl = null;
         public ViewModel viewModel = null;
         public ThreeDSettings threeDSettings = null;
-        public ThreeDControl threeDControl = null;
         public STLComposer stlComposer = null;
         public ThreeDCamera threeDCamera = null;
 
@@ -31,7 +31,7 @@ namespace OpenGL3DViewerMVVM
 
         public static readonly ManualResetEventSlim _mainWindowReady = new ManualResetEventSlim(false);
 
-        public MainWindow()
+        public MainWindow(ThreeDControl threeDCtrl)
         {
             main = this;
 
@@ -48,6 +48,9 @@ namespace OpenGL3DViewerMVVM
                     dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
                 }
             };
+
+            // ThreeDControl is created in the main thread (not WPF thread) in App.Main() and passed to MainWindow via constructor.
+            threeDControl = threeDCtrl;
 
             // ViewModel for MVVM pattern used on STLComposer and other UI user controls.
             viewModel = new ViewModel();

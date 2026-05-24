@@ -32,10 +32,6 @@ namespace OpenGL3DViewerMVVM
         {
             main = this;
 
-            // Initial Trans.T().
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
-            Trans trans = new Trans(AppDomain.CurrentDomain.BaseDirectory + "Resources");
-
             // Retrieve DPI from WPF presentation source after initialization
             Loaded += (s, e) =>
             {

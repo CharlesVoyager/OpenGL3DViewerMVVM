@@ -1,4 +1,6 @@
-﻿using OpenGL3DViewerMVVM.View;
+﻿using OpenGL3DViewerMVVM.ModelLib.Utils;
+using OpenGL3DViewerMVVM.View;
+using System.Globalization;
 using System.IO;
 
 #nullable disable
@@ -13,6 +15,10 @@ namespace OpenGL3DViewerMVVM
         [STAThread]
         public static void Main(string[] args)
         {
+            // Initial Trans.T().
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
+            Trans trans = new Trans(AppDomain.CurrentDomain.BaseDirectory + "Resources");
+
             // OpenTK GameWindow runs on the main thread (required by GLFW)
             ThreeDControl threeDCtrl = new ThreeDControl(
                 SettingsService.Instance.Settings.InitialClientSizeWidth, 

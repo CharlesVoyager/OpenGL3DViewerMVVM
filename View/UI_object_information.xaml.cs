@@ -64,7 +64,7 @@ namespace OpenGL3DViewerMVVM.View
         {
             if (State1Panel.Opacity == 0) return;
 
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
 
             updateNonMVVMProperties(model);
@@ -72,10 +72,9 @@ namespace OpenGL3DViewerMVVM.View
 
         private void OnStateVisibleCompleted(object sender, EventArgs e)
         {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
 
-            Console.WriteLine(State1Panel.Opacity);
             updateNonMVVMProperties(model);
         }
     }

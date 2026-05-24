@@ -124,7 +124,7 @@ namespace OpenGL3DViewerMVVM
         }
 
         //── UI (WPF) ────────────────────────────────────────────────
-        DispatcherTimer? timer;
+        DispatcherTimer timer;
         private ContextMenu _contextMenu;
         private void initializeUi()
         {
@@ -383,7 +383,7 @@ namespace OpenGL3DViewerMVVM
         {
         }
 
-        private void timerTickMemoryMonitor(object? sender, EventArgs e)
+        private void timerTickMemoryMonitor(object sender, EventArgs e)
         {
             memoryUsageLabel.Content = RamTools.getCurMemoryUsed().ToString() + " MB";
         }

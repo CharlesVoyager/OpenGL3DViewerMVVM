@@ -32,10 +32,11 @@ namespace OpenGL3DViewerMVVM.View
         public ObservableCollection<ThreeDModel> Models { get; set; }
 
         public AsyncRelayCommand<string> AddCommand => new AsyncRelayCommand<string>(ExecuteAddAsync);
-        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => SelectedModel != null);
-        public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => SelectedModel != null);
-        public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => SelectedModel != null);
-       
+        public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
+        public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
+        public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
+
+
         public ViewModel(IDispatcherService? dispatcher = null)
         {
             _dispatcher = dispatcher ?? new WpfDispatcherService();

@@ -89,7 +89,7 @@ namespace OpenGL3DViewerMVVM.View
 
         private ThreeDModel _subscribedSelectedModel = null;
 
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if ( e.PropertyName == "SelectedModel")
             {
@@ -111,7 +111,7 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
-        private void OnSelectedModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OnSelectedModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             //Debug.WriteLine($"[OnSelectedModelPropertyChanged] Property changed: {e.PropertyName}");
 

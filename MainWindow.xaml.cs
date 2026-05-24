@@ -26,15 +26,15 @@ namespace OpenGL3DViewerMVVM
         public STLComposer stlComposer = null;
         public ThreeDCamera threeDCamera = null;
 
-        Trans trans = null;
         double dpiX, dpiY;
 
         public MainWindow(ThreeDControl threeDCtrl)
         {
             main = this;
 
+            // Initial Trans.T().
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
-            trans = new Trans(AppDomain.CurrentDomain.BaseDirectory + "Resources");
+            Trans trans = new Trans(AppDomain.CurrentDomain.BaseDirectory + "Resources");
 
             // Retrieve DPI from WPF presentation source after initialization
             Loaded += (s, e) =>

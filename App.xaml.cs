@@ -18,8 +18,8 @@ namespace OpenGL3DViewerMVVM
                 SettingsService.Instance.Settings.InitialClientSizeWidth, 
                 SettingsService.Instance.Settings.InitialClientSizeHeight);
 
-            MainWindow mainWindow = null;
             // Launch WPF on a dedicated STA background thread
+            MainWindow mainWindow = null;
             var wpfThread = new Thread(() =>
             {
                 var app = new App();
@@ -38,7 +38,7 @@ namespace OpenGL3DViewerMVVM
             // viewModel is created in MainWindow's constructor, so it is ready to use at this point.
             mainWindow.threeDControl.SubscribeToViewModel(mainWindow.viewModel);
 
-            // threeDCamera object is created in MainWindow's constructor, so it is ready to use at this point.
+            // threeDCamera is created in MainWindow's constructor, so it is ready to use at this point.
             mainWindow.threeDControl.SetCamera(mainWindow.threeDCamera);
 
             // Set camera to isometric view.

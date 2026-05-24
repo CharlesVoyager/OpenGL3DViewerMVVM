@@ -15,9 +15,10 @@ namespace OpenGL3DViewerMVVM
 
     public partial class MainWindow : Window
     {
-        public event languageChangedEvent languageChanged = null;
-
         public static MainWindow main = null;
+        public static readonly ManualResetEventSlim _mainWindowReady = new ManualResetEventSlim(false);
+
+        public event languageChangedEvent languageChanged = null;
 
         public ThreeDControl threeDControl = null;
         public ViewModel viewModel = null;
@@ -25,11 +26,8 @@ namespace OpenGL3DViewerMVVM
         public STLComposer stlComposer = null;
         public ThreeDCamera threeDCamera = null;
 
-        public Trans trans = null;
-
-        public double dpiX, dpiY;
-
-        public static readonly ManualResetEventSlim _mainWindowReady = new ManualResetEventSlim(false);
+        Trans trans = null;
+        double dpiX, dpiY;
 
         public MainWindow(ThreeDControl threeDCtrl)
         {

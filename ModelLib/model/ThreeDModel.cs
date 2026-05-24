@@ -311,7 +311,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / (BoundingBox.Size.x / UniformScale); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
+                    UniformScale = value / (BoundingBox.Size.x / ScaleX); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
                 else
                     ScaleX = value / Model.boundingBox.Size.x;
                 OnPropertyChanged();
@@ -324,7 +324,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / (BoundingBox.Size.y / UniformScale); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
+                    UniformScale = value / (BoundingBox.Size.y / ScaleY); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
                 else
                     ScaleY = value / Model.boundingBox.Size.y;
                 OnPropertyChanged();
@@ -337,7 +337,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             {
                 if (value <= 0) return;
                 if (IsUniformScale)
-                    UniformScale = value / (BoundingBox.Size.z / UniformScale); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
+                    UniformScale = value / (BoundingBox.Size.z / ScaleZ); // NOTE: If the model is rotated, the model.boundingBox.Size is not the no scale size.
                 else
                     ScaleZ = value / Model.boundingBox.Size.z;
                 OnPropertyChanged();
@@ -419,6 +419,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 OnPropertyChanged(nameof(SizeScaleX));
                 OnPropertyChanged(nameof(SizeScaleY));
                 OnPropertyChanged(nameof(SizeScaleZ));
+
+                if (rotation.x != 0)    // Not allow non-uniform scale when the model is rotated.
+                    IsUniformScale = true;
             }
         }
 
@@ -443,6 +446,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 OnPropertyChanged(nameof(SizeScaleX));
                 OnPropertyChanged(nameof(SizeScaleY));
                 OnPropertyChanged(nameof(SizeScaleZ));
+
+                if (rotation.y != 0)    // Not allow non-uniform scale when the model is rotated.
+                    IsUniformScale = true;
             }
         }
 
@@ -467,6 +473,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
                 OnPropertyChanged(nameof(SizeScaleX));
                 OnPropertyChanged(nameof(SizeScaleY));
                 OnPropertyChanged(nameof(SizeScaleZ));
+
+                if (rotation.z != 0)    // Not allow non-uniform scale when the model is rotated.
+                    IsUniformScale = true;
             }
         }
 

@@ -3,8 +3,6 @@ using System.Windows.Input;
 using OpenGL3DViewerMVVM.ModelLib.model;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
 
-#nullable disable
-
 namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
@@ -77,7 +75,7 @@ namespace OpenGL3DViewerMVVM.View
 
         public void SetSliderMinimumMaximum()
         {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
             double xShift = stl.BoundingBox.Center.x - stl.PositionX;
@@ -102,7 +100,7 @@ namespace OpenGL3DViewerMVVM.View
 
         public void button_move_reset_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
             stl.PositionX = stl.InitialPosition.x;
@@ -112,7 +110,7 @@ namespace OpenGL3DViewerMVVM.View
 
         public void button_land_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
             stl.Land();
@@ -156,7 +154,7 @@ namespace OpenGL3DViewerMVVM.View
             {
                 try
                 {
-                    ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+                    ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
                     if (stl == null) return;
                     slider_moveX.Value = Convert.ToDouble(moveX_textbox.Text);
                 }
@@ -170,7 +168,7 @@ namespace OpenGL3DViewerMVVM.View
             {
                 try
                 {
-                    ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+                    ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
                     if (stl == null) return;
                     slider_moveY.Value = Convert.ToDouble(moveY_textbox.Text);
                 }
@@ -184,7 +182,7 @@ namespace OpenGL3DViewerMVVM.View
             {
                 try
                 {
-                    ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+                    ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
                     if (stl == null) return;
                     slider_moveZ.Value = Convert.ToDouble(moveZ_textbox.Text);
                 }

@@ -6,9 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-
-#nullable disable
-
 namespace OpenGL3DViewerMVVM.View
 {
     public class UniformScaleToPercent : IValueConverter
@@ -79,7 +76,7 @@ namespace OpenGL3DViewerMVVM.View
         private void sliderResizeTemp_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
             if (e.Delta > 0)
@@ -92,7 +89,7 @@ namespace OpenGL3DViewerMVVM.View
         void updateSliderMaximum()
         {
             if (MainWindow.main == null) return;
-            ThreeDModel stl = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
 
             // Ensure the value of dimension is not zero; otherwise, exception happens when calculating scale.
@@ -110,7 +107,7 @@ namespace OpenGL3DViewerMVVM.View
 
         private void button_mmtoinch_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
 
             MainWindow.main.viewModel.DoMmToInch(model);
@@ -118,7 +115,7 @@ namespace OpenGL3DViewerMVVM.View
 
         private void button_inchtomm_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
 
             MainWindow.main.viewModel.DoInchToMm(model);
@@ -126,7 +123,7 @@ namespace OpenGL3DViewerMVVM.View
 
         private void btn_Scale_Click(object sender, RoutedEventArgs e)
         {
-            ThreeDModel model = MainWindow.main.viewModel.SelectedModel;
+            ThreeDModel? model = MainWindow.main.viewModel.SelectedModel;
             if (model == null) return;
 
             try

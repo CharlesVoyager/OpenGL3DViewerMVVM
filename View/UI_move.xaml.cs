@@ -112,13 +112,7 @@ namespace OpenGL3DViewerMVVM.View
         {
             ThreeDModel? stl = MainWindow.main.viewModel.SelectedModel;
             if (stl == null) return;
-
             stl.Land();
-
-            // Land() will NOT trigger OnPropertyChanged(). Therefore, update slider values manually.
-            slider_moveX.Value = stl.PositionX;
-            slider_moveY.Value = stl.PositionY;
-            slider_moveZ.Value = stl.PositionZ;
         }
 
         private void slider_moveX_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

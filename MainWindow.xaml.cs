@@ -216,11 +216,6 @@ namespace OpenGL3DViewerMVVM
         private void view_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_view, "StateVisible", true);
-
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
         }
 
         private void view_toggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -232,10 +227,6 @@ namespace OpenGL3DViewerMVVM
         public void move_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_move, "StateVisible", true);
-            view_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
 
             // The model is required to reset the slider minimum and maximum after scale or rotate.
             UI_move.SetSliderMinimumMaximum();
@@ -251,11 +242,6 @@ namespace OpenGL3DViewerMVVM
         {
             btnImport.IsEnabled = false;
 
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
 
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
@@ -267,11 +253,7 @@ namespace OpenGL3DViewerMVVM
         {
             gridAbout.Visibility = Visibility.Visible;
 
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
+
 
             DebugLog();
         }
@@ -290,11 +272,6 @@ namespace OpenGL3DViewerMVVM
         private void rotate_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_rotate, "StateVisible", true);
-            
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
         }
 
         private void rotate_toggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -307,10 +284,6 @@ namespace OpenGL3DViewerMVVM
         public void resize_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_resize_advance, "StateVisible", true);
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
         }
 
         private void resize_toggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -322,11 +295,6 @@ namespace OpenGL3DViewerMVVM
         private void info_toggleButton_Checked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_object_information, "StateVisible", true);
-      
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
         }
 
         private void info_toggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -337,12 +305,6 @@ namespace OpenGL3DViewerMVVM
 
         public void remove_toggleButton_Click(object sender, RoutedEventArgs e)
         {
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
-
             UI_move.slider_moveX.Minimum = -1000;
             UI_move.slider_moveX.Maximum = 1000;
             UI_move.slider_moveY.Minimum = -1000;
@@ -354,24 +316,12 @@ namespace OpenGL3DViewerMVVM
 
         private void zoomin_toggleButton_Click(object sender, RoutedEventArgs e)
         {
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
-
             threeDControl.ZoomInKeyHandling(null, null);
             Focus();
         }
 
         private void zoomout_toggleButton_Click(object sender, RoutedEventArgs e)
         {
-            view_toggleButton.IsChecked = false;
-            move_toggleButton.IsChecked = false;
-            rotate_toggleButton.IsChecked = false;
-            resize_toggleButton.IsChecked = false;
-            info_toggleButton.IsChecked = false;
-
             threeDControl.ZoomOutKeyHandling(null, null);
             Focus();
         }

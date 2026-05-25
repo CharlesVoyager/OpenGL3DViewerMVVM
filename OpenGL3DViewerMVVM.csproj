@@ -34,9 +34,6 @@
     <None Remove="Resources\button_zoomOut1.png" />
     <None Remove="Resources\lock16.png" />
     <None Remove="Resources\ok16.png" />
-    <None Remove="Resources\submenu_center1.png" />
-    <None Remove="Resources\submenu_center2.png" />
-    <None Remove="Resources\submenu_center3.png" />
     <None Remove="Resources\submenu_land1.png" />
     <None Remove="Resources\submenu_reset1.png" />
     <None Remove="Resources\submenu_reset31.png" />
@@ -76,9 +73,6 @@
     <Resource Include="Resources\button_zoomOut1.png" />
     <Resource Include="Resources\lock16.png" />
     <Resource Include="Resources\ok16.png" />
-    <Resource Include="Resources\submenu_center1.png" />
-    <Resource Include="Resources\submenu_center2.png" />
-    <Resource Include="Resources\submenu_center3.png" />
     <Resource Include="Resources\submenu_land1.png" />
     <Resource Include="Resources\submenu_reset1.png" />
     <Resource Include="Resources\submenu_reset31.png" />

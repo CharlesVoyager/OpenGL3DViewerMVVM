@@ -13,7 +13,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
         public string fileshort;
         public Dictionary<string, string> trans;
 
-        public Translation(string _file,string _fileShort)
+        public Translation(string _file, string _fileShort)
         {
             file = _file;
             fileshort = _fileShort;
@@ -46,7 +46,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
                 }
             }
             catch(Exception e) {
-                System.Windows.MessageBox.Show("Error reading translation "+_file+":\n"+e.ToString(),"Error",MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Error reading translation "+_file+":\n"+e.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -62,10 +62,10 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
         public event languageChangedEvent languageChanged = null;
 
         public static Trans trans = null;
+        public SortedList<string, Translation> translations;
 
         private Translation english = null;
         private Translation active = null;
-        private SortedList<string, Translation> translations;
 
         public Trans(string folder)
         {
@@ -80,12 +80,13 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
                     //Console.WriteLine("Adding language " + l);
                     FileInfo f = new FileInfo(l);
                     string shortname = f.Name;
-                    Translation t = new Translation(l, shortname);
+                    Translation t = new Translation(l, shortname);  // shortname example: "en.xml"
                     if (shortname == "en.xml")
                     { english = t; }
                     if (shortname == lastactive)
                     { active = t; }
-                    translations.Add(t.language, t);
+                    string languageCode = Path.GetFileNameWithoutExtension(shortname);
+                    translations.Add(languageCode, t);
                 }
                 catch { }
             }
@@ -96,11 +97,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.Utils
             Trans.trans = this;
         }
 
-        public void SetLanguage(string language)
+        public void SetLanguage(string languageCode)
         {
-            if (translations.ContainsKey(language))
+            if (translations.ContainsKey(languageCode))
             {
-                active = translations[language];
+                active = translations[languageCode];
                 languageChanged?.Invoke();
             }
         }

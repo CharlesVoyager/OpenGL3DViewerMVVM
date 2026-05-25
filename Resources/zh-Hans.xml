@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+<translation revision="0.9" language="简体中文" languageInEnglish="Simplified Chinese" author="Charles">
+<t id="B_IMPORT">导入</t>
+<t id="B_EXPORT">导出</t>
+<t id="B_SAVE">保存</t>
+<t id="B_SAVING">保存中…</t>
+<t id="B_PRINT">打印</t>
+<t id="B_SETTING">设置</t>
+<t id="B_VIEW">视图</t>
+<t id="B_TOP">顶部</t>
+<t id="B_LEFT">左侧</t>
+<t id="B_RIGHT">右侧</t>
+<t id="B_FRONT">正面</t>
+<t id="B_BACK">背面</t>
+<t id="B_BOTTOM">底部</t>
+<t id="B_RESET">重置</t>
+<t id="B_MOVE">移动</t>
+<t id="B_ROTATE">旋转</t>
+<t id="B_LAND">落地</t>
+<t id="L_MIN">最小</t>
+<t id="L_MAX">最大</t>
+<t id="B_SCALE">缩放</t>
+<t id="B_INFO">信息</t>
+<t id="B_REMOVE">移除</t>
+<t id="L_DONE">完成</t>
+<t id="B_CANCEL">取消</t>
+<t id="W_EXPORT">导出 </t>
+<t id="W_OBJECT_INFOMATION">对象信息</t>
+<t id="L_FILENAME">文件名</t>
+<t id="L_VOLUME">体积</t>
+<t id="L_DIMENSION">尺寸</t>
+<t id="L_POSITION">位置</t>
+<t id="L_SIZE">大小</t>
+<t id="B_CLOSE">关闭</t>
+<t id="B_ABOUT">关于</t>
+<t id="W_ABOUT">关于</t>
+<t id="G_VERSION">版本</t>
+<t id="L_SOFTWARE">软件</t>
+<t id="L_COPYRIGHTS">版权声明</t>
+<t id="W_SETTING">设置</t>
+<t id="G_LANGUAGE">语言</t>
+<t id="L_VERSION">版本</t>
+<t id="B_SCALE_UP">放大</t>
+<t id="B_SCALE_DOWN">缩小</t>
+<t id="L_MM">毫米</t>
+<t id="L_INCH">英寸</t>
+<t id="B_APPLY">应用</t>
+<t id="L_UNIFORM">等比例</t>
+<t id="L_OUT_OF_BOUNDARY">超出边界 - 请调整大小或移动对象</t>
+</translation>
+</resources>

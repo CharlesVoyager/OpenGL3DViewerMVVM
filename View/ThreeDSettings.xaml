@@ -33,7 +33,7 @@
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -116,6 +116,16 @@
                             <Label Content="(Settings in right side needs restart to apply.)" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="10" Foreground="#888"/>
                         </Grid>
                     </GroupBox>
+                    <Label Grid.Row="1" Content="Language:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <ComboBox x:Name="comboLanguage" Grid.Row="1" Margin="80,0,0,0" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center"
+                              SelectedValuePath="Tag"
+                              SelectedValue="{Binding Language}" 
+                              SelectionChanged="Language_SelectionChanged">
+                        <ComboBoxItem Content="en" Tag="en"/>
+                        <ComboBoxItem Content="zh-Hant" Tag="zh-Hant"/>
+                        <ComboBoxItem Content="zh-Hans" Tag="zh-Hans"/>
+                    </ComboBox>
+
                     <Button Grid.Row="2" Content="Reset All Settings to Default" Width="200" Height="28" Margin="0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="ResetSettings_Click"/>
                     <Button Grid.Row="2" Content="Open Settings File Folder" Width="150" Height="28" Margin="220,10,0,10" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="OpenSettingsFileFolder_Click"/>
                 </Grid>

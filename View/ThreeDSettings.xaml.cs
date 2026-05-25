@@ -91,9 +91,22 @@ namespace OpenGL3DViewerMVVM.View
         // UseVBOs and OpenGLVersion will be updated in OnLoad of ThreeDControl.
         bool _useVBOs = false;
         float _openGLVersion = 1.0f;
+        private string _language = "en"; // default value
 
         public bool UseVBOs { get { return _useVBOs; } set { _useVBOs = value; OnPropertyChanged(); } }
         public float OpenGLVersion { get { return _openGLVersion; } set { _openGLVersion = value; OnPropertyChanged(); } } // Version for feature detection
+        public string Language
+        {
+            get => _language;
+            set
+            {
+                if (_language != value)
+                {
+                    _language = value;
+                    OnPropertyChanged(nameof(Language));
+                }
+            }
+        }
         // <>
 
         uint _backgroundTopColor = 0xFFF5F5F5;
@@ -294,6 +307,15 @@ namespace OpenGL3DViewerMVVM.View
 
             DataContext = SettingsService.Instance.Settings;
             Trans.trans.languageChanged += translate;
+
+            // Initialized ComboBox contents. Updated ComboBoxItem.Content as friendly display language name.
+            // For exmaple. en => English, zh-Hant => 繁體中文, zh-Hans => 简体中文.
+            foreach (var item in comboLanguage.Items)
+            {
+                if (item is ComboBoxItem comboBoxItem)
+                    comboBoxItem.Content = Trans.trans.translations[comboBoxItem.Tag.ToString()].language;
+            }
+            // <>
         }
 
         public void translate()
@@ -631,6 +653,12 @@ namespace OpenGL3DViewerMVVM.View
         private void ThreeDSettings_Closed(object sender, EventArgs e)
         {
             SettingsService.Instance.Save();
+        }
+
+        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //Debug.WriteLine($"Language changed to: {SettingsService.Instance.Settings.Language}");
+            Trans.trans.SetLanguage(SettingsService.Instance.Settings.Language);
         }
     }
 }

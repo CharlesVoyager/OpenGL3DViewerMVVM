@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ctrl="clr-namespace:OpenGL3DViewerMVVM"
         xmlns:local="clr-namespace:OpenGL3DViewerMVVM.View"
         Title="OpenGL 3D Viewer" Height="642" Width="780"
         WindowStyle="None" 
@@ -192,60 +193,60 @@
                 </ToggleButton>
             </StackPanel>
 
-            <RadioButton Name="view_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Unchecked="view_toggleButton_Unchecked" Height="70" Padding="3" Margin="2.5" Checked="view_toggleButton_Checked" FontFamily="Arial">
-                <RadioButton.Background>
+            <ctrl:ToggleRadioButton x:Name="view_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Unchecked="view_toggleButton_Unchecked" Height="70" Padding="3" Margin="2.5" Checked="view_toggleButton_Checked" FontFamily="Arial">
+                <ctrl:ToggleRadioButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_view1.png" />
-                </RadioButton.Background> View
-            </RadioButton>
+                </ctrl:ToggleRadioButton.Background> View
+            </ctrl:ToggleRadioButton>
 
             <Image Name="image3" Source="/OpenGL3DViewerMVVM;component/Resources/bar2.png" Stretch="None" Height="8" />
 
             <StackPanel Orientation="Vertical" Style="{StaticResource leftPanelStackPanelStyle}" IsVisibleChanged="OnVisibilityChanged">
-                <RadioButton Name="move_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" FontFamily="Arial">
-                    <RadioButton.Background>
+                <ctrl:ToggleRadioButton x:Name="move_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Unchecked="move_toggleButton_Unchecked" Checked="move_toggleButton_Checked" FontFamily="Arial">
+                    <ctrl:ToggleRadioButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_move1.png" />
-                    </RadioButton.Background> Move
-                </RadioButton>
+                    </ctrl:ToggleRadioButton.Background> Move
+                </ctrl:ToggleRadioButton>
 
-                <RadioButton Name="rotate_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Checked="rotate_toggleButton_Checked" Unchecked="rotate_toggleButton_Unchecked" FontFamily="Arial">
-                    <RadioButton.Background>
+                <ctrl:ToggleRadioButton x:Name="rotate_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Checked="rotate_toggleButton_Checked" Unchecked="rotate_toggleButton_Unchecked" FontFamily="Arial">
+                    <ctrl:ToggleRadioButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_turn1.png" />
-                    </RadioButton.Background> Rotate
-                </RadioButton>
+                    </ctrl:ToggleRadioButton.Background> Rotate
+                </ctrl:ToggleRadioButton>
 
-                <RadioButton Name="resize_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Checked="resize_toggleButton_Checked" Unchecked="resize_toggleButton_Unchecked" FontFamily="Arial">
-                    <RadioButton.Background>
+                <ctrl:ToggleRadioButton x:Name="resize_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Checked="resize_toggleButton_Checked" Unchecked="resize_toggleButton_Unchecked" FontFamily="Arial">
+                    <ctrl:ToggleRadioButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_scale1.png" />
-                    </RadioButton.Background> Resize
-                </RadioButton>
+                    </ctrl:ToggleRadioButton.Background> Resize
+                </ctrl:ToggleRadioButton>
 
-                <RadioButton Name="info_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Checked="info_toggleButton_Checked" Unchecked="info_toggleButton_Unchecked" FontFamily="Arial">
-                    <RadioButton.Background>
+                <ctrl:ToggleRadioButton x:Name="info_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Checked="info_toggleButton_Checked" Unchecked="info_toggleButton_Unchecked" FontFamily="Arial">
+                    <ctrl:ToggleRadioButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_info1.png" />
-                    </RadioButton.Background> Info
-                </RadioButton>
+                    </ctrl:ToggleRadioButton.Background> Info
+                </ctrl:ToggleRadioButton>
 
-                <RadioButton Name="remove_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Click="remove_toggleButton_Click" FontFamily="Arial">
-                    <RadioButton.Background>
+                <ctrl:ToggleRadioButton x:Name="remove_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Width="50" Height="70" Padding="3" Margin="2.5" Click="remove_toggleButton_Click" FontFamily="Arial">
+                    <ctrl:ToggleRadioButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_remove1.png" />
-                    </RadioButton.Background> Remove
-                </RadioButton>
+                    </ctrl:ToggleRadioButton.Background> Remove
+                </ctrl:ToggleRadioButton>
             </StackPanel>
         </StackPanel>
 
         <!--Top Panel-->
         <StackPanel Margin="0,60,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <RadioButton Name="btnImport" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Content="Import" Height="70" Margin="2.5" Padding="3" Width="50" Click="Import_Click" FontFamily="Arial">
-                <RadioButton.Background>
+            <ctrl:ToggleRadioButton x:Name="btnImport" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Content="Import" Height="70" Margin="2.5" Padding="3" Width="50" Click="Import_Click" FontFamily="Arial">
+                <ctrl:ToggleRadioButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_import1.png" />
-                </RadioButton.Background>
-            </RadioButton>
+                </ctrl:ToggleRadioButton.Background>
+            </ctrl:ToggleRadioButton>
             <Image Source="/OpenGL3DViewerMVVM;component/Resources/bar1.png" Stretch="None" Width="10" />
-            <RadioButton Name="about_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Height="70" Margin="2.5" Padding="3" Width="50" Checked="AboutToggleButton_Checked" Unchecked="AboutToggleButton_Unchecked" FontFamily="Arial">
-                <RadioButton.Background>
+            <ctrl:ToggleRadioButton x:Name="about_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Height="70" Margin="2.5" Padding="3" Width="50" Checked="AboutToggleButton_Checked" Unchecked="AboutToggleButton_Unchecked" FontFamily="Arial">
+                <ctrl:ToggleRadioButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_about.png" />
-                </RadioButton.Background>
-            </RadioButton>
+                </ctrl:ToggleRadioButton.Background>
+            </ctrl:ToggleRadioButton>
         </StackPanel>
 
         <!--About-->

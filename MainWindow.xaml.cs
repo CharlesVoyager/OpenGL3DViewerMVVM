@@ -10,6 +10,28 @@ using System.Windows.Threading;
 
 namespace OpenGL3DViewerMVVM
 {
+    /// <summary>
+    /// A RadioButton that can be unchecked by clicking it again,
+    /// while still preventing two buttons in the same group from
+    /// being checked at the same time.
+    /// </summary>
+    public class ToggleRadioButton : RadioButton
+    {
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            // If already checked, uncheck and swallow the event so the
+            // base class does not immediately re-check it.
+            if (IsChecked == true)
+            {
+                IsChecked = false;
+                e.Handled = true;   // prevent base from re-checking
+                return;
+            }
+
+            base.OnMouseLeftButtonDown(e);
+        }
+    }
+
     public partial class MainWindow : Window
     {
         public static MainWindow main = null;

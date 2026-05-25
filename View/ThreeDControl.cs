@@ -180,9 +180,6 @@ namespace OpenGL3DViewerMVVM.View
             {
                 WindowInteropHelper helper = new WindowInteropHelper(MainWindow.main);
                 helper.Owner = hwnd;
-                MainWindow.main.Show();
-
-                // CHANGED: Location / Size are now Vector2i in OpenTK 4
                 MainWindow.main.UpdateLocation(Location.X, Location.Y);
                 MainWindow.main.UpdateSize(ClientSize.X, ClientSize.Y);
             });

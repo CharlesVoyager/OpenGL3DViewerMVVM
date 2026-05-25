@@ -234,13 +234,13 @@
 
         <!--Top Panel-->
         <StackPanel Margin="0,60,40,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <ToggleButton Content="Import" Height="70" Margin="2.5" Name="import_button" Padding="3" Width="50" Click="import_button_Click" FontFamily="Arial">
+            <ToggleButton Name="btnImport" Content="Import" Height="70" Margin="2.5" Padding="3" Width="50" Click="Import_Click" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_import1.png" />
                 </ToggleButton.Background>
             </ToggleButton>
             <Image Source="/OpenGL3DViewerMVVM;component/Resources/bar1.png" Stretch="None" Width="10" />
-            <ToggleButton Content="About" Height="70" Margin="2.5" Name="about_button" Padding="3" Width="50" Click="about_button_Click" FontFamily="Arial">
+            <ToggleButton Name="btnAbout" Content="About" Height="70" Margin="2.5" Padding="3" Width="50" Click="About_Click" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_about.png" />
                 </ToggleButton.Background>

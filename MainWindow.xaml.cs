@@ -176,8 +176,8 @@ namespace OpenGL3DViewerMVVM
             resize_toggleButton.ToolTip = Trans.T("B_SCALE");
             info_toggleButton.ToolTip = Trans.T("B_INFO");
             remove_toggleButton.ToolTip = Trans.T("B_REMOVE");
-            import_button.ToolTip = Trans.T("B_IMPORT");
-            about_button.ToolTip = Trans.T("B_ABOUT");
+            btnImport.ToolTip = Trans.T("B_IMPORT");
+            btnAbout.ToolTip = Trans.T("B_ABOUT");
 
             view_toggleButton.Content = Trans.T("B_VIEW");
             move_toggleButton.Content = Trans.T("B_MOVE");
@@ -185,8 +185,8 @@ namespace OpenGL3DViewerMVVM
             resize_toggleButton.Content = Trans.T("B_SCALE");
             info_toggleButton.Content = Trans.T("B_INFO");
             remove_toggleButton.Content = Trans.T("B_REMOVE");
-            import_button.Content = Trans.T("B_IMPORT");
-            about_button.Content = Trans.T("B_ABOUT");
+            btnImport.Content = Trans.T("B_IMPORT");
+            btnAbout.Content = Trans.T("B_ABOUT");
         }
 
         // Move/Rotate/Scale/Info/Remove button visibility changed.
@@ -247,8 +247,10 @@ namespace OpenGL3DViewerMVVM
             Focus();
         }
 
-        private async void import_button_Click(object sender, RoutedEventArgs e)
+        private async void Import_Click(object sender, RoutedEventArgs e)
         {
+            btnImport.IsEnabled = false;
+
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
             rotate_toggleButton.IsChecked = false;
@@ -258,9 +260,10 @@ namespace OpenGL3DViewerMVVM
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
 
             await viewModel.ExecuteAddAsync();
+            btnImport.IsEnabled = true;
         }
 
-        private void about_button_Click(object sender, RoutedEventArgs e)
+        private void About_Click(object sender, RoutedEventArgs e)
         {
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;

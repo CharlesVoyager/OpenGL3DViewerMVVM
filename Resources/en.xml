@@ -48,5 +48,15 @@
 <t id="B_APPLY">Apply</t>
 <t id="L_UNIFORM">Uniform</t>
 <t id="L_OUT_OF_BOUNDARY">Out of Boundary - Please resize or move the object(s)</t>
+<t id="W_OBJ_TOO_LARGE">Object is too large</t>
+<t id="W_OBJ_TOO_SMALL">Object is too small</t>
+<t id="M_OBJ_SCALE_DOWN">
+  The object is too large for the platform. To fit the object in the platform, do you want to scale it down?
+  Scale by
+</t>
+<t id="L_ELAPSED_TIME">Elapsed Time</t>
+<t id="M_LOAD_FILE_FAIL">File loading failed</t>
+<t id="W_PRINTER_BED_FULL">Message</t>
+<t id="M_PRINTER_BED_FULL_TEXT">Printing area full. New loading objects will not be printed.</t>
 </translation>
 </resources>

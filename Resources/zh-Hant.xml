@@ -48,5 +48,15 @@
 <t id="B_APPLY">套用</t>
 <t id="L_UNIFORM">等比例</t>
 <t id="L_OUT_OF_BOUNDARY">超出邊界 - 請調整大小或移動物件</t>
+<t id="W_OBJ_TOO_LARGE">物體過大</t>
+<t id="W_OBJ_TOO_SMALL">物體過小</t>
+<t id="M_OBJ_SCALE_DOWN">
+  物體超出平台範圍。是否要將其縮小以適應平台？
+  縮放比例
+</t>
+<t id="L_ELAPSED_TIME">已用時間</t>
+<t id="M_LOAD_FILE_FAIL">檔案載入失敗</t>
+<t id="W_PRINTER_BED_FULL">訊息</t>
+<t id="M_PRINTER_BED_FULL_TEXT">列印區域已滿。新載入的物體將不會被列印。</t>
 </translation>
 </resources>

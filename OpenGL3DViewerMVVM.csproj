@@ -48,6 +48,7 @@
     <None Remove="Resources\submenu_viewTop1.png" />
     <None Remove="Resources\trash16.png" />
     <None Remove="Resources\unlock16.png" />
+    <None Remove="View\rkkpolc1.er5~" />
   </ItemGroup>
 
   <ItemGroup>

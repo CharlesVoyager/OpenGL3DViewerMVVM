@@ -113,7 +113,9 @@ namespace OpenGL3DViewerMVVM.View
             _meshDataReady.Set();
 
             if (!result)
-                MessageBox.Show("Error: " + Trans.T("M_LOAD_FILE_FAIL"));
+                MessageBox.Show(Trans.T("M_LOAD_FILE_FAIL"),
+                                "Error",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private bool AddModel(string? file = null, bool isAutoPosition = true)

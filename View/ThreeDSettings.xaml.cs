@@ -306,7 +306,7 @@ namespace OpenGL3DViewerMVVM.View
             InitializeComponent();
 
             DataContext = SettingsService.Instance.Settings;
-            Trans.trans.languageChanged += translate;
+            Trans.trans?.languageChanged += translate;
 
             // Initialized ComboBox contents. Updated ComboBoxItem.Content as friendly display language name.
             // For exmaple. en => English, zh-Hant => 繁體中文, zh-Hans => 简体中文.

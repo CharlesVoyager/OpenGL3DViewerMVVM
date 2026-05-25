@@ -122,7 +122,7 @@ namespace OpenGL3DViewerMVVM
             VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
             VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
 
-            Trans.trans.languageChanged += translate;
+            Trans.trans?.languageChanged += translate;
 
             // Retrieve the context menu from resources
             _contextMenu = (System.Windows.Controls.ContextMenu)this.Resources["ViewerContextMenu"];

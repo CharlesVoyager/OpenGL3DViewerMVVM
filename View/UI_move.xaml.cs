@@ -13,7 +13,7 @@ namespace OpenGL3DViewerMVVM.View
         public UI_move()
         {
             InitializeComponent();
-            Trans.trans.languageChanged += translate;
+            Trans.trans?.languageChanged += translate;
         }
 
         private void translate()

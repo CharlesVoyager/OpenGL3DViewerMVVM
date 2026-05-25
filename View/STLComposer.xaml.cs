@@ -8,12 +8,10 @@ namespace OpenGL3DViewerMVVM.View
         public STLComposer()
         {
             InitializeComponent();
+            Trans.trans?.languageChanged += translate;
  
             if (MainWindow.main != null)
-            {
-                Trans.trans.languageChanged += translate;
                 DataContext = MainWindow.main.viewModel;
-            }
         }
 
         public void translate() { }

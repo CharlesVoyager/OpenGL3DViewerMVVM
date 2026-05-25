@@ -1,8 +1,6 @@
 ﻿using System.Windows;
 using OpenGL3DViewerMVVM.ModelLib.Utils;
 
-#nullable disable
-
 namespace OpenGL3DViewerMVVM.View
 {
     /// <summary>
@@ -13,7 +11,7 @@ namespace OpenGL3DViewerMVVM.View
         public UI_view()
         {
             InitializeComponent();
-            Trans.trans.languageChanged += translate;
+            Trans.trans?.languageChanged += translate;
         }
 
         private void translate()

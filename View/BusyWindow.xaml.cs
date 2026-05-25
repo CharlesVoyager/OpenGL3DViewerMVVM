@@ -18,6 +18,7 @@ namespace OpenGL3DViewerMVVM.View
         public BusyWindow()
         {
             InitializeComponent();
+            Trans.trans?.languageChanged += translate;
 
             stopWatch = new Stopwatch();
 
@@ -26,10 +27,7 @@ namespace OpenGL3DViewerMVVM.View
             timer.Interval = TimeSpan.FromMilliseconds(1000);
 
             if (MainWindow.main != null)
-            {
-                Trans.trans.languageChanged += translate;
                 DataContext = MainWindow.main.viewModel;
-            }
         }
 
         private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)

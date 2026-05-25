@@ -177,7 +177,7 @@ namespace OpenGL3DViewerMVVM
             info_toggleButton.ToolTip = Trans.T("B_INFO");
             remove_toggleButton.ToolTip = Trans.T("B_REMOVE");
             btnImport.ToolTip = Trans.T("B_IMPORT");
-            toggleAbout.ToolTip = Trans.T("B_ABOUT");
+            about_toggleButton.ToolTip = Trans.T("B_ABOUT");
 
             view_toggleButton.Content = Trans.T("B_VIEW");
             move_toggleButton.Content = Trans.T("B_MOVE");
@@ -186,30 +186,31 @@ namespace OpenGL3DViewerMVVM
             info_toggleButton.Content = Trans.T("B_INFO");
             remove_toggleButton.Content = Trans.T("B_REMOVE");
             btnImport.Content = Trans.T("B_IMPORT");
-            toggleAbout.Content = Trans.T("B_ABOUT");
+            about_toggleButton.Content = Trans.T("B_ABOUT");
         }
 
         // Move/Rotate/Scale/Info/Remove button visibility changed.
         private void OnVisibilityChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            view_toggleButton.IsChecked = false;
-            VisualStateManager.GoToState(UI_view, "StateHidden", true);
-
             bool isVisible = (bool)e.NewValue;
             if (isVisible)
             {
+                view_toggleButton.IsChecked = false;
                 move_toggleButton.IsChecked = false;
                 rotate_toggleButton.IsChecked = false;
                 resize_toggleButton.IsChecked = false;
                 info_toggleButton.IsChecked = false;
                 remove_toggleButton.IsChecked = false;
+                about_toggleButton.IsChecked = false;
             }
             else
-            {
+            {            
+                VisualStateManager.GoToState(UI_view, "StateHidden", true);
                 VisualStateManager.GoToState(UI_move, "StateHidden", true);
                 VisualStateManager.GoToState(UI_rotate, "StateHidden", true);
                 VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
                 VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
+                about_toggleButton.IsChecked = false;   // Hide grdAbout if about_toggleButton is checked.
             }
         }
 
@@ -221,7 +222,6 @@ namespace OpenGL3DViewerMVVM
         private void view_toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_view, "StateHidden", true);
-            Focus();
         }
 
         public void move_toggleButton_Checked(object sender, RoutedEventArgs e)
@@ -235,18 +235,14 @@ namespace OpenGL3DViewerMVVM
         public void move_toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_move, "StateHidden", true);
-            Focus();
         }
 
         private async void Import_Click(object sender, RoutedEventArgs e)
         {
             btnImport.IsEnabled = false;
-
-
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-
             await viewModel.ExecuteAddAsync();
             btnImport.IsEnabled = true;
+            btnImport.IsChecked = false;
         }
 
         private void AboutToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -260,13 +256,12 @@ namespace OpenGL3DViewerMVVM
 
         private void button_closeAbout_Click(object sender, RoutedEventArgs e)
         {
-            toggleAbout.IsChecked = false;
+            about_toggleButton.IsChecked = false;
         }
 
         private void AboutToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             gridAbout.Visibility = Visibility.Hidden;
-            Focus();
         }
 
         private void rotate_toggleButton_Checked(object sender, RoutedEventArgs e)
@@ -277,7 +272,6 @@ namespace OpenGL3DViewerMVVM
         private void rotate_toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_rotate, "StateHidden", true);
-            Focus();
         }
 
         // Scale
@@ -289,7 +283,6 @@ namespace OpenGL3DViewerMVVM
         private void resize_toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
-            Focus();
         }
 
         private void info_toggleButton_Checked(object sender, RoutedEventArgs e)
@@ -300,7 +293,6 @@ namespace OpenGL3DViewerMVVM
         private void info_toggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
-            Focus();
         }
 
         public void remove_toggleButton_Click(object sender, RoutedEventArgs e)
@@ -311,19 +303,16 @@ namespace OpenGL3DViewerMVVM
             UI_move.slider_moveY.Maximum = 1000;
 
             viewModel.DeleteModel();
-            Focus();
         }
 
         private void zoomin_toggleButton_Click(object sender, RoutedEventArgs e)
         {
             threeDControl.ZoomInKeyHandling(null, null);
-            Focus();
         }
 
         private void zoomout_toggleButton_Click(object sender, RoutedEventArgs e)
         {
             threeDControl.ZoomOutKeyHandling(null, null);
-            Focus();
         }
 
         void DebugLog()

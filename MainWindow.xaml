@@ -241,7 +241,7 @@
                 </RadioButton.Background>
             </RadioButton>
             <Image Source="/OpenGL3DViewerMVVM;component/Resources/bar1.png" Stretch="None" Width="10" />
-            <RadioButton Name="toggleAbout" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Height="70" Margin="2.5" Padding="3" Width="50" Checked="AboutToggleButton_Checked" Unchecked="AboutToggleButton_Unchecked" FontFamily="Arial">
+            <RadioButton Name="about_toggleButton" GroupName="MainRadioButtonGroup" Style="{StaticResource CheckableToggleButtonStyle}" Height="70" Margin="2.5" Padding="3" Width="50" Checked="AboutToggleButton_Checked" Unchecked="AboutToggleButton_Unchecked" FontFamily="Arial">
                 <RadioButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_about.png" />
                 </RadioButton.Background>

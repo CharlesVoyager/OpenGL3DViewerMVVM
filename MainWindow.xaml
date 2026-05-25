@@ -180,12 +180,12 @@
         <!--Left Panel-->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,60,0,0">
             <StackPanel Orientation="Horizontal">
-                <ToggleButton Height="24" Margin="2.5" Name="zoomout_toggleButton" Padding="3" Width="24" Click="zoomout_toggleButton_Click">
+                <ToggleButton Height="24" Margin="2.5" Padding="3" Width="24" Click="zoomout_toggleButton_Click">
                     <ToggleButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_zoomOut1.png" />
                     </ToggleButton.Background>
                 </ToggleButton>
-                <ToggleButton Height="24" Margin="0" Name="zoomin_toggleButton" Padding="3" Width="24" Click="zoomin_toggleButton_Click">
+                <ToggleButton Height="24" Margin="0" Padding="3" Width="24" Click="zoomin_toggleButton_Click">
                     <ToggleButton.Background>
                         <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_zoomIn1.png" />
                     </ToggleButton.Background>

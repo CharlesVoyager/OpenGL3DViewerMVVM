@@ -177,7 +177,7 @@ namespace OpenGL3DViewerMVVM
             info_toggleButton.ToolTip = Trans.T("B_INFO");
             remove_toggleButton.ToolTip = Trans.T("B_REMOVE");
             btnImport.ToolTip = Trans.T("B_IMPORT");
-            btnAbout.ToolTip = Trans.T("B_ABOUT");
+            toggleAbout.ToolTip = Trans.T("B_ABOUT");
 
             view_toggleButton.Content = Trans.T("B_VIEW");
             move_toggleButton.Content = Trans.T("B_MOVE");
@@ -186,7 +186,7 @@ namespace OpenGL3DViewerMVVM
             info_toggleButton.Content = Trans.T("B_INFO");
             remove_toggleButton.Content = Trans.T("B_REMOVE");
             btnImport.Content = Trans.T("B_IMPORT");
-            btnAbout.Content = Trans.T("B_ABOUT");
+            toggleAbout.Content = Trans.T("B_ABOUT");
         }
 
         // Move/Rotate/Scale/Info/Remove button visibility changed.
@@ -263,17 +263,28 @@ namespace OpenGL3DViewerMVVM
             btnImport.IsEnabled = true;
         }
 
-        private void About_Click(object sender, RoutedEventArgs e)
+        private void AboutToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            gridAbout.Visibility = Visibility.Visible;
+
             view_toggleButton.IsChecked = false;
             move_toggleButton.IsChecked = false;
             rotate_toggleButton.IsChecked = false;
             resize_toggleButton.IsChecked = false;
             info_toggleButton.IsChecked = false;
 
-            gridAbout.Visibility = Visibility.Visible;
-
             DebugLog();
+        }
+
+        private void button_closeAbout_Click(object sender, RoutedEventArgs e)
+        {
+            toggleAbout.IsChecked = false;
+        }
+
+        private void AboutToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            gridAbout.Visibility = Visibility.Hidden;
+            Focus();
         }
 
         private void rotate_toggleButton_Checked(object sender, RoutedEventArgs e)
@@ -363,11 +374,6 @@ namespace OpenGL3DViewerMVVM
 
             threeDControl.ZoomOutKeyHandling(null, null);
             Focus();
-        }
-
-        private void button_closeAbout_Click(object sender, RoutedEventArgs e)
-        {
-            gridAbout.Visibility = Visibility.Hidden;
         }
 
         void DebugLog()

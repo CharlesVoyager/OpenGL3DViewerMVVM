@@ -240,7 +240,7 @@
                 </ToggleButton.Background>
             </ToggleButton>
             <Image Source="/OpenGL3DViewerMVVM;component/Resources/bar1.png" Stretch="None" Width="10" />
-            <ToggleButton Name="btnAbout" Content="About" Height="70" Margin="2.5" Padding="3" Width="50" Click="About_Click" FontFamily="Arial">
+            <ToggleButton Name="toggleAbout" Style="{StaticResource CheckableToggleButtonStyle}" Height="70" Margin="2.5" Padding="3" Width="50" Checked="AboutToggleButton_Checked" Unchecked="AboutToggleButton_Unchecked" FontFamily="Arial">
                 <ToggleButton.Background>
                     <ImageBrush ImageSource="/OpenGL3DViewerMVVM;component/Resources/button_about.png" />
                 </ToggleButton.Background>

@@ -2,7 +2,7 @@
   "profiles": {
     "OpenGL3DViewerMVVM": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\Testfiles\\DamagedHelmet.glb"
+      "commandLineArgs": "..\\..\\..\\..\\Stl\\GraphCard\\nvidia_geforce_rtx_3090.glb\r\n..\\..\\..\\Testfiles\\DamagedHelmet.gl"
     }
   }
 }

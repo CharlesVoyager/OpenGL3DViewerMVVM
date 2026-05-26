@@ -190,7 +190,9 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
             Mesh.Clear();
 
-            Mesh.EnsureCapacity(Model.drawTriangles.Count, Model.HasColor());
+            bool hasColor = !Name.ToLower().EndsWith(".stl");   // STL file does not have color information, so we treat all STL as no color.
+
+            Mesh.EnsureCapacity(Model.drawTriangles.Count, hasColor);
 
             var ranges = Model.primitiveMaterials
                 .OrderBy(r => r.StartTriangle)

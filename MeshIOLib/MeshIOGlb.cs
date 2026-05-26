@@ -1,9 +1,9 @@
+using OpenGL3DViewerMVVM.model.geom;
 using System.Drawing;
 using System.IO;
 using System.Numerics;
 using System.Text;
 using System.Text.Json;
-using OpenGL3DViewerMVVM.model.geom;
 
 namespace OpenGL3DViewerMVVM.MeshIOLib
 {
@@ -161,6 +161,15 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
 
                 foreach (var prim in mesh.GetProperty("primitives").EnumerateArray())
                 {
+                    updateRate?.Invoke(model.drawTriangles.Count / 1000);
+                    if (Command == COMMAND.Abort)
+                    {
+                        Command = COMMAND.None;
+                        Status = STATUS.UserAbort;
+                        model.Clear();
+                        return;
+                    }
+
                     int mode = prim.TryGetProperty("mode", out var modeEl) ? modeEl.GetInt32() : 4;
                     if (mode != 4) continue; // triangles only
 

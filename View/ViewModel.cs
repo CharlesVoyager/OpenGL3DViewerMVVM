@@ -147,6 +147,7 @@ namespace OpenGL3DViewerMVVM.View
             try
             {           
                 modelIO.LoadWOCatch(file, newModel.Model);
+                newModel.Name = Path.GetFileName(file);
 
                 // NOTES:
                 // 1. Model (TopoModel): Original STL file triangles data.
@@ -158,7 +159,6 @@ namespace OpenGL3DViewerMVVM.View
                 // 2. Current bounding box is for orignal STL data. 
                 newModel.CopyTopoModelBoundingBoxToPrintModel();
                 // <>
-
             }
             catch (Exception)
             {
@@ -172,8 +172,6 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.Model.Clear();
                 return true;
             }
-            newModel.Name = Path.GetFileName(file);
-
             if (isTooSmall(newModel.BoundingBox) && newModel.Name.Contains(".glb"))
                 DoAutoScale(newModel);
             else if (isTooSmall(newModel.BoundingBox))

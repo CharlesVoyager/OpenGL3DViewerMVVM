@@ -203,8 +203,7 @@ namespace OpenGL3DViewerMVVM.View
             {
                 newModel.UpdateBoundingBoxAndMatrix();
             }
-
-            newModel.PositionZ = newModel.BoundingBox.Size.z / 2;
+            newModel.Land();
             if (isAutoPosition)
             {
                 Autoposition(newModel);
@@ -214,7 +213,6 @@ namespace OpenGL3DViewerMVVM.View
                 newModel.PositionX = (float)newModel.BoundingBox.Center.x;
                 newModel.PositionY = (float)newModel.BoundingBox.Center.y;
             }
-
             _dispatcher.Invoke(() => { Models.Add(newModel); });
 
             SelectedModel = newModel;

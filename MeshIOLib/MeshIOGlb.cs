@@ -147,6 +147,12 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
             var images      = ParseImages(root);
             var textures    = ParseTextures(root);
 
+            // Cache for bufferView byte-slices: each view is allocated once and reused
+            // by all accessors that reference it.  Without this, a GLB with thousands of
+            // primitives all sharing a few large bufferViews (e.g. 2979 meshes × 82 MB)
+            // would allocate hundreds of gigabytes and crash with OutOfMemoryException.
+            var bvCache = new Dictionary<int, byte[]>();
+
             if (!root.TryGetProperty("meshes", out var meshesEl)) return;
 
             // Build world-space transforms for every mesh index from the node hierarchy.
@@ -178,25 +184,25 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                     // ---- Required: positions — transform to world space ----
                     var positions = ReadVec3Accessor(
                         attrib.GetProperty("POSITION").GetInt32(),
-                        accessors, bufferViews, buffers);
+                        accessors, bufferViews, buffers, bvCache);
                     for (int vi = 0; vi < positions.Length; vi++)
                         positions[vi] = ApplyTransform(positions[vi], worldMatrix);
 
                     // ---- Optional: indices ----
                     int[]? indices = null;
                     if (prim.TryGetProperty("indices", out var idxEl))
-                        indices = ReadScalarAccessor(idxEl.GetInt32(), accessors, bufferViews, buffers);
+                        indices = ReadScalarAccessor(idxEl.GetInt32(), accessors, bufferViews, buffers, bvCache);
 
                     // ---- Optional: per-vertex colors ----
                     float[][]? vertexColors = null;
                     if (attrib.TryGetProperty("COLOR_0", out var colEl))
-                        vertexColors = ReadColorAccessor(colEl.GetInt32(), accessors, bufferViews, buffers);
+                        vertexColors = ReadColorAccessor(colEl.GetInt32(), accessors, bufferViews, buffers, bvCache);
 
                     // ---- Optional: imported vertex normals — transform to world space ----
                     RHVector3[]? normals = null;
                     if (attrib.TryGetProperty("NORMAL", out var normEl))
                     {
-                        normals = ReadVec3Accessor(normEl.GetInt32(), accessors, bufferViews, buffers);
+                        normals = ReadVec3Accessor(normEl.GetInt32(), accessors, bufferViews, buffers, bvCache);
                         for (int vi = 0; vi < normals.Length; vi++)
                             normals[vi] = ApplyNormalTransform(normals[vi], worldMatrix);
                     }
@@ -204,12 +210,12 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                     // ---- Optional: UV coordinates ----
                     float[][]? texcoords = null;
                     if (attrib.TryGetProperty("TEXCOORD_0", out var uvEl))
-                        texcoords = ReadVec2Accessor(uvEl.GetInt32(), accessors, bufferViews, buffers);
+                        texcoords = ReadVec2Accessor(uvEl.GetInt32(), accessors, bufferViews, buffers, bvCache);
 
                     // ---- Optional: tangents (VEC4 FLOAT, w = handedness) ----
                     float[][]? tangents = null;
                     if (attrib.TryGetProperty("TANGENT", out var tanEl))
-                        tangents = ReadVec4Accessor(tanEl.GetInt32(), accessors, bufferViews, buffers);
+                        tangents = ReadVec4Accessor(tanEl.GetInt32(), accessors, bufferViews, buffers, bvCache);
 
                     // After reading positions, normals, UVs, indices — and when tangents == null:
                     if (tangents == null && texcoords != null)
@@ -518,13 +524,14 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
         /// <summary>Reads a VEC3 FLOAT accessor → RHVector3[].</summary>
         static RHVector3[] ReadVec3Accessor(
             int accessorIdx, List<AccessorInfo> accessors,
-            List<BufferViewInfo> bufferViews, List<byte[]?> buffers)
+            List<BufferViewInfo> bufferViews, List<byte[]?> buffers,
+            Dictionary<int, byte[]> bvCache)
         {
             var acc = accessors[accessorIdx];
             if (acc.Type != "VEC3")       throw new InvalidDataException($"Expected VEC3, got {acc.Type}.");
             if (acc.ComponentType != 5126) throw new NotSupportedException("Only FLOAT (5126) is supported for VEC3.");
 
-            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, 12);
+            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, 12, bvCache);
             var result         = new RHVector3[acc.Count];
 
             for (int i = 0; i < acc.Count; i++)
@@ -541,13 +548,14 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
         /// <summary>Reads a VEC2 FLOAT accessor → float[][2] (u,v per vertex).</summary>
         static float[][] ReadVec2Accessor(
             int accessorIdx, List<AccessorInfo> accessors,
-            List<BufferViewInfo> bufferViews, List<byte[]?> buffers)
+            List<BufferViewInfo> bufferViews, List<byte[]?> buffers,
+            Dictionary<int, byte[]> bvCache)
         {
             var acc = accessors[accessorIdx];
             if (acc.Type != "VEC2")       throw new InvalidDataException($"Expected VEC2, got {acc.Type}.");
             if (acc.ComponentType != 5126) throw new NotSupportedException("Only FLOAT (5126) is supported for TEXCOORD_0.");
 
-            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, 8);
+            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, 8, bvCache);
             var result         = new float[acc.Count][];
 
             for (int i = 0; i < acc.Count; i++)
@@ -568,13 +576,14 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
         /// </summary>
         static float[][] ReadVec4Accessor(
             int accessorIdx, List<AccessorInfo> accessors,
-            List<BufferViewInfo> bufferViews, List<byte[]?> buffers)
+            List<BufferViewInfo> bufferViews, List<byte[]?> buffers,
+            Dictionary<int, byte[]> bvCache)
         {
             var acc = accessors[accessorIdx];
             if (acc.Type != "VEC4")       throw new InvalidDataException($"Expected VEC4, got {acc.Type}.");
             if (acc.ComponentType != 5126) throw new NotSupportedException("Only FLOAT (5126) is supported for TANGENT.");
 
-            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, 16);
+            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, 16, bvCache);
             var result         = new float[acc.Count][];
 
             for (int i = 0; i < acc.Count; i++)
@@ -594,7 +603,8 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
         /// <summary>Reads a SCALAR accessor (indices) → int[].</summary>
         static int[] ReadScalarAccessor(
             int accessorIdx, List<AccessorInfo> accessors,
-            List<BufferViewInfo> bufferViews, List<byte[]?> buffers)
+            List<BufferViewInfo> bufferViews, List<byte[]?> buffers,
+            Dictionary<int, byte[]> bvCache)
         {
             var acc = accessors[accessorIdx];
             if (acc.Type != "SCALAR") throw new InvalidDataException($"Expected SCALAR, got {acc.Type}.");
@@ -607,7 +617,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                 _    => throw new NotSupportedException($"Unsupported index component type {acc.ComponentType}.")
             };
 
-            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, elementSize);
+            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, elementSize, bvCache);
             var result         = new int[acc.Count];
 
             for (int i = 0; i < acc.Count; i++)
@@ -630,7 +640,8 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
         /// </summary>
         static float[][] ReadColorAccessor(
             int accessorIdx, List<AccessorInfo> accessors,
-            List<BufferViewInfo> bufferViews, List<byte[]?> buffers)
+            List<BufferViewInfo> bufferViews, List<byte[]?> buffers,
+            Dictionary<int, byte[]> bvCache)
         {
             var  acc    = accessors[accessorIdx];
             bool isVec4 = acc.Type == "VEC4";
@@ -643,7 +654,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                 _    => throw new NotSupportedException($"Unsupported COLOR_0 component type {acc.ComponentType}.")
             };
 
-            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, elementSize);
+            var (data, stride) = GetAccessorBytes(acc, bufferViews, buffers, elementSize, bvCache);
             var result         = new float[acc.Count][];
 
             for (int i = 0; i < acc.Count; i++)
@@ -689,23 +700,33 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
         /// Returns (bufferSlice, elementStride) for an accessor.
         /// The returned slice starts at the bufferView's byteOffset.
         /// The accessor's own byteOffset is NOT baked in — callers apply it as a base.
+        ///
+        /// <paramref name="bvCache"/> is a caller-owned dictionary keyed by bufferView index.
+        /// Each bufferView slice is allocated only once and reused across all accessors that
+        /// share the same bufferView, preventing O(n·BVsize) memory allocations on large GLBs
+        /// with many primitives (e.g. 2979 meshes × 82 MB BV = ~760 GB without caching).
         /// </summary>
         static (byte[] data, int stride) GetAccessorBytes(
             AccessorInfo         acc,
             List<BufferViewInfo> bufferViews,
             List<byte[]?>        buffers,
-            int                  elementSize)
+            int                  elementSize,
+            Dictionary<int, byte[]> bvCache)
         {
             if (acc.BufferViewIdx < 0)
                 throw new NotSupportedException("Sparse accessors without a bufferView are not supported.");
 
             var bv  = bufferViews[acc.BufferViewIdx];
-            var buf = buffers[bv.BufferIdx]
-                      ?? throw new InvalidDataException(
-                          $"Buffer {bv.BufferIdx} is missing (external URIs are not supported).");
 
-            var slice = new byte[bv.ByteLength];
-            Array.Copy(buf, bv.ByteOffset, slice, 0, bv.ByteLength);
+            if (!bvCache.TryGetValue(acc.BufferViewIdx, out var slice))
+            {
+                var buf = buffers[bv.BufferIdx]
+                          ?? throw new InvalidDataException(
+                              $"Buffer {bv.BufferIdx} is missing (external URIs are not supported).");
+                slice = new byte[bv.ByteLength];
+                Array.Copy(buf, bv.ByteOffset, slice, 0, bv.ByteLength);
+                bvCache[acc.BufferViewIdx] = slice;
+            }
 
             int stride = bv.ByteStride > 0 ? bv.ByteStride : elementSize;
             return (slice, stride);

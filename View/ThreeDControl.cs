@@ -576,7 +576,7 @@ namespace OpenGL3DViewerMVVM.View
  
             Vector3 aabbMinPoint3 = new Vector3();
             Vector3 aabbMaxPoint3 = new Vector3();
-            ViewModel._meshDataReady.Wait();
+            if (ViewModel._meshDataReady.Wait(0) == false) return null;
             foreach (ThreeDModel model in MainWindow.main.viewModel.Models)
             {
                 if (model.BoundingBox.minPoint == null || model.BoundingBox.maxPoint == null)

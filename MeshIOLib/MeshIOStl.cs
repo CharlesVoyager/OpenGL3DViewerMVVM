@@ -279,6 +279,13 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                         else if (vertexIndex == 1) p2 = v;
                         else if (vertexIndex == 2)
                         {
+                            if (normalVect == null)
+                            {
+                                RHVector3 d1 = p2.Subtract(p1);
+                                RHVector3 d2 = v.Subtract(p1);
+                                normalVect = d1.CrossProduct(d2);
+                                normalVect.NormalizeSafe();
+                            }
                             model.AddTriangle(p1, p2, v, normalVect);
                         }
                         vertexIndex++;

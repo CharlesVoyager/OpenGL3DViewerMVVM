@@ -279,6 +279,16 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
 
         static readonly float[] DefaultColor = { 1f, 1f, 1f, 1f };
 
+        // Placeholder UV and tangent data emitted for non-UV triangles so that
+        // model.texCoords and model.tangents remain index-parallel with glVertices.
+        // Every vertex VBO entry at location 3 (UV) and 4 (tangent) must have a
+        // corresponding element even for flat-color primitives; otherwise all UV
+        // meshes that appear after a non-UV primitive in the draw list sample from
+        // the wrong buffer position, producing incorrect texturing (the "Socket
+        // mesh" rendering bug in the RTX-3090 GLB).
+        static readonly float[] ZeroUv3 = { 0f, 0f, 0f, 0f, 0f, 0f };
+        static readonly float[] UnitTangent3 = { 1f, 0f, 0f, 1f, 1f, 0f, 0f, 1f, 1f, 0f, 0f, 1f };
+
         static void AddPrimitiveToModel(
             RHVector3[]  positions,
             int[]?       indices,
@@ -328,6 +338,12 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                         (c0[3]+c1[3]+c2[3]) / 3f,
                     };
                     model.AddTriangle(p1, p2, p3, n0, n1, n2, color);
+                    // Emit placeholder UVs and tangents so model.texCoords and model.tangents
+                    // stay index-parallel with glVertices (which includes every triangle).
+                    // Without this, meshes that follow a non-UV primitive in the draw order
+                    // read UVs and tangents from the wrong positions in the GPU buffer.
+                    model.texCoords.AddRange(ZeroUv3);
+                    model.tangents.AddRange(UnitTangent3);
                 }
                 // ---- Priority 2: UV-mapped texture (base color or PBR) ----
                 else if (hasAnyTexture && texcoords!=null)
@@ -346,6 +362,9 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                 {
                     float[] color = flatColor ?? DefaultColor;
                     model.AddTriangle(p1, p2, p3, n0, n1, n2, color);
+                    // Same placeholder padding as Priority 1 above.
+                    model.texCoords.AddRange(ZeroUv3);
+                    model.tangents.AddRange(UnitTangent3);
                 }
             }
         }

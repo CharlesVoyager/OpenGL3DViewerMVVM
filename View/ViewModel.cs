@@ -175,7 +175,7 @@ namespace OpenGL3DViewerMVVM.View
             if (isTooSmall(newModel.BoundingBox) && newModel.Name.Contains(".glb"))
                 DoAutoScale(newModel);
             else if (isTooSmall(newModel.BoundingBox))
-                check_stl_size_too_small(newModel);
+                _dispatcher.Invoke(() => { check_stl_size_too_small(newModel); });
             else if (isTooBig(newModel.BoundingBox))  // the object is too big.
             {
                 double tXBound = newModel.BoundingBox.Size.x / SettingsService.Instance.Settings.PrintAreaWidth;

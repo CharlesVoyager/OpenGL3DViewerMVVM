@@ -25,9 +25,16 @@ namespace OpenGL3DViewerMVVM.View
             get
             {
                 Vector3 cam = new Vector3();
+                // Z-UP
                 cam.X = viewCenter.X + (float)(Distance * Math.Cos(theta) * Math.Sin(phi));
                 cam.Y = viewCenter.Y + (float)(Distance * Math.Sin(theta) * Math.Sin(phi));
                 cam.Z = viewCenter.Z + (float)(Distance * Math.Cos(phi));
+
+#if false       // Y-UP
+                cam.X = viewCenter.X + (float)(Distance * Math.Cos(theta) * Math.Sin(phi));
+                cam.Y = viewCenter.Y + (float)(Distance * Math.Cos(phi));           // ← Y gets cos(φ)
+                cam.Z = viewCenter.Z + (float)(Distance * Math.Sin(theta) * Math.Sin(phi)); // ← Z gets sin
+#endif
                 return cam;
             }
         }
@@ -279,7 +286,9 @@ namespace OpenGL3DViewerMVVM.View
         public Matrix4 GetViewMatrix()
         {
             Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitZ);
-
+#if flase   // Y-UP 
+            Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitY);
+#endif
 #if false // Fixed camera position for testing
               view = Matrix4.LookAt(
                             new Vector3(300, 300, 300),

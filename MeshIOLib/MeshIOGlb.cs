@@ -149,8 +149,16 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
 
             if (!root.TryGetProperty("meshes", out var meshesEl)) return;
 
+            // Build world-space transforms for every mesh index from the node hierarchy.
+            var nodeTransforms = BuildNodeTransforms(root);
+
+            int meshEnumIdx = -1;
             foreach (var mesh in meshesEl.EnumerateArray())
             {
+                meshEnumIdx++;
+                // Retrieve world matrix for this mesh (identity if not found).
+                nodeTransforms.TryGetValue(meshEnumIdx, out float[]? worldMatrix);
+
                 foreach (var prim in mesh.GetProperty("primitives").EnumerateArray())
                 {
                     int mode = prim.TryGetProperty("mode", out var modeEl) ? modeEl.GetInt32() : 4;
@@ -158,10 +166,12 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
 
                     var attrib = prim.GetProperty("attributes");
 
-                    // ---- Required: positions ----
+                    // ---- Required: positions — transform to world space ----
                     var positions = ReadVec3Accessor(
                         attrib.GetProperty("POSITION").GetInt32(),
                         accessors, bufferViews, buffers);
+                    for (int vi = 0; vi < positions.Length; vi++)
+                        positions[vi] = ApplyTransform(positions[vi], worldMatrix);
 
                     // ---- Optional: indices ----
                     int[]? indices = null;
@@ -173,10 +183,14 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                     if (attrib.TryGetProperty("COLOR_0", out var colEl))
                         vertexColors = ReadColorAccessor(colEl.GetInt32(), accessors, bufferViews, buffers);
 
-                    // ---- Optional: imported vertex normals ----
+                    // ---- Optional: imported vertex normals — transform to world space ----
                     RHVector3[]? normals = null;
                     if (attrib.TryGetProperty("NORMAL", out var normEl))
+                    {
                         normals = ReadVec3Accessor(normEl.GetInt32(), accessors, bufferViews, buffers);
+                        for (int vi = 0; vi < normals.Length; vi++)
+                            normals[vi] = ApplyNormalTransform(normals[vi], worldMatrix);
+                    }
 
                     // ---- Optional: UV coordinates ----
                     float[][]? texcoords = null;
@@ -510,7 +524,7 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
                 result[i] = new RHVector3(
                     BitConverter.ToSingle(data, o),
                     BitConverter.ToSingle(data, o + 4),
-                    BitConverter.ToSingle(data, o + 8) * (-1)); // GLTF's +Y up → our +Z up. But, why flip the Z???
+                    BitConverter.ToSingle(data, o + 8)); // Raw glTF values; Y-up→Z-up is handled by the root node matrix.
             }
             return result;
         }
@@ -827,6 +841,26 @@ namespace OpenGL3DViewerMVVM.MeshIOLib
             double y = m[1]*v.x + m[5]*v.y + m[9] *v.z + m[13];
             double z = m[2]*v.x + m[6]*v.y + m[10]*v.z + m[14];
             return new RHVector3(x, y, z);
+        }
+
+        /// <summary>
+        /// Applies the rotational part of a column-major 4×4 matrix to a normal vector
+        /// (no translation, no scale — uses the normalised upper-left 3×3).
+        /// For correct shading under non-uniform scale this should be the inverse-transpose,
+        /// but the GLB models shipped by standard exporters use uniform or near-uniform
+        /// scale, so normalising the column vectors is sufficient.
+        /// </summary>
+        static RHVector3 ApplyNormalTransform(RHVector3 n, float[]? m)
+        {
+            if (m == null) return n;
+            // Transform the normal direction (no translation)
+            double x = m[0]*n.x + m[4]*n.y + m[8] *n.z;
+            double y = m[1]*n.x + m[5]*n.y + m[9] *n.z;
+            double z = m[2]*n.x + m[6]*n.y + m[10]*n.z;
+            // Re-normalise to eliminate any scale effect
+            double len = Math.Sqrt(x*x + y*y + z*z);
+            if (len < 1e-12) return n;
+            return new RHVector3(x/len, y/len, z/len);
         }
 
         /// <summary>Builds a column-major 4×4 matrix from glTF TRS components.</summary>

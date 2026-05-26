@@ -19,10 +19,6 @@ using System.Windows.Interop;
 
 namespace OpenGL3DViewerMVVM.View
 {
-    /// <summary>
-    /// OpenTK GameWindow replacing the WinForms UserControl + RHOpenGL child.
-    /// Rendering, input, and camera logic are unchanged; only the hosting mechanism differs.
-    /// </summary>
     public class ThreeDControl : GameWindow
     {
         BackgroundDraw backgroundDraw = null;
@@ -245,11 +241,7 @@ namespace OpenGL3DViewerMVVM.View
             int newX = e.Position.X;
             int newY = e.Position.Y;
 
-            MainWindow.main.Dispatcher.Invoke(() =>
-            {
-                if (MainWindow.main != null)
-                    MainWindow.main.UpdateLocation(newX, newY);
-            });
+            MainWindow.main.Dispatcher.Invoke(() => { MainWindow.main.UpdateLocation(newX, newY); });
         }
 
         protected override void OnResize(ResizeEventArgs e)
@@ -260,10 +252,7 @@ namespace OpenGL3DViewerMVVM.View
             int newWidth = e.Width;
             int newHeight = e.Height;
 
-            MainWindow.main.Dispatcher.Invoke(() =>
-            {
-                MainWindow.main.UpdateSize(newWidth, newHeight);
-            });
+            MainWindow.main.Dispatcher.Invoke(() => { MainWindow.main.UpdateSize(newWidth, newHeight); });
 
             GL.Viewport(0, 0, ClientSize.X, ClientSize.Y);
             UpdateChanges();
@@ -389,17 +378,11 @@ namespace OpenGL3DViewerMVVM.View
                     movePlane = new Geom3DPlane(pickPoint, new Geom3DVector(0, 0, 1));
                     moveStart = moveLast = new Geom3DVector(pickPoint);
          
-                    MainWindow.main.Dispatcher.InvokeAsync(() =>
-                    {
-                        MainWindow.main.viewModel.SelectedModel = sel;
-                    });
+                    MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.viewModel.SelectedModel = sel; });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
-                    MainWindow.main.Dispatcher.InvokeAsync(() =>
-                    {
-                        MainWindow.main.viewModel.SelectedModel = null;
-                    });
+                    MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.viewModel.SelectedModel = null; });
                 }
             }
 
@@ -411,17 +394,11 @@ namespace OpenGL3DViewerMVVM.View
                     movePlane = new Geom3DPlane(pickPoint, new Geom3DVector(0, 0, 1));
                     moveStart = moveLast = new Geom3DVector(pickPoint);
            
-                    MainWindow.main.Dispatcher.InvokeAsync(() =>
-                    {
-                        MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null);
-                    });
+                    MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null); });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
-                    MainWindow.main.Dispatcher.InvokeAsync(() =>
-                    {
-                        MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null);
-                    });
+                    MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null); });
                 }
             }
             speedX = speedY = 0;
@@ -463,10 +440,7 @@ namespace OpenGL3DViewerMVVM.View
             base.OnKeyDown(e);
             if (e.Key == Keys.Delete)
             {
-                MainWindow.main.Dispatcher.Invoke(() =>
-                {
-                    MainWindow.main.viewModel.DeleteModel();
-                });
+                MainWindow.main.Dispatcher.Invoke(() => { MainWindow.main.viewModel.DeleteModel(); });
                 UpdateChanges();
             }
         }

@@ -275,7 +275,7 @@ namespace OpenGL3DViewerMVVM.View
 
         public void OnIsometricView() 
         {
-            theta = -Math.PI * 1.25;
+            theta = -Math.PI * 0.75;
             phi = Math.PI / 2.5;
 
             SetCameraDefaults();

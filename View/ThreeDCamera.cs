@@ -32,7 +32,7 @@ namespace OpenGL3DViewerMVVM.View
 
 #if false       // Y-UP
                 cam.X = viewCenter.X + (float)(Distance * Math.Cos(theta) * Math.Sin(phi));
-                cam.Y = viewCenter.Y + (float)(Distance * Math.Cos(phi));           // ← Y gets cos(φ)
+                cam.Y = viewCenter.Y + (float)(Distance * Math.Cos(phi));                   // ← Y gets cos(φ)
                 cam.Z = viewCenter.Z + (float)(Distance * Math.Sin(theta) * Math.Sin(phi)); // ← Z gets sin
 #endif
                 return cam;
@@ -272,6 +272,7 @@ namespace OpenGL3DViewerMVVM.View
             Distance = originDistance;
             MainWindow.main.threeDControl.UpdateChanges(); 
         }
+
         public void OnIsometricView() 
         {
             theta = -Math.PI * 1.25;
@@ -288,13 +289,7 @@ namespace OpenGL3DViewerMVVM.View
             Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitZ);
 #if flase   // Y-UP 
             Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitY);
-#endif
-#if false // Fixed camera position for testing
-              view = Matrix4.LookAt(
-                            new Vector3(300, 300, 300),
-                            new Vector3(128, 128, 0),
-                            Vector3.UnitZ);
-#endif
+#endif      
             return view;
         }
 

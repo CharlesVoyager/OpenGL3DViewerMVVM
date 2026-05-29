@@ -140,23 +140,8 @@ namespace OpenGL3DViewerMVVM.View
             FitBoundingBox(b);
         }
 
-        void FitObjects()
-        {
-            RHBoundingBox b = new RHBoundingBox();
-
-            foreach (ThreeDModel model in MainWindow.main.viewModel.Models)
-            {
-                b.Add(model.BoundingBox.minPoint);
-                b.Add(model.BoundingBox.maxPoint);
-            }
-            if (b.minPoint == null)     // means there is no model is loaded.
-                FitPrinter();
-            else
-                FitBoundingBox(b);
-        }
-
         // Set viewCenter and Distance to fit the given bounding box in the view. 
-        void FitBoundingBox(RHBoundingBox box)
+        public void FitBoundingBox(RHBoundingBox box)
         {
             viewCenter = box.Center.asVector3();
 

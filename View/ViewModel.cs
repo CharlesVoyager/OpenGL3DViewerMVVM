@@ -35,7 +35,7 @@ namespace OpenGL3DViewerMVVM.View
         public RelayCommand DeleteCommand => new RelayCommand(execute => DeleteModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
         public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
         public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
-
+        public RelayCommand FitModelCommand => new RelayCommand(execute => FitModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
 
         public ViewModel(IDispatcherService? dispatcher = null)
         {
@@ -262,7 +262,14 @@ namespace OpenGL3DViewerMVVM.View
             SelectedModel.Reset();
             check_stl_size_too_small(SelectedModel);
         }
- 
+
+        public void FitModel()
+        {
+            if (SelectedModel == null) return;
+            MainWindow.main.threeDCamera.FitBoundingBox(SelectedModel.BoundingBox);
+            MainWindow.main.threeDControl.UpdateChanges();
+        }
+
         bool Autoposition(ThreeDModel newModel)
         {
             List<ThreeDModel> allModels = new List<ThreeDModel>(Models);

@@ -62,9 +62,7 @@
             <Button Content="Delete" Margin="4,2" Padding="6,2" Command="{Binding DeleteCommand}"/>
             <Button Content="Clone" Margin="4,2" Padding="6,2" Command="{Binding CloneCommand}"/>
             <Button Content="Reset" Margin="4,2" Padding="6,2" Command="{Binding ResetCommand}"/>
-            <!--
             <Button Content="Fit Model" Margin="4,2" Padding="6,2" Command="{Binding FitModelCommand}"/>
-            -->
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Vertical">

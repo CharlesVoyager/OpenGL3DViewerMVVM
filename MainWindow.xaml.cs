@@ -170,6 +170,9 @@ namespace OpenGL3DViewerMVVM
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timerTickMemoryMonitor;
             ShowMemoryMonitor(SettingsService.Instance.Settings.ShowMemoryMonitor);
+
+            // Enable Viewer Mode 
+            EnableViewerMode(SettingsService.Instance.Settings.EnableViewerMode);
         }
 
         /// <summary>
@@ -263,7 +266,12 @@ namespace OpenGL3DViewerMVVM
         {
             btnImport.IsEnabled = false;
             await viewModel.ExecuteAddAsync();
-            btnImport.IsEnabled = true;
+
+            // If viewer mode is enabled, only allow one model to be loaded, so keep the Import button disabled.
+            if (SettingsService.Instance.Settings.EnableViewerMode != true 
+                || viewModel.Models.Count == 0) // Cancel to add model.
+                btnImport.IsEnabled = true;
+
             btnImport.IsChecked = false;
         }
 
@@ -358,6 +366,42 @@ namespace OpenGL3DViewerMVVM
                 grdMemoryMonitor.Visibility = Visibility.Hidden;
                 timer.Stop();
             }
+        }
+
+        public void EnableViewerMode(bool enable)
+        {
+            if (enable)
+            {
+                // Hide all button on left panel.
+                view_toggleButton.Visibility = Visibility.Collapsed;
+                move_toggleButton.Visibility = Visibility.Collapsed;
+                rotate_toggleButton.Visibility = Visibility.Collapsed;
+                resize_toggleButton.Visibility = Visibility.Collapsed;
+                info_toggleButton.Visibility = Visibility.Collapsed;
+                remove_toggleButton.Visibility = Visibility.Collapsed;
+
+                VisualStateManager.GoToState(UI_move, "StateHidden", true);
+                VisualStateManager.GoToState(UI_rotate, "StateHidden", true);
+                VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
+                VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
+
+                // Fit Model
+                viewModel.FitModel();
+
+                // If GLB file is loaded, rotate the model 90 degree on X axis to make it upright, because GLB file is usually created in Y-up coordinate system.
+                if (viewModel.SelectedModel?.Name.EndsWith(".glb", StringComparison.OrdinalIgnoreCase) == true)
+                    viewModel.SelectedModel?.RotationX = 90;
+            }
+            else
+            {
+                view_toggleButton.Visibility = Visibility.Visible;
+                move_toggleButton.Visibility = Visibility.Visible;
+                rotate_toggleButton.Visibility = Visibility.Visible;
+                resize_toggleButton.Visibility = Visibility.Visible;
+                info_toggleButton.Visibility = Visibility.Visible;
+                remove_toggleButton.Visibility = Visibility.Visible;
+            }
+            MainWindow.main.threeDControl.UpdateChanges();  // Update show or hide of Bounding Box.
         }
     }
 }

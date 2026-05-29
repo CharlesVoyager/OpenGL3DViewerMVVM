@@ -116,6 +116,9 @@ namespace OpenGL3DViewerMVVM.View
                 MessageBox.Show(Trans.T("M_LOAD_FILE_FAIL"),
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Enable Viewer Mode 
+            MainWindow.main.EnableViewerMode(SettingsService.Instance.Settings.EnableViewerMode);
         }
 
         private bool AddModel(string? file = null, bool isAutoPosition = true)
@@ -239,6 +242,9 @@ namespace OpenGL3DViewerMVVM.View
             if (SelectedModel == null) return;
             SelectedModel.Dispose();
             Models.Remove(SelectedModel);
+
+            if (Models.Count == 0)
+                MainWindow.main.btnImport.IsEnabled = true;
         }
 
         public void CloneModel()

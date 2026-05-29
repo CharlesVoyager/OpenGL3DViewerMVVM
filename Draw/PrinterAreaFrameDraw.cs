@@ -110,6 +110,7 @@ namespace OpenGL3DViewerMVVM.Draw
         public void Draw()
         {
             if (SettingsService.Instance.Settings.ShowPrintbed == false) return;
+            if (SettingsService.Instance.Settings.EnableViewerMode == true) return;
 
             Matrix4 model = Matrix4.Identity;
             Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();

@@ -127,16 +127,17 @@ namespace OpenGL3DViewerMVVM.View
         public uint PrinterFrameColor { get { return _printerFrameColor; } set { _printerFrameColor = value; OnPropertyChanged(); } }
         public uint OutsidePrintbedColor { get { return _outsidePrintbedColor; } set { _outsidePrintbedColor = value; OnPropertyChanged(); } }
 
-
         bool _showEdges = false;
         bool _showFaces = true;
         bool _showPrintbed = true;
         bool _showMemoryMonitor = false;
+        bool _enableViewerMode = false;
 
         public bool ShowEdges { get { return _showEdges; } set { _showEdges = value; OnPropertyChanged(); } }
         public bool ShowFaces { get { return _showFaces; } set { _showFaces = value; OnPropertyChanged(); } }
         public bool ShowPrintbed { get { return _showPrintbed;  } set { _showPrintbed = value; OnPropertyChanged(); } }
         public bool ShowMemoryMonitor { get { return _showMemoryMonitor; } set { _showMemoryMonitor = value; OnPropertyChanged(); } }
+        public bool EnableViewerMode { get { return _enableViewerMode; } set { _enableViewerMode = value; OnPropertyChanged(); } }
 
         uint _selectionBoxColor = 0xFFFFFFFF;
         uint _errorModelColor = 0xFFFF0000;
@@ -535,6 +536,11 @@ namespace OpenGL3DViewerMVVM.View
             if (sender == showMemoryMonitor)
             {
                 MainWindow.main.ShowMemoryMonitor(showMemoryMonitor.IsChecked == true);
+                return;
+            }
+            else if (sender == enableViewerMode)
+            {
+                MainWindow.main.EnableViewerMode(enableViewerMode.IsChecked == true);
                 return;
             }
             if (MainWindow.main.threeDControl != null)

@@ -1,4 +1,5 @@
 ﻿using OpenGL3DViewerMVVM.ModelLib.model;
+using OpenGL3DViewerMVVM.View;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 
@@ -99,6 +100,8 @@ namespace OpenGL3DViewerMVVM.Draw
         // Call each frame in place of the original GL.Begin/End block
         public void Draw()
         {
+            if (SettingsService.Instance.Settings.EnableViewerMode == true) return;
+
             ThreeDModel? m = MainWindow.main.viewModel.SelectedModel;
 
             if (m == null) return;

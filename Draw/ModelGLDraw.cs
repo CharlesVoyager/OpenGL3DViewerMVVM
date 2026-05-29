@@ -595,18 +595,18 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.Enable(EnableCap.DepthTest);
             GL.Disable(EnableCap.CullFace); // render both faces
 
-            Matrix4 model = printModel.trans;
+            Matrix4 model = printModel.ModelMatrix4;
             Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();
             Matrix4 proj = MainWindow.main.threeDCamera.GetProjMatrix();
 
-            Matrix3 normalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(printModel.trans)));
+            Matrix3 normalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(printModel.ModelMatrix4)));
 
             GL.UseProgram(shader);
 
             // ---- Transforms ----
+            GL.UniformMatrix4(modelLoc,        false, ref model);
             GL.UniformMatrix4(viewLoc,         false, ref view);
             GL.UniformMatrix4(projLoc,         false, ref proj);
-            GL.UniformMatrix4(modelLoc,        false, ref model);
             GL.UniformMatrix3(normalMatrixLoc, false, ref normalMatrix);
 
             // ---- Camera ----

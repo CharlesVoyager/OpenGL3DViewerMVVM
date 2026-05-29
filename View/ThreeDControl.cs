@@ -566,7 +566,7 @@ namespace OpenGL3DViewerMVVM.View
 
                 if (!tool.RaycastAABB(ray, aabbMinPoint3, aabbMaxPoint3)) continue;  // Check if it hit bounding box of a model.
 
-                ModelMatrix mtx = ModelObjectToolHelper.ToModelMatrix(model.trans);
+                ModelMatrix mtx = ModelObjectToolHelper.ToModelMatrix(model.ModelMatrix4);
 
                 if (tool.RayIntersectTriangle(mtx, model.Mesh.glVertices, rayPos, rayNor, out _, out float output))
                 {

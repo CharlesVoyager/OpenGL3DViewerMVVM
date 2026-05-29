@@ -27,7 +27,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public RHBoundingBox BoundingBox;
      
-        public Matrix4 trans;
+        public Matrix4 ModelMatrix4;
 
         public ThreeDModel()
         {
@@ -66,7 +66,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             stl.rotation.x = rotation.x;
             stl.rotation.y = rotation.y;
             stl.rotation.z = rotation.z;
-            stl.trans = trans;
+            stl.ModelMatrix4 = ModelMatrix4;
             stl.Selected = false;
             BoundingBox.CopyTo(stl.BoundingBox);    // NOTE: This must be after copying position becuse setting position will update bounding box.
         }
@@ -136,7 +136,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             Matrix4 transl = Matrix4.CreateTranslation((float)position.x, (float)position.y, (float)position.z);
 
             // Combine: Scale → RotX → RotY → RotZ → Translate
-            trans = scaleMatrix * rotX * rotY * rotZ * transl;
+            ModelMatrix4 = scaleMatrix * rotX * rotY * rotZ * transl;
         }
 
         private unsafe void updateBoundingBox()
@@ -148,7 +148,7 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
             if (Mesh.glVertices.Length == 0)
                 return;
 
-            ModelMatrix mtx = ModelObjectToolHelper.ToModelMatrix(trans);
+            ModelMatrix mtx = ModelObjectToolHelper.ToModelMatrix(ModelMatrix4);
             fixed (float* ptr = &Mesh.glVertices[0])
             {
                 BoundingBox3 box3 = ModelObjectToolWrapper.Instance.Tool.GetBoundingBox(mtx, ptr, Mesh.glVertices.Length);
@@ -161,11 +161,11 @@ namespace OpenGL3DViewerMVVM.ModelLib.model
 
         public void UpdateBoundingBoxAndMatrix()
         {
-            Matrix4 previousModelMatrix = trans;
+            Matrix4 previousModelMatrix = ModelMatrix4;
 
             UpdateTransMatrix(); // Must update trans Matrix before updating Bounding Box.
 
-            if (trans != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
+            if (ModelMatrix4 != previousModelMatrix)   // Compute bounding box only when the model matrix has changed. This can save a lot of time.
                 updateBoundingBox();
         }
 

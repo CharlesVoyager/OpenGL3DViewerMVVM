@@ -391,6 +391,10 @@ namespace OpenGL3DViewerMVVM
                 // If GLB file is loaded, rotate the model 90 degree on X axis to make it upright, because GLB file is usually created in Y-up coordinate system.
                 if (viewModel.SelectedModel?.Name.EndsWith(".glb", StringComparison.OrdinalIgnoreCase) == true)
                     viewModel.SelectedModel?.RotationX = 90;
+
+                // Not allow to load multi-model.
+                if (viewModel.Models.Count > 0)
+                    btnImport.IsEnabled = false;
             }
             else
             {
@@ -400,6 +404,8 @@ namespace OpenGL3DViewerMVVM
                 resize_toggleButton.Visibility = Visibility.Visible;
                 info_toggleButton.Visibility = Visibility.Visible;
                 remove_toggleButton.Visibility = Visibility.Visible;
+
+                btnImport.IsEnabled = true;
             }
             MainWindow.main.threeDControl.UpdateChanges();  // Update show or hide of Bounding Box.
         }

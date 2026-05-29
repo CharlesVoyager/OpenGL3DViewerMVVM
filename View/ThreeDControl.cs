@@ -349,7 +349,6 @@ namespace OpenGL3DViewerMVVM.View
             if (!anyButton)
             {
                 speedX = speedY = 0;
-                UpdateChanges();
                 return;
             }
 

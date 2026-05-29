@@ -596,13 +596,9 @@ namespace OpenGL3DViewerMVVM.View
             else if (kb.IsKeyDown(Keys.LeftAlt) || kb.IsKeyDown(Keys.RightAlt)) 
                 emode = 4;
 
-            float d = Math.Min(ClientSize.X, ClientSize.Y) / 3f;
-
             switch (emode)
             {
                 case 0: // Rotate
-                    speedX = (xPos - xDown) / d;
-                    speedY = (yPos - yDown) / d;
                     threeDCam.Rotate(-speedX * 0.9, speedY * 0.9);
                     UpdateChanges();
                     break;

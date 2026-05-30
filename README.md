@@ -34,7 +34,7 @@ To build and run the project, you will need:
 ### Build in Visual Studio
 
 1. Clone the repository.
-2. Open `OpenGL3DViewerMVVM.slnx` in Visual Studio.
+2. Open `OpenGL3DViewerMVVM.csproj` in Visual Studio.
 3. Restore packages and build the solution.
 4. Run the project.
 

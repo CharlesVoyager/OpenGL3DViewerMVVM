@@ -125,9 +125,9 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             float* minCube, float* maxCube, int cubeCount,
             Vector3 cubeSizeXYZ, Vector3 cubeCountXYZ, Vector3 boundingBoxMinXYZ);
 
-        public abstract unsafe bool RayIntersectTriangle(ModelMatrix matrix, float* vertices, int vertexCount, float[] ray_Position, float[] ray_Normal,
+        public abstract unsafe bool RayIntersectTriangle(Matrix4 matrix, float* vertices, int vertexCount, float[] ray_Position, float[] ray_Normal,
             out int id, out float output);
-        public abstract unsafe bool RayIntersectTriangle(ModelMatrix matrix, float[] vertices, float[] ray_Position, float[] ray_Normal,
+        public abstract unsafe bool RayIntersectTriangle(Matrix4 matrix, float[] vertices, float[] ray_Position, float[] ray_Normal,
             out int id, out float output);
 
         public abstract Ray GenerateRay(int mouseX, int mouseY, Matrix4 view, Matrix4 projection, Vector2i windowSize, out Vector3 nearPos, out Vector3 farPos);

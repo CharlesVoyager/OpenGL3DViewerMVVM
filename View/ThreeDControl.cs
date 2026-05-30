@@ -540,7 +540,7 @@ namespace OpenGL3DViewerMVVM.View
 
         ThreeDModel Picktest(int x, int y)
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            //Stopwatch sw = Stopwatch.StartNew();
 
             var tool = ModelObjectToolWrapper.Instance.Tool;
 
@@ -574,9 +574,7 @@ namespace OpenGL3DViewerMVVM.View
 
                 if (!tool.RaycastAABB(ray, aabbMinPoint3, aabbMaxPoint3)) continue;  // Check if it hit bounding box of a model.
 
-                ModelMatrix mtx = ModelObjectToolHelper.ToModelMatrix(model.ModelMatrix4);
-
-                if (tool.RayIntersectTriangle(mtx, model.Mesh.glVertices, rayPos, rayNor, out _, out float output))
+                if (tool.RayIntersectTriangle(model.ModelMatrix4, model.Mesh.glVertices, rayPos, rayNor, out _, out float output))
                 {
                     Vector3 hitP = ray.Position + ray.Normal * output;
                     float lineLen = (hitP - near).Length;   // Avoid allocating a Line object
@@ -584,11 +582,12 @@ namespace OpenGL3DViewerMVVM.View
                     {
                         length = lineLen;
                         nearestModel = model;
+                        //Debug.WriteLine("[ThreeDModel.Picktest]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
+                        return nearestModel;
                     }
                 }
             }
-
-            // Debug.WriteLine("[ThreeDModel.Picktest]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
+            //Debug.WriteLine("[ThreeDModel.Picktest]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
             return nearestModel;
         }
 

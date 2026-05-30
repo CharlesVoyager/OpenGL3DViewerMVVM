@@ -108,7 +108,7 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             throw new NotImplementedException();
         }
 
-        public override unsafe bool RayIntersectTriangle(ModelMatrix matrix, float[] vertices, float[] ray_Position, float[] ray_Normal,
+        public override unsafe bool RayIntersectTriangle(Matrix4 matrix, float[] vertices, float[] ray_Position, float[] ray_Normal,
             out int id, out float output)
         {
             fixed (float* ptr = &vertices[0])
@@ -117,7 +117,7 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             }
         }
 
-        public override unsafe bool RayIntersectTriangle(ModelMatrix matrix, float* vertices, int vertexCount, float[] ray_Position, float[] ray_Normal,
+        public override unsafe bool RayIntersectTriangle(Matrix4 mat, float* vertices, int vertexCount, float[] ray_Position, float[] ray_Normal,
             out int id, out float output)
         {
             output = -1;
@@ -125,7 +125,6 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             bool selected = false;
             Vector3[] triangle = new Vector3[3];
             Vector4[] mdVertices = new Vector4[3];
-            Matrix4 mat = ModelObjectToolHelper.ToMatrix4(matrix);            
             float length = float.MaxValue;            
             Ray ray = new Ray();
             ray.Normal = new Vector3(ray_Normal[0], ray_Normal[1], ray_Normal[2]);

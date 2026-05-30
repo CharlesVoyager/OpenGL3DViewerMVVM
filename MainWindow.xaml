@@ -24,17 +24,17 @@
         </Storyboard>
 
         <ContextMenu x:Key="ViewerContextMenu">
-            <MenuItem x:Name="menuLandObject"   Header="Land Object"/>
-            <MenuItem x:Name="menuResetObject"  Header="Reset Object"/>
-            <MenuItem x:Name="menuRemoveObject" Header="Remove Object"/>
+            <MenuItem x:Name="menuLandModel" Header="Land Model"/>
+            <MenuItem x:Name="menuResetModel" Header="Reset Model"/>
+            <MenuItem x:Name="menuRemoveModel" Header="Remove Model"/>
             <Separator/>
             <MenuItem x:Name="menuMmToInch" Header="Scale Up (mm→inch)"/>
             <MenuItem x:Name="menuInchToMm" Header="Scale Down (inch→mm)"/>
             <Separator/>
-            <MenuItem x:Name="menuClone"        Header="Clone"/>
+            <MenuItem x:Name="menuClone" Header="Clone"/>
             <Separator/>
-            <MenuItem x:Name="menuSTLComposerWindow"     Header="STLComposer Window"/>
-            <MenuItem x:Name="menuThreeDSettingsWindow"  Header="ThreeDSettings Window"/>
+            <MenuItem x:Name="menuSTLComposerWindow" Header="STLComposer Window"/>
+            <MenuItem x:Name="menuThreeDSettingsWindow" Header="ThreeDSettings Window"/>
         </ContextMenu>
 
         <Style x:Key="leftPanelStackPanelStyle" TargetType="StackPanel">

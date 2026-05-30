@@ -36,6 +36,7 @@ namespace OpenGL3DViewerMVVM.View
         public RelayCommand CloneCommand => new RelayCommand(execute => CloneModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
         public RelayCommand ResetCommand => new RelayCommand(execute => ResetModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
         public RelayCommand FitModelCommand => new RelayCommand(execute => FitModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
+        public RelayCommand LandModelCommand => new RelayCommand(execute => LandModel(), canExecute => (SelectedModel != null && !IsLoadingModel));
 
         public ViewModel(IDispatcherService? dispatcher = null)
         {
@@ -274,6 +275,12 @@ namespace OpenGL3DViewerMVVM.View
             if (SelectedModel == null) return;
             MainWindow.main.threeDCamera.FitBoundingBox(SelectedModel.BoundingBox);
             MainWindow.main.threeDControl.UpdateChanges();
+        }
+
+        public void LandModel()
+        {
+            if (SelectedModel == null) return;
+            SelectedModel.Land();
         }
 
         bool Autoposition(ThreeDModel newModel)

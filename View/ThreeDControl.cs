@@ -608,7 +608,7 @@ namespace OpenGL3DViewerMVVM.View
             switch (emode)
             {
                 case 0: // Rotate
-                    threeDCam.Rotate(-speedX * 0.9, speedY * 0.9);
+                    threeDCam.Rotate(speedX * 0.9, speedY * 0.9);
                     UpdateChanges();
                     break;
 

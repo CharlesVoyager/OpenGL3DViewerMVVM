@@ -98,15 +98,15 @@ namespace OpenGL3DViewerMVVM.View
 
         public void Rotate(double side, double updown)
         {
-            theta = startTheta + side;
+            theta = startTheta - side;
             phi = startPhi - updown;
-            while (theta > Math.PI)
+            while (theta >= Math.PI)
                 theta -= 2 * Math.PI;
-            while (theta < -Math.PI)
+            while (theta <= -Math.PI)
                 theta += 2 * Math.PI;
-            while (phi > Math.PI)
+            while (phi >= Math.PI)
                 phi = Math.PI-1e-5;
-            while (phi < 0)
+            while (phi <= 0)
                 phi = 1e-5;
         }
 

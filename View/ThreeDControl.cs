@@ -577,13 +577,11 @@ namespace OpenGL3DViewerMVVM.View
                 if (tool.RayIntersectTriangle(model.ModelMatrix4, model.Mesh.glVertices, rayPos, rayNor, out _, out float output))
                 {
                     Vector3 hitP = ray.Position + ray.Normal * output;
-                    float lineLen = (hitP - near).Length;   // Avoid allocating a Line object
-                    if (lineLen <= length)
-                    {
+                    float lineLen = (hitP - near).Length;
+                    if (lineLen <= length)  // Check if the model is closer.
+                    {   
                         length = lineLen;
                         nearestModel = model;
-                        //Debug.WriteLine("[ThreeDModel.Picktest]==> Elapsed Time: " + sw.ElapsedMilliseconds.ToString());
-                        return nearestModel;
                     }
                 }
             }

@@ -28,8 +28,8 @@
             <MenuItem x:Name="menuResetObject"  Header="Reset Object"/>
             <MenuItem x:Name="menuRemoveObject" Header="Remove Object"/>
             <Separator/>
-            <MenuItem x:Name="menuMmToInch"     Header="Scale Up (mm→inch)"/>
-            <MenuItem x:Name="menuInchToMm"     Header="Scale Down (inch→mm)"/>
+            <MenuItem x:Name="menuMmToInch" Header="Scale Up (mm→inch)"/>
+            <MenuItem x:Name="menuInchToMm" Header="Scale Down (inch→mm)"/>
             <Separator/>
             <MenuItem x:Name="menuClone"        Header="Clone"/>
             <Separator/>

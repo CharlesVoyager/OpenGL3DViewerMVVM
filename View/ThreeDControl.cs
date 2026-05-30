@@ -614,6 +614,7 @@ namespace OpenGL3DViewerMVVM.View
 
                 case 2: // Pan
                 {
+                    if (SettingsService.Instance.Settings.EnableViewerMode) return; // Not allow pan in viewer mode.
                     speedX = (xPos - xDown) / ClientSize.X;
                     speedY = (yPos - yDown) / ClientSize.Y;
                     Vector3 planeVec = Vector3.Subtract(new Vector3(moveStart.x, moveStart.y, moveStart.z), threeDCam.CameraPosition);
@@ -632,7 +633,7 @@ namespace OpenGL3DViewerMVVM.View
                     break;
 
                 case 4: // Move objects
-                {
+                    if (SettingsService.Instance.Settings.EnableViewerMode) return;// Not allow moving model in viewer mode.
                     Geom3DVector diff = movePos.sub(moveLast);
                     moveLast = movePos;
                     speedX = (xPos - lastX) * 200 * zoom / ClientSize.X;
@@ -645,7 +646,6 @@ namespace OpenGL3DViewerMVVM.View
                     lastY = yPos;
                     UpdateChanges();
                     break;
-                }
             }
         }
     }

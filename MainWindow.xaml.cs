@@ -385,6 +385,8 @@ namespace OpenGL3DViewerMVVM
         {
             if (enable)
             {
+                MainWindow.main.threeDCamera.OnIsometricView();
+
                 // Hide all button on left panel.
                 view_toggleButton.Visibility = Visibility.Collapsed;
                 move_toggleButton.Visibility = Visibility.Collapsed;
@@ -398,16 +400,21 @@ namespace OpenGL3DViewerMVVM
                 VisualStateManager.GoToState(UI_resize_advance, "StateHidden", true);
                 VisualStateManager.GoToState(UI_object_information, "StateHidden", true);
 
+                // Not allow to load multi-model.
+                if (viewModel.Models.Count > 0)
+                    btnImport.IsEnabled = false;
+                else
+                    return;
+
+                if (viewModel.SelectedModel == null)
+                    viewModel.SelectedModel = viewModel.Models[0];
+
                 // Fit Model
                 viewModel.FitModel();
 
                 // If GLB file is loaded, rotate the model 90 degree on X axis to make it upright, because GLB file is usually created in Y-up coordinate system.
                 if (viewModel.SelectedModel?.Name.EndsWith(".glb", StringComparison.OrdinalIgnoreCase) == true)
                     viewModel.SelectedModel?.RotationX = 90;
-
-                // Not allow to load multi-model.
-                if (viewModel.Models.Count > 0)
-                    btnImport.IsEnabled = false;
             }
             else
             {

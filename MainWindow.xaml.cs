@@ -181,15 +181,28 @@ namespace OpenGL3DViewerMVVM
         /// </summary>
         public void ShowContextMenu(bool isModelSelected)
         {
-            if (isModelSelected == false) return;
-
-            // Must be called on the WPF thread
-            _contextMenu.Items.Cast<FrameworkElement>()
-                .Where(item => item is System.Windows.Controls.MenuItem)
-                .ToList()
-                .ForEach(item => item.Visibility =
-                    isModelSelected ? Visibility.Visible : Visibility.Collapsed);
-
+            if (SettingsService.Instance.Settings.EnableViewerMode)
+            {
+                ((MenuItem)_contextMenu.Items[0]).IsEnabled = false;    // Land Model
+                ((MenuItem)_contextMenu.Items[1]).IsEnabled = false;    // Reset Model
+                ((MenuItem)_contextMenu.Items[2]).IsEnabled = false;    // Delete Model
+                // Separator
+                ((MenuItem)_contextMenu.Items[4]).IsEnabled = false;    // mm to inch
+                ((MenuItem)_contextMenu.Items[5]).IsEnabled = false;    // inch to mm
+                // Separator
+                ((MenuItem)_contextMenu.Items[7]).IsEnabled = false;    // Clone Model
+            }
+            else
+            {
+                ((MenuItem)_contextMenu.Items[0]).IsEnabled = isModelSelected;  // Land Model      
+                ((MenuItem)_contextMenu.Items[1]).IsEnabled = isModelSelected;  // Reset Model
+                ((MenuItem)_contextMenu.Items[2]).IsEnabled = isModelSelected;  // Delete Model
+                // Separator
+                ((MenuItem)_contextMenu.Items[4]).IsEnabled = isModelSelected;  // mm to inch
+                ((MenuItem)_contextMenu.Items[5]).IsEnabled = isModelSelected;  // inch to mm
+                // Separator
+                ((MenuItem)_contextMenu.Items[7]).IsEnabled = isModelSelected;  // Clone Model
+            }
             _contextMenu.IsOpen = true;
         }
 

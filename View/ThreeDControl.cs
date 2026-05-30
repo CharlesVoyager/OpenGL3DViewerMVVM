@@ -376,7 +376,6 @@ namespace OpenGL3DViewerMVVM.View
                 {
                     movePlane = new Geom3DPlane(pickPoint, new Geom3DVector(0, 0, 1));
                     moveStart = moveLast = new Geom3DVector(pickPoint);
-         
                     MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.viewModel.SelectedModel = sel; });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
@@ -387,17 +386,27 @@ namespace OpenGL3DViewerMVVM.View
 
             if (e.Button == MouseButton.Right)
             {
+                bool isSelectedModel;
                 sel = Picktest((int)pos.X, (int)pos.Y);
                 if (sel != null)
                 {
                     movePlane = new Geom3DPlane(pickPoint, new Geom3DVector(0, 0, 1));
                     moveStart = moveLast = new Geom3DVector(pickPoint);
-           
-                    MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null); });
+                    MainWindow.main.Dispatcher.InvokeAsync(() =>
+                    {
+                        MainWindow.main.viewModel.SelectedModel = sel;
+                        isSelectedModel = true;
+                        MainWindow.main.ShowContextMenu(isSelectedModel); 
+                    });
                 }
                 else if (keyX == (int)pos.X && keyY == (int)pos.Y)
                 {
-                    MainWindow.main.Dispatcher.InvokeAsync(() => { MainWindow.main.ShowContextMenu(MainWindow.main.viewModel.SelectedModel != null); });
+                    MainWindow.main.Dispatcher.InvokeAsync(() =>
+                    {
+                        MainWindow.main.viewModel.SelectedModel = null;
+                        isSelectedModel = false;
+                        MainWindow.main.ShowContextMenu(isSelectedModel); 
+                    });
                 }
             }
             speedX = speedY = 0;

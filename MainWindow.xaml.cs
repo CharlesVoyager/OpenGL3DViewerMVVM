@@ -409,12 +409,12 @@ namespace OpenGL3DViewerMVVM
                 if (viewModel.SelectedModel == null)
                     viewModel.SelectedModel = viewModel.Models[0];
 
-                // Fit Model
-                viewModel.FitModel();
-
                 // If GLB file is loaded, rotate the model 90 degree on X axis to make it upright, because GLB file is usually created in Y-up coordinate system.
                 if (viewModel.SelectedModel?.Name.EndsWith(".glb", StringComparison.OrdinalIgnoreCase) == true)
                     viewModel.SelectedModel?.RotationX = 90;
+                
+                // Fit Model
+                viewModel.FitModel();
             }
             else
             {

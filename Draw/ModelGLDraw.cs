@@ -785,7 +785,7 @@ namespace OpenGL3DViewerMVVM.Draw
             return prog;
         }
 
-        private static int CompileShader(ShaderType type, string src)
+        private int CompileShader(ShaderType type, string src)
         {
             int s = GL.CreateShader(type);
             GL.ShaderSource(s, src);
@@ -821,7 +821,7 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.DeleteProgram(shader);
         }
 
-        private static void DeleteTexture(int texId)
+        private void DeleteTexture(int texId)
         {
             if (texId != 0) GL.DeleteTexture(texId);
         }

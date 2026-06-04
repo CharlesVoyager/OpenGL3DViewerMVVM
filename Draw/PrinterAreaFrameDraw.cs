@@ -15,7 +15,7 @@ namespace OpenGL3DViewerMVVM.Draw
     /// blue colour so the frame is clearly visible but does not obscure the
     /// model.
     /// </summary>
-    internal class PrinterAreaFrameDraw
+    internal class PrinterAreaFrameDraw : IDrawBase
     {
         // ── GL handles ────────────────────────────────────────────────────────
         private int shader;
@@ -109,12 +109,11 @@ namespace OpenGL3DViewerMVVM.Draw
         /// <summary>Call every frame from gl_Paint, after PrinterbedDraw.Draw().</summary>
         public void Draw()
         {
-            if (SettingsService.Instance.Settings.ShowPrintbed == false) return;
-            if (SettingsService.Instance.Settings.EnableViewerMode == true) return;
+            if (CanDraw() == false) return;
 
             Matrix4 model = Matrix4.Identity;
-            Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();
-            Matrix4 proj = MainWindow.main.threeDCamera.GetProjMatrix();
+            Matrix4 view = MainWindow.main.threeDCamera.ViewMatrix;
+            Matrix4 proj = MainWindow.main.threeDCamera.ProjMatrix;
 
             GL.UseProgram(shader);
             GL.UniformMatrix4(modelLoc, false, ref model);
@@ -168,5 +167,12 @@ namespace OpenGL3DViewerMVVM.Draw
 
             return prog;
         }
+        public bool CanDraw()
+        {
+            if (SettingsService.Instance.Settings.ShowPrintbed == false) return false;
+            if (SettingsService.Instance.Settings.EnableViewerMode == true) return false;
+            return true;
+        }
+
     }
 }

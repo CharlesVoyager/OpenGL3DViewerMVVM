@@ -22,7 +22,7 @@ namespace OpenGL3DViewerMVVM.Draw
     Render Loop — Cook-Torrance GGX PBR fragment shader
     */
 
-    public class ModelGLDraw
+    public class ModelGLDraw : IDrawBase
     {
         class MaterialGpuState
         {
@@ -140,6 +140,17 @@ namespace OpenGL3DViewerMVVM.Draw
         int skyColorLoc;
         int groundColorLoc;
         int ambientStrLoc;
+
+        // Triangle highlight
+        int triangleIdForRedLoc;
+
+        /// <summary>
+        /// 0-based index of the triangle to highlight in red.
+        /// Set to -1 (default) to disable highlighting.
+        /// Note: the index is relative to each GL draw call, which matches
+        /// gl_PrimitiveID in the shader.
+        /// </summary>
+        public int TriangleIdForRed { get; set; } = -1;
 
         readonly List<MaterialGpuState> materialStates = new List<MaterialGpuState>();
 
@@ -264,6 +275,11 @@ namespace OpenGL3DViewerMVVM.Draw
             uniform vec3  skyColor;
             uniform vec3  groundColor;
             uniform float ambientStr;
+
+            // --- Triangle highlight ---
+            // Set to a triangle index (0-based) to force that triangle red.
+            // Set to -1 (default) to disable highlighting.
+            uniform int triangleIdForRed;
 
             const float PI = 3.14159265358979;
 
@@ -415,6 +431,11 @@ namespace OpenGL3DViewerMVVM.Draw
                 // --- Gamma correction (linear -> sRGB) ---
                 color = pow(clamp(color, 0.0, 1.0), vec3(1.0 / 2.2));
 
+                // --- Triangle highlight override ---
+                // gl_PrimitiveID is 0-based per draw call; triangleIdForRed == -1 means disabled.
+                if (triangleIdForRed >= 0 && gl_PrimitiveID == triangleIdForRed)
+                    color = vec3(1.0, 0.0, 0.0);
+
                 FragColor = vec4(color, 1.0);
             }
 ";
@@ -480,6 +501,9 @@ namespace OpenGL3DViewerMVVM.Draw
             skyColorLoc     = GL.GetUniformLocation(shader, "skyColor");
             groundColorLoc  = GL.GetUniformLocation(shader, "groundColor");
             ambientStrLoc   = GL.GetUniformLocation(shader, "ambientStr");
+
+            // Triangle highlight
+            triangleIdForRedLoc = GL.GetUniformLocation(shader, "triangleIdForRed");
         }
 
         // -------------------------------------------------------------------------
@@ -596,8 +620,8 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.Disable(EnableCap.CullFace); // render both faces
 
             Matrix4 model = printModel.ModelMatrix4;
-            Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();
-            Matrix4 proj = MainWindow.main.threeDCamera.GetProjMatrix();
+            Matrix4 view = MainWindow.main.threeDCamera.ViewMatrix;
+            Matrix4 proj = MainWindow.main.threeDCamera.ProjMatrix;
 
             Matrix3 normalMatrix = new Matrix3(Matrix4.Transpose(Matrix4.Invert(printModel.ModelMatrix4)));
 
@@ -631,6 +655,9 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.Uniform3(skyColorLoc, skyColor);
             GL.Uniform3(groundColorLoc, groundColor);
             GL.Uniform1(ambientStrLoc, ambientStr);
+
+            // Triangle highlight
+            GL.Uniform1(triangleIdForRedLoc, TriangleIdForRed);
 
             GL.BindVertexArray(vao);
 
@@ -820,7 +847,7 @@ namespace OpenGL3DViewerMVVM.Draw
 
             GL.DeleteProgram(shader);
         }
-
+        public bool CanDraw() { return true; }
         private void DeleteTexture(int texId)
         {
             if (texId != 0) GL.DeleteTexture(texId);

@@ -4,7 +4,7 @@ using OpenGL3DViewerMVVM.View;
 
 namespace OpenGL3DViewerMVVM.Draw
 {
-    internal class RedBorderDraw
+    internal class RedBorderDraw : IDrawBase
     {
         // Red border around print area
         int vao;
@@ -104,12 +104,11 @@ namespace OpenGL3DViewerMVVM.Draw
         // Call each frame in place of the original GL.Begin/End block
         public void Draw()
         {
-            if (SettingsService.Instance.Settings.ShowPrintbed == false) return;
-            if (SettingsService.Instance.Settings.EnableViewerMode == true) return;
+            if (CanDraw() == false) return;
 
             Matrix4 model = Matrix4.Identity;
-            Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();
-            Matrix4 proj = MainWindow.main.threeDCamera.GetProjMatrix();
+            Matrix4 view = MainWindow.main.threeDCamera.ViewMatrix;
+            Matrix4 proj = MainWindow.main.threeDCamera.ProjMatrix;
             Matrix4 mvp = model * view * proj;  // Note: OpenTK uses column-major order, so the multiplication order is reversed compared to row-major math libraries.
 
             GL.UseProgram(shader);
@@ -130,6 +129,13 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.DeleteVertexArray(vao);
             GL.DeleteBuffer(vbo);
             GL.DeleteProgram(shader);
+        }
+
+        public bool CanDraw()
+        {
+            if (SettingsService.Instance.Settings.ShowPrintbed == false) return false;
+            if (SettingsService.Instance.Settings.EnableViewerMode == true) return false;
+            return true;
         }
     }
 }

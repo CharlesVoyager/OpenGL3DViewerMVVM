@@ -5,7 +5,7 @@ using OpenTK.Mathematics;
 
 namespace OpenGL3DViewerMVVM.Draw
 {
-    internal class BoundingBoxDraw
+    internal class BoundingBoxDraw : IDrawBase
     {
         int shader;
 
@@ -100,7 +100,7 @@ namespace OpenGL3DViewerMVVM.Draw
         // Call each frame in place of the original GL.Begin/End block
         public void Draw()
         {
-            if (SettingsService.Instance.Settings.EnableViewerMode == true) return;
+            if (CanDraw() == false) return;
 
             ThreeDModel? m = MainWindow.main.viewModel.SelectedModel;
 
@@ -130,8 +130,8 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.BufferSubData(BufferTarget.ArrayBuffer, (IntPtr)0, verticesBbox.Length * sizeof(float), verticesBbox);
 
             Matrix4 model = Matrix4.Identity;
-            Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();
-            Matrix4 proj = MainWindow.main.threeDCamera.GetProjMatrix();
+            Matrix4 view = MainWindow.main.threeDCamera.ViewMatrix;
+            Matrix4 proj = MainWindow.main.threeDCamera.ProjMatrix;
 
             GL.UseProgram(shader);
 
@@ -155,6 +155,12 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.DeleteVertexArray(vao);
             GL.DeleteBuffer(vbo);
             GL.DeleteProgram(shader);
+        }
+
+        public bool CanDraw() 
+        {
+            if (SettingsService.Instance.Settings.EnableViewerMode == true) return false;
+            return true;
         }
     }
 }

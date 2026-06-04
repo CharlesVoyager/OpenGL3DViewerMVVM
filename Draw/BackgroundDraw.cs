@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace OpenGL3DViewerMVVM.Draw
 {
-    internal class BackgroundDraw
+    internal class BackgroundDraw : IDrawBase
     { 
         int shader;
         int dummyVao;   // add this
@@ -119,5 +119,6 @@ namespace OpenGL3DViewerMVVM.Draw
             GL.DeleteVertexArray(dummyVao); 
             GL.DeleteProgram(shader);
         }
+        public bool CanDraw() { return true; }
     }
 }

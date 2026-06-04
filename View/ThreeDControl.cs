@@ -21,11 +21,7 @@ namespace OpenGL3DViewerMVVM.View
 {
     public class ThreeDControl : GameWindow
     {
-        BackgroundDraw backgroundDraw = null;
-        PrinterbedDraw printerbedDraw = null;
-        PrinterAreaFrameDraw printerAreaFrameDraw = null;
-        BoundingBoxDraw boundingBoxDraw = null;
-        RedBorderDraw redBorderDraw = null;
+        List<IDrawBase> drawers = new List<IDrawBase>();
 
         bool loaded = false;
         float xDown, yDown;
@@ -211,25 +207,14 @@ namespace OpenGL3DViewerMVVM.View
             catch { }
             #endregion
 
-            // Background
-            backgroundDraw = new BackgroundDraw();
-            backgroundDraw.Init(); 
+            drawers.Add(new BackgroundDraw());          // Background
+            drawers.Add(new PrinterbedDraw());          // Printer bed
+            drawers.Add(new PrinterAreaFrameDraw());    // Printer area frame (256 × 256 × 200 mm build volume)
+            drawers.Add(new RedBorderDraw());           // Red Border
+            drawers.Add(new BoundingBoxDraw());         // Bounding Box
 
-            // Printer bed
-            printerbedDraw = new PrinterbedDraw();
-            printerbedDraw.Init();
-
-            // Printer area frame (256 × 256 × 200 mm build volume)
-            printerAreaFrameDraw = new PrinterAreaFrameDraw();
-            printerAreaFrameDraw.Init();
-         
-            // Red Border
-            redBorderDraw = new RedBorderDraw();
-            redBorderDraw.Init();
-
-            // Bounding Box
-            boundingBoxDraw = new BoundingBoxDraw();
-            boundingBoxDraw.Init();
+            foreach (var drawer in drawers)
+                drawer.Init();
 
             loaded = true;
         }
@@ -270,11 +255,8 @@ namespace OpenGL3DViewerMVVM.View
                 _subscribedSelectedModel = null;
             }
 
-            backgroundDraw.Dispose();
-            printerbedDraw.Dispose();
-            printerAreaFrameDraw.Dispose();
-            redBorderDraw.Dispose();
-            boundingBoxDraw.Dispose();
+            foreach (var drawer in drawers)
+                drawer.Dispose();
 
             foreach (var m in MainWindow.main.viewModel.Models)
                 m.Drawer.Dispose();
@@ -487,15 +469,8 @@ namespace OpenGL3DViewerMVVM.View
 
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                backgroundDraw.Draw();
-
-                printerbedDraw.Draw();
-
-                printerAreaFrameDraw.Draw();
-
-                boundingBoxDraw.Draw();
-
-                redBorderDraw.Draw();
+                foreach (var drawer in drawers)
+                    drawer.Draw();
 
                 foreach (var m in MainWindow.main.viewModel.Models)
                     m.Drawer.Draw();
@@ -511,7 +486,6 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
-
         // ── Pick / ray-cast ───────────────────────────────────────────────────
         void UpdatePickLine(int x, int y)
         {          
@@ -520,7 +494,7 @@ namespace OpenGL3DViewerMVVM.View
             float nearHeight = 2.0f * (float)Math.Tan(threeDCam.Angle) * nearDist;
             float aspectRatio = (float)ClientSize.X / (float)ClientSize.Y;
 
-            int window_y = (ClientSize.Y - y) - ClientSize.Y / 2;            // CHANGED: Width/Height → ClientSize.X / ClientSize.Y
+            int window_y = (ClientSize.Y - y) - ClientSize.Y / 2;    
             double norm_y = (double)window_y / (ClientSize.Y / 2.0);
             int window_x = x - ClientSize.X / 2;
             double norm_x = (double)window_x / (ClientSize.X / 2.0);
@@ -528,7 +502,7 @@ namespace OpenGL3DViewerMVVM.View
             float fpx = (float)(nearHeight * 0.5 * aspectRatio * norm_x);
 
             Vector4 dirN = new Vector4(fpx, fpy, -nearDist, 0);
-            Matrix4 ntrans = threeDCam.GetViewMatrix();
+            Matrix4 ntrans = threeDCam.ViewMatrix;
             ntrans = Matrix4.Invert(ntrans);
             Vector4 frontPoint = ntrans.Row3;
             Vector4 dirVec = dirN * ntrans;
@@ -544,8 +518,8 @@ namespace OpenGL3DViewerMVVM.View
 
             var tool = ModelObjectToolWrapper.Instance.Tool;
 
-            Matrix4 view = MainWindow.main.threeDCamera.GetViewMatrix();
-            Matrix4 proj = MainWindow.main.threeDCamera.GetProjMatrix();
+            Matrix4 view = MainWindow.main.threeDCamera.ViewMatrix;
+            Matrix4 proj = MainWindow.main.threeDCamera.ProjMatrix;
             Vector2i windowSize = ClientSize;
             Ray ray = tool.GenerateRay(x, y, view, proj, windowSize, out Vector3 near, out _);
 
@@ -574,12 +548,12 @@ namespace OpenGL3DViewerMVVM.View
 
                 if (!tool.RaycastAABB(ray, aabbMinPoint3, aabbMaxPoint3)) continue;  // Check if it hit bounding box of a model.
 
-                if (tool.RayIntersectTriangle(model.ModelMatrix4, model.Mesh.glVertices, rayPos, rayNor, out _, out float output))
+                if (tool.RayIntersectTriangle(model.ModelMatrix4, model.Mesh.glVertices, ray, out int id, out float output))
                 {
                     Vector3 hitP = ray.Position + ray.Normal * output;
                     float lineLen = (hitP - near).Length;
                     if (lineLen <= length)  // Check if the model is closer.
-                    {   
+                    {
                         length = lineLen;
                         nearestModel = model;
                     }

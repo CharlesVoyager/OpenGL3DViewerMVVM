@@ -39,6 +39,35 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
+        public Matrix4 ViewMatrix
+        {
+            get
+            {
+                Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitZ);
+#if flase   // Y-UP 
+                Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitY);
+#endif
+                return view;
+            }
+        }
+
+        public Matrix4 ProjMatrix
+        {
+            get
+            {
+                float dist = (float)Distance;
+                float nearDist = Math.Max(1, dist - BedRadius);
+                float farDist = Math.Max(BedRadius * 2, dist + BedRadius);
+                Vector2i size = MainWindow.main.threeDControl.Size;
+                Matrix4 proj = Matrix4.CreatePerspectiveFieldOfView(
+                                Angle * 2.0f,
+                                size.X / (float)size.Y,
+                                nearDist,
+                                farDist);
+                return proj;
+            }
+        }
+
         public ThreeDCamera()  
         {
             SetCameraDefaults();
@@ -152,7 +181,7 @@ namespace OpenGL3DViewerMVVM.View
 
             for (int i = 0; i < 5; i++)
             {
-                Matrix4 lookAt = GetViewMatrix();
+                Matrix4 lookAt = ViewMatrix;
                 Matrix4 persp;
                 Vector3 dir = new Vector3();
                 Vector3.Subtract(in viewCenter, CameraPosition, out dir);
@@ -266,30 +295,6 @@ namespace OpenGL3DViewerMVVM.View
             SetCameraDefaults();
             MainWindow.main.threeDControl.UpdateChanges();
         }
-        // <>
-
-
-        public Matrix4 GetViewMatrix()
-        {
-            Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitZ);
-#if flase   // Y-UP 
-            Matrix4 view = Matrix4.LookAt(CameraPosition, viewCenter, Vector3.UnitY);
-#endif      
-            return view;
-        }
-
-        public Matrix4 GetProjMatrix()
-        {
-            float dist = (float)Distance;
-            float nearDist = Math.Max(1, dist - BedRadius);
-            float farDist = Math.Max(BedRadius * 2, dist + BedRadius);
-            Vector2i size = MainWindow.main.threeDControl.Size;
-            Matrix4 proj = Matrix4.CreatePerspectiveFieldOfView(
-                            Angle * 2.0f,
-                            size.X / (float)size.Y,
-                            nearDist,
-                            farDist);
-            return proj;
-        }
+        // <> 
     }
 }

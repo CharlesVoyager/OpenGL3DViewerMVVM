@@ -108,16 +108,16 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             throw new NotImplementedException();
         }
 
-        public override unsafe bool RayIntersectTriangle(Matrix4 matrix, float[] vertices, float[] ray_Position, float[] ray_Normal,
+        public override unsafe bool RayIntersectTriangle(Matrix4 matrix, float[] vertices, Ray ray,
             out int id, out float output)
         {
             fixed (float* ptr = &vertices[0])
             {
-                return RayIntersectTriangle(matrix, ptr, vertices.Length / 3, ray_Position, ray_Normal, out id, out output);
+                return RayIntersectTriangle(matrix, ptr, vertices.Length / 3, ray, out id, out output);
             }
         }
 
-        public override unsafe bool RayIntersectTriangle(Matrix4 mat, float* vertices, int vertexCount, float[] ray_Position, float[] ray_Normal,
+        public override unsafe bool RayIntersectTriangle(Matrix4 mat, float* vertices, int vertexCount, Ray ray,
             out int id, out float output)
         {
             output = -1;
@@ -125,10 +125,7 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
             bool selected = false;
             Vector3[] triangle = new Vector3[3];
             Vector4[] mdVertices = new Vector4[3];
-            float length = float.MaxValue;            
-            Ray ray = new Ray();
-            ray.Normal = new Vector3(ray_Normal[0], ray_Normal[1], ray_Normal[2]);
-            ray.Position = new Vector3(ray_Position[0], ray_Position[1], ray_Position[2]);
+            float minLength = float.MaxValue;
             int triId = 0;
             for (int i = 0; i < vertexCount; i += 3)
             {
@@ -144,20 +141,16 @@ namespace OpenGL3DViewerMVVM.ModelObjectTool
                 triangle[1] = Vector4.TransformRow(mdVertices[1], mat).Xyz;
                 triangle[2] = Vector4.TransformRow(mdVertices[2], mat).Xyz;
 
-                float temp;
-                if (RaycastTriangle(ray, triangle, out temp))
+                float length;
+                if (RaycastTriangle(ray, triangle, out length))
                 {                    
-                    if (temp <= length)
-                    {                        
-                        length = temp;
+                    selected = true;
+                    if (length < minLength)
+                    {
                         id = triId;
-                        selected = true;
                         output = length;
-                        return true;
+                        minLength = length;
                     }
-#if DEBUG_MODE
-                        Console.WriteLine("Pos: " + hitP + ", Dist: " + line.Length);
-#endif
                 }
                 triId++;
             }

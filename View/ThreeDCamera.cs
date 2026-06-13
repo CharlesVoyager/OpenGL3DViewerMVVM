@@ -10,10 +10,10 @@ namespace OpenGL3DViewerMVVM.View
     {
         double startTheta, startPhi;
         double theta = 0;
-        double phi = 0;
+        double phi = 1e-5;  // Cannot be 0 or π to avoid gimbal lock and singularity in view direction calculation.
 
         float minDistance, maxDistance;
-      
+
         Vector3 viewCenterStart = new Vector3();
         Vector3 viewCenter = new Vector3(0, 0, 0);
 
@@ -55,9 +55,8 @@ namespace OpenGL3DViewerMVVM.View
         {
             get
             {
-                float dist = (float)Distance;
-                float nearDist = Math.Max(1, dist - BedRadius);
-                float farDist = Math.Max(BedRadius * 2, dist + BedRadius);
+                float nearDist = Math.Max(1, Distance - BedRadius);
+                float farDist = Math.Max(BedRadius * 2, Distance + BedRadius);
                 Vector2i size = MainWindow.main.threeDControl.Size;
                 Matrix4 proj = Matrix4.CreatePerspectiveFieldOfView(
                                 Angle * 2.0f,
@@ -68,7 +67,7 @@ namespace OpenGL3DViewerMVVM.View
             }
         }
 
-        public ThreeDCamera()  
+        public ThreeDCamera()
         {
             SetCameraDefaults();
         }
@@ -134,7 +133,7 @@ namespace OpenGL3DViewerMVVM.View
             while (theta <= -Math.PI)
                 theta += 2 * Math.PI;
             while (phi >= Math.PI)
-                phi = Math.PI-1e-5;
+                phi = Math.PI - 1e-5;
             while (phi <= 0)
                 phi = 1e-5;
         }
@@ -142,7 +141,7 @@ namespace OpenGL3DViewerMVVM.View
         public void Pan(double leftRight, double upDown, double dist)
         {
             if (dist < 0) dist = Distance;
-            leftRight *= Math.Max(1,dist) * Math.Tan(Angle) * 2.0;
+            leftRight *= Math.Max(1, dist) * Math.Tan(Angle) * 2.0;
             upDown *= -Math.Max(1, dist) * Math.Tan(Angle) * 2.0;
             Vector3 ud = new Vector3(0, 0, 1);
             Vector3 camCenter = new Vector3();
@@ -162,8 +161,8 @@ namespace OpenGL3DViewerMVVM.View
         {
             RHBoundingBox b = new RHBoundingBox();
             b.Add(0, 0, 0);
-            b.Add(  SettingsService.Instance.Settings.PrintAreaWidth, 
-                    SettingsService.Instance.Settings.PrintAreaDepth, 
+            b.Add(SettingsService.Instance.Settings.PrintAreaWidth,
+                    SettingsService.Instance.Settings.PrintAreaDepth,
                     SettingsService.Instance.Settings.PrintAreaHeight);
 
             FitBoundingBox(b);
@@ -179,10 +178,21 @@ namespace OpenGL3DViewerMVVM.View
                 SettingsService.Instance.Settings.PrintAreaWidth * SettingsService.Instance.Settings.PrintAreaWidth +
                 SettingsService.Instance.Settings.PrintAreaHeight * SettingsService.Instance.Settings.PrintAreaHeight);
 
-            for (int i = 0; i < 5; i++)
+            // All 8 corners of the AABB
+            ReadOnlySpan<Vector4> corners =
+            [
+                new((float)box.xMin, (float)box.yMin, (float)box.zMin, 1),
+                new((float)box.xMax, (float)box.yMin, (float)box.zMin, 1),
+                new((float)box.xMin, (float)box.yMax, (float)box.zMin, 1),
+                new((float)box.xMax, (float)box.yMax, (float)box.zMin, 1),
+                new((float)box.xMin, (float)box.yMin, (float)box.zMax, 1),
+                new((float)box.xMax, (float)box.yMin, (float)box.zMax, 1),
+                new((float)box.xMin, (float)box.yMax, (float)box.zMax, 1),
+                new((float)box.xMax, (float)box.yMax, (float)box.zMax, 1),
+            ];
+
+            for (int i = 0; i < 2; i++)
             {
-                Matrix4 lookAt = ViewMatrix;
-                Matrix4 persp;
                 Vector3 dir = new Vector3();
                 Vector3.Subtract(in viewCenter, CameraPosition, out dir);
                 dir.Normalize();
@@ -194,24 +204,9 @@ namespace OpenGL3DViewerMVVM.View
                 float farDist = Math.Max(BedRadius * 2, dist + BedRadius);
                 float nearHeight = 2.0f * (float)Math.Tan(Angle) * dist;
 
-                persp = Matrix4.CreatePerspectiveFieldOfView(Angle * 1.9f, 1.0f, nearDist, farDist);
-
-                Matrix4 trans = Matrix4.Mult(lookAt, persp);
+                Matrix4 persp = Matrix4.CreatePerspectiveFieldOfView(Angle * 1.9f, 1.0f, nearDist, farDist);
+                Matrix4 trans = Matrix4.Mult(ViewMatrix, persp);
                 RHBoundingBox bb = new RHBoundingBox();
-
-                // All 8 corners of the AABB
-                ReadOnlySpan<Vector4> corners =
-                [
-                    new((float)box.xMin, (float)box.yMin, (float)box.zMin, 1),
-                    new((float)box.xMax, (float)box.yMin, (float)box.zMin, 1),
-                    new((float)box.xMin, (float)box.yMax, (float)box.zMin, 1),
-                    new((float)box.xMax, (float)box.yMax, (float)box.zMin, 1),
-                    new((float)box.xMin, (float)box.yMin, (float)box.zMax, 1),
-                    new((float)box.xMax, (float)box.yMin, (float)box.zMax, 1),
-                    new((float)box.xMin, (float)box.yMax, (float)box.zMax, 1),
-                    new((float)box.xMax, (float)box.yMax, (float)box.zMax, 1),
-                ];
-
                 foreach (ref readonly Vector4 corner in corners)
                 {
                     Vector4 projected = corner * trans;
@@ -219,82 +214,106 @@ namespace OpenGL3DViewerMVVM.View
                 }
 
                 double fac = Math.Max(Math.Abs(bb.xMin), Math.Abs(bb.xMax));
-                fac = Math.Max(fac, Math.Abs(bb.yMin));
-                fac = Math.Max(fac, Math.Abs(bb.yMax));
+                       fac = Math.Max(fac, Math.Abs(bb.yMin));
+                       fac = Math.Max(fac, Math.Abs(bb.yMax));
                 Distance *= (float)(fac * 1.03);
                 if (Distance < 1) Angle = (float)Math.Atan(Distance * Math.Tan(15.0 * Math.PI / 180.0));
+
+//              System.Diagnostics.Debug.WriteLine("Distance: " + Distance + ", fac: " + fac + ", facx1.03: " + (fac * 1.03));
             }
         }
 
         // ── UI button event handlers ────────────────────────────────────────────────────
-        public void OnFrontView() 
+        public void OnFrontView()
         {
-            theta = Math.PI / 2;
-            phi = Math.PI / 2;
-            float originDistance = Distance;
-            SetCameraDefaults();
-            Distance = originDistance;
-            MainWindow.main.threeDControl.UpdateChanges(); 
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(Math.PI / 2, Math.PI / 2);
         }
 
-        public void OnBackView() 
+        public void OnBackView()
         {
-            theta = -Math.PI / 2;
-            phi = Math.PI / 2;
-            float originDistance = Distance;
-            SetCameraDefaults();
-            Distance = originDistance;
-            MainWindow.main.threeDControl.UpdateChanges(); 
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(-Math.PI / 2, Math.PI / 2);
         }
 
-        public void OnLeftView() 
+        public void OnLeftView()
         {
-            theta = 0;
-            phi = Math.PI / 2;
-            float originDistance = Distance;
-            SetCameraDefaults();
-            Distance = originDistance;
-            MainWindow.main.threeDControl.UpdateChanges(); 
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(0, Math.PI / 2);
         }
 
-        public void OnRightView() 
+        public void OnRightView()
         {
-            theta = Math.PI;
-            phi = Math.PI / 2;
-            float originDistance = Distance;
-            SetCameraDefaults();
-            Distance = originDistance;
-            MainWindow.main.threeDControl.UpdateChanges(); 
-        }
-        public void OnTopView() 
-        {
-            theta = -Math.PI / 2;
-            phi = 1e-5;
-            float originDistance = Distance;
-            SetCameraDefaults();
-            Distance = originDistance;
-            MainWindow.main.threeDControl.UpdateChanges(); 
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(Math.PI, Math.PI / 2);
         }
 
-        public void OnBottomView() 
+        public void OnTopView()
         {
-            theta = -Math.PI / 2;
-            phi = Math.PI - 1e-5;
-
-            float originDistance = Distance;
-            SetCameraDefaults();
-            Distance = originDistance;
-            MainWindow.main.threeDControl.UpdateChanges(); 
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(-Math.PI / 2, 1e-5);
         }
 
-        public void OnIsometricView() 
+        public void OnBottomView()
         {
-            theta = -Math.PI * 0.75;
-            phi = Math.PI / 2.5;
-
-            SetCameraDefaults();
-            MainWindow.main.threeDControl.UpdateChanges();
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(-Math.PI / 2, Math.PI - 1e-5);
         }
-        // <> 
-    }
+
+        public void OnIsometricView()
+        {       
+            fitViewCenterToPrinterAnimation();
+            toThetaPhiAnimation(-Math.PI * 0.75, Math.PI / 2.5);
+            
+            // Distance animation
+            float originalDistance = Distance;
+            SetCameraDefaults();
+            float targetDistance = Distance;
+            Distance = originalDistance;
+            while (Math.Abs(targetDistance - Distance) > 10) 
+            {
+                Distance += 10f * Math.Sign(targetDistance - Distance);
+                Thread.Sleep(10); // Adjust the sleep duration for smoother animation
+                MainWindow.main.threeDControl.UpdateChanges();
+            }       
+            // <>
+        }
+
+        void fitViewCenterToPrinterAnimation()
+        {
+            RHBoundingBox b = new RHBoundingBox();
+            b.Add(0, 0, 0);
+            b.Add(SettingsService.Instance.Settings.PrintAreaWidth,
+                    SettingsService.Instance.Settings.PrintAreaDepth,
+                    SettingsService.Instance.Settings.PrintAreaHeight);
+
+            Vector3 targetViewCenter = b.Center.asVector3();
+            while (Math.Abs(targetViewCenter.X - viewCenter.X) > 1 ||
+                    Math.Abs(targetViewCenter.Y - viewCenter.Y) > 1 ||
+                    Math.Abs(targetViewCenter.Z - viewCenter.Z) > 1)
+            {
+                if (Math.Abs(targetViewCenter.X - viewCenter.X) > 1)
+                    viewCenter.X += 1f * Math.Sign(targetViewCenter.X - viewCenter.X);
+                if (Math.Abs(targetViewCenter.Y - viewCenter.Y) > 1)
+                    viewCenter.Y += 1f * Math.Sign(targetViewCenter.Y - viewCenter.Y);
+                if (Math.Abs(targetViewCenter.Z - viewCenter.Z) > 1)
+                    viewCenter.Z += 1f * Math.Sign(targetViewCenter.Z - viewCenter.Z);
+
+                Thread.Sleep(1); // Adjust the sleep duration for smoother animation
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
+        }
+        void toThetaPhiAnimation(double targetTheta, double targetPhi)
+        {
+            while (Math.Abs(targetTheta - theta) > 0.1 || Math.Abs(targetPhi - phi) > 0.1)
+            {
+                if (Math.Abs(targetTheta - theta) > 0.1)
+                    theta += 0.1 * Math.Sign(targetTheta - theta);
+                if (Math.Abs(targetPhi - phi) > 0.1)
+                    phi += 0.1 * Math.Sign(targetPhi - phi);
+                Thread.Sleep(10); // Adjust the sleep duration for smoother animation
+                MainWindow.main.threeDControl.UpdateChanges();
+            }
+        }
+    } 
 }

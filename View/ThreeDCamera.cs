@@ -226,43 +226,43 @@ namespace OpenGL3DViewerMVVM.View
         // ── UI button event handlers ────────────────────────────────────────────────────
         public void OnFrontView()
         {
-            fitViewCenterToPrinterAnimation();
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(Math.PI / 2, Math.PI / 2);
         }
 
         public void OnBackView()
         {
-            fitViewCenterToPrinterAnimation();
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(-Math.PI / 2, Math.PI / 2);
         }
 
         public void OnLeftView()
         {
-            fitViewCenterToPrinterAnimation();
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(0, Math.PI / 2);
         }
 
         public void OnRightView()
         {
-            fitViewCenterToPrinterAnimation();
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(Math.PI, Math.PI / 2);
         }
 
         public void OnTopView()
         {
-            fitViewCenterToPrinterAnimation();
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(-Math.PI / 2, 1e-5);
         }
 
         public void OnBottomView()
         {
-            fitViewCenterToPrinterAnimation();
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(-Math.PI / 2, Math.PI - 1e-5);
         }
 
         public void OnIsometricView()
-        {       
-            fitViewCenterToPrinterAnimation();
+        {
+            toPrinterViewCenterAnimation();
             toThetaPhiAnimation(-Math.PI * 0.75, Math.PI / 2.5);
             
             // Distance animation
@@ -279,7 +279,7 @@ namespace OpenGL3DViewerMVVM.View
             // <>
         }
 
-        void fitViewCenterToPrinterAnimation()
+        void toPrinterViewCenterAnimation()
         {
             RHBoundingBox b = new RHBoundingBox();
             b.Add(0, 0, 0);

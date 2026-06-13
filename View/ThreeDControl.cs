@@ -207,11 +207,24 @@ namespace OpenGL3DViewerMVVM.View
             catch { }
             #endregion
 
+            /*
+             Background          ← must be first; ignores depth, fills entire screen
+             Printer bed         ← opaque, writes depth
+             Printer area frame  ← blended lines, reads bed pixels correctly
+             Red border          ← opaque lines
+             Models              ← opaque geometry; moved up, before depth-dependent overlays
+             Bounding box        ← opaque lines, depth-tested against model
+             Annotation marks    ← depth-disabled overlay, must be last (or near last)
+
+             The short rule: opaque back-to-front first, then depth-disabled overlays last, background always first.
+            */
+
             drawers.Add(new BackgroundDraw());          // Background
             drawers.Add(new PrinterbedDraw());          // Printer bed
             drawers.Add(new PrinterAreaFrameDraw());    // Printer area frame (256 × 256 × 200 mm build volume)
-            drawers.Add(new RedBorderDraw());           // Red Border
-            drawers.Add(new BoundingBoxDraw());         // Bounding Box
+            drawers.Add(new RedBorderDraw());           // Red border
+            drawers.Add(new ModelsDraw());              // Models
+            drawers.Add(new BoundingBoxDraw());         // Bounding box
 
             foreach (var drawer in drawers)
                 drawer.Init();
@@ -257,9 +270,6 @@ namespace OpenGL3DViewerMVVM.View
 
             foreach (var drawer in drawers)
                 drawer.Dispose();
-
-            foreach (var m in MainWindow.main.viewModel.Models)
-                m.Drawer.Dispose();
 
             MainWindow.main.Dispatcher.Invoke(() =>
             {
@@ -472,9 +482,6 @@ namespace OpenGL3DViewerMVVM.View
                 foreach (var drawer in drawers)
                     drawer.Draw();
 
-                foreach (var m in MainWindow.main.viewModel.Models)
-                    m.Drawer.Draw();
-
                 SwapBuffers();
 
                 fpsTimer.Stop();
@@ -524,12 +531,14 @@ namespace OpenGL3DViewerMVVM.View
             Ray ray = tool.GenerateRay(x, y, view, proj, windowSize, out Vector3 near, out _);
 
             float length = float.MaxValue;
+            int hitTriangleId = -1;
             ThreeDModel nearestModel = null;
 
             // Cache these once outside the loop
             float[] rayPos = { ray.Position.X, ray.Position.Y, ray.Position.Z };
             float[] rayNor = { ray.Normal.X, ray.Normal.Y, ray.Normal.Z };
- 
+
+            Vector3 hitP = new Vector3();
             Vector3 aabbMinPoint3 = new Vector3();
             Vector3 aabbMaxPoint3 = new Vector3();
             if (ViewModel._meshDataReady.Wait(0) == false) return null;
@@ -550,11 +559,12 @@ namespace OpenGL3DViewerMVVM.View
 
                 if (tool.RayIntersectTriangle(model.ModelMatrix4, model.Mesh.glVertices, ray, out int id, out float output))
                 {
-                    Vector3 hitP = ray.Position + ray.Normal * output;
+                    hitP = ray.Position + ray.Normal * output;
                     float lineLen = (hitP - near).Length;
                     if (lineLen <= length)  // Check if the model is closer.
                     {
                         length = lineLen;
+                        hitTriangleId = id;
                         nearestModel = model;
                     }
                 }

@@ -42,6 +42,11 @@ To build and run the project, you will need:
 
 - The viewer opens sample assets from the `Testfiles` folder, including both `STL` and `GLB` examples.
 - Viewer settings are persisted under the current user's application data folder.
+- Shortcuts:
+  - Mouse drag: Orbit camera
+  - Scroll wheel: Zoom camera
+  - Alt + Mouse drag: Move the selected model
+  - Shift + Mouse drag: Pan camera
 
 ## Project Structure
 
